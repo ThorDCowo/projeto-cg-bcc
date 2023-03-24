@@ -14,7 +14,6 @@ using namespace std;
 Main_frame::Main_frame(QWidget *parent)
     : QFrame{parent}
 {
-    Window janela(QPoint(0, 0), 400, 300); // metade do tamanho do viewport
     QList<pair<int,int>> pontos;
 
     pontos.append(pair<int, int>(200, 200));
@@ -61,26 +60,8 @@ void Main_frame::paintEvent(QPaintEvent *event)
     {
         painter.setPen(QPen(list[i]->getColor(), 2));
         printf(" %d \n", i);
-        // list[i]->transformadaWindow(0, 0);       // centro da janela (x,y)
-        // list[i]->normalizacao(300, 400);         // tamanho da janela (alt,lar)
-        // list[i]->transformadaViewport(600, 800); // tamanho do view (alt,lar)
-        // list[i]->translacao(150, 80);            // movimentacao (x,y)
-        // list[i]->escala(0.5, 0.5);               // escala da proporcao
-        // list[i]->rotacao(30);                    // grau da rotacao
         list[i]->draw(painter);
     }
 }
 
-// void Main_frame::muda(int i)
-// {
-//     cout << "entrou no Main_frame::muda" << endl;
-//     update();
-// }
 
-// void Main_frame::muda()
-// {
-//     for (int i = 0; i < list.size(); ++i)
-//     {
-//         muda(i);
-//     }
-// }

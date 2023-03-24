@@ -17,9 +17,6 @@ public:
     void paintEvent(QPaintEvent *event) override;
 
 public slots:
-    // void muda(int i);
-    // void muda();
-
 
 signals:
 

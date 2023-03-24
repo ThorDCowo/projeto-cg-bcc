@@ -9,8 +9,6 @@ public:
     Window(const QPoint& center, int width, int height):
         QPoint(center),width(width), height(height)
     {}
-
-
 };
 
 #endif // WINDOW_H
