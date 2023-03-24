@@ -4,12 +4,19 @@
 
 using namespace std;
 
-void Rect::desenha(QPainter &painter)
+void Rect::draw(QPainter &painter)
 {
-    painter.drawRect(*this);
-    cout << "passou aqui-> Rect::desenha" << endl;
+    painter.drawLine(pointsList[0].first, pointsList[0].second,
+                     pointsList[1].first, pointsList[1].second);
+    painter.drawLine(pointsList[1].first, pointsList[1].second,
+                     pointsList[2].first, pointsList[2].second);
+    painter.drawLine(pointsList[2].first, pointsList[2].second,
+                     pointsList[3].first, pointsList[3].second);
+    painter.drawLine(pointsList[3].first, pointsList[3].second,
+                     pointsList[0].first, pointsList[0].second);
+    cout << "passou aqui-> Rect::draw" << endl;
 }
-
+/*
 void Rect::ajusta(int dx, int dy)
 {
     adjust(dx,dy,dx,dy);
@@ -73,3 +80,4 @@ void Rect::rotacao(int teta)
     setCoords((x()*qRadiansToDegrees(qCos(teta))-(y()*qRadiansToDegrees(qSin(teta)))), (x()*qRadiansToDegrees(qSin(teta))+(y()*qRadiansToDegrees(qCos(teta)))), (x2*qRadiansToDegrees(qCos(teta))-(y2*qRadiansToDegrees(qSin(teta)))), (x2*qRadiansToDegrees(qSin(teta))+(y2*qRadiansToDegrees(qCos(teta)))));
     setCoords(x()+auxY, y()+auxX, x2+auxY, y2+auxX);
 }
+*/

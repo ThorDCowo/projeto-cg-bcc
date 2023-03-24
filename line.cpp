@@ -2,12 +2,13 @@
 #include <iostream>
 using namespace std;
 
-void Line::desenha(QPainter &painter)
+void Line::draw(QPainter &painter)
 {
-    painter.drawLine(*this);
-    cout << "pasosu aqui-> Line::desenha" << endl;
+    painter.drawLine(this->pointsList[0].first, this->pointsList[0].second,
+                     this->pointsList[1].first, this->pointsList[1].second);
+    cout << "pasosu aqui-> Line::draw" << endl;
 }
-
+/*
 void Line::ajusta(int dx, int dy)
 {
     translate(dx,dy);
@@ -52,3 +53,4 @@ void Line::rotacao(int teta)
     setLine((x1()*qCos(teta)-(y1()*qSin(teta))), (x1()*qSin(teta)+(y1()*qCos(teta))), (x2()*qCos(teta)-(y2()*qSin(teta))), (x2()*qSin(teta)+(y2()*qCos(teta))));
     setLine(x1()+auxX, y1()+auxY, x2()+auxX, y2()+auxY);
 }
+*/

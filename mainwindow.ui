@@ -25,7 +25,7 @@
      <rect>
       <x>-10</x>
       <y>-20</y>
-      <width>151</width>
+      <width>281</width>
       <height>601</height>
      </rect>
     </property>
@@ -39,23 +39,173 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>110</y>
+       <y>70</y>
        <width>113</width>
        <height>20</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: white</string>
+     </property>
      <property name="text">
       <string>inicial</string>
+     </property>
+    </widget>
+    <widget class="QListView" name="listView">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>251</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">padding: 200px</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>26</x>
+       <y>421</y>
+       <width>75</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: opacity(0.3);
+</string>
+     </property>
+     <property name="text">
+      <string>Rotação</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>140</y>
+       <width>76</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white</string>
+     </property>
+     <property name="text">
+      <string>Ponto</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>160</y>
+       <width>76</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white
+</string>
+     </property>
+     <property name="text">
+      <string>Linha</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_3">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>180</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white
+</string>
+     </property>
+     <property name="text">
+      <string>Retangulo 1</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>109</x>
+       <y>421</y>
+       <width>75</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: opacity(0.3);
+</string>
+     </property>
+     <property name="text">
+      <string>Escala</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>191</x>
+       <y>421</y>
+       <width>75</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: opacity(0.3);
+</string>
+     </property>
+     <property name="text">
+      <string>Translação</string>
+     </property>
+    </widget>
+    <widget class="QDial" name="dial">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>310</y>
+       <width>50</width>
+       <height>64</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>390</y>
+       <width>71</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: opacity(0.3)</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>340</y>
+       <width>42</width>
+       <height>22</height>
+      </rect>
      </property>
     </widget>
    </widget>
    <widget class="Main_frame" name="frame" native="true">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>270</x>
       <y>-10</y>
-      <width>931</width>
-      <height>600</height>
+      <width>881</width>
+      <height>591</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -69,7 +219,7 @@
      <x>0</x>
      <y>0</y>
      <width>1080</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

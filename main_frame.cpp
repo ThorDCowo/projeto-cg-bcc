@@ -5,6 +5,7 @@
 
 using namespace std;
 
+#include "object.h"
 #include "point.h"
 #include "line.h"
 #include "rect.h"
@@ -14,68 +15,40 @@ Main_frame::Main_frame(QWidget *parent)
     : QFrame{parent}
 {
     Window janela(QPoint(0, 0), 400, 300); // metade do tamanho do viewport
+    QList<pair<int,int>> pontos;
 
-    list.append(
-        new Rect(
-            QString("ret-01"), 
-            QRect(QPoint(120, 20),
-            QSize(20, 20)), 
-            20, 
-            20, 
-            20, 
-            20, 
-            Qt::red
-        )
-    );
+    pontos.append(pair<int, int>(200, 200));
+    pontos.append(pair<int, int>(400, 200));
+    pontos.append(pair<int, int>(400, 400));
+    pontos.append(pair<int, int>(400, 200));
+    list.append(new Rect(QString("Retangulo-001"), QList(pontos), Qt::red));
+    pontos.clear();
 
-    list.append(
-        new Rect(
-            QString("ret-02"),
-            QRect(QPoint(150, 115),
-            QSize(300,50)),
-            15,
-            15,
-            300,
-            50,
-            Qt::cyan
-        )
-    );
 
-    list.append(
-        new Line(QString("line-01"),
-        QLine(QPoint(10,
-        10),
-        QPoint(90,
-        90)),
-        10,
-        10,
-        90,
-        90,
-        Qt::green
-        )
-    );
+    pontos.append(pair<int, int>(100, 100));
+    pontos.append(pair<int, int>(100, 200));
+    pontos.append(pair<int, int>(400, 200));
+    pontos.append(pair<int, int>(400, 100));
+    list.append(new Rect(QString("Retangulo-002"), QList(pontos), Qt::cyan));
+    pontos.clear();
 
-    list.append(
-        new Point(QString("Point-01"),
-        QPoint(30,50),
-        30,
-        50,
-        Qt::white
-        )
-    );
+    pontos.append(pair<int, int>(500, 100));
+    pontos.append(pair<int, int>(900, 100));
+    list.append(new Line(QString("Linha-001"), QList(pontos), Qt::green));
+    pontos.clear();
 
-    list.append(
-        new Rect(
-            QString("ret-03"),
-            QRect(QPoint(-15, 300),
-            QSize(300, 50)),
-            15,
-            15,
-            300,
-            50,
-            Qt::yellow
-        )
-    );
+
+    pontos.append(pair<int, int>(12000, 12000));
+    list.append(new Point(QString("Ponto-01"), QList(pontos), Qt::white));
+    pontos.clear();
+
+    pontos.append(pair<int, int>(-900, 100));
+    pontos.append(pair<int, int>(-900, 200));
+    pontos.append(pair<int, int>(100, 200));
+    pontos.append(pair<int, int>(100, 100));
+    
+    list.append(new Rect(QString("Retangulo-03"), QList(pontos), Qt::yellow));
+    pontos.clear();
 }
 
 void Main_frame::paintEvent(QPaintEvent *event)
@@ -94,21 +67,20 @@ void Main_frame::paintEvent(QPaintEvent *event)
         // list[i]->translacao(150, 80);            // movimentacao (x,y)
         // list[i]->escala(0.5, 0.5);               // escala da proporcao
         // list[i]->rotacao(30);                    // grau da rotacao
-        list[i]->desenha(painter);
+        list[i]->draw(painter);
     }
 }
 
-void Main_frame::muda(int i)
-{
-    cout << "entrou no Main_frame::muda" << endl;
-    list[i]->ajusta(5, 2);
-    update();
-}
+// void Main_frame::muda(int i)
+// {
+//     cout << "entrou no Main_frame::muda" << endl;
+//     update();
+// }
 
-void Main_frame::muda()
-{
-    for (int i = 0; i < list.size(); ++i)
-    {
-        muda(i);
-    }
-}
+// void Main_frame::muda()
+// {
+//     for (int i = 0; i < list.size(); ++i)
+//     {
+//         muda(i);
+//     }
+// }

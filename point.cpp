@@ -2,12 +2,13 @@
 #include <iostream>
 using namespace std;
 
-void Point::desenha(QPainter &painter)
+void Point::draw(QPainter &painter)
 {
-    painter.drawPoint(*this);
-    cout << "passou aqui-> Point::desenha" << endl;
+    //first -> eixo x  second-> eixo y
+    painter.drawPoint(pointsList[0].first, pointsList[0].second);
+    cout << "passou aqui-> Point::draw" << endl;
 }
-
+/*
 void Point::ajusta(int dx, int dy)
 {
     setX((*this + QPoint(dx,dy)).x());
@@ -41,4 +42,4 @@ void Point::translacao(int dx, int dy)
 void Point::escala(float px, float py){}
 
 void Point::rotacao(int teta){}
-
+*/
