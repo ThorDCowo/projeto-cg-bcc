@@ -8,8 +8,8 @@
 class Point : public Object, public QPointF
 {
 public:
-    Point(const QString& nome, const QList<std::pair<int,int>> &pointsList,  Qt::GlobalColor color=Qt::black):
-        Object(nome, pointsList, color)
+    Point(const QString& name, const QList<std::pair<int,int>> &pointsList,  Qt::GlobalColor color=Qt::black):
+        Object(name, pointsList, color)
     {}
 
     void draw(QPainter &painter);

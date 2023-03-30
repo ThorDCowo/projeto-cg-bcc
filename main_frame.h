@@ -5,13 +5,16 @@
 #include <QPaintEvent>
 #include <QRect>
 #include <QList>
+#include <QCheckBox>
 #include <object.h>
-
+ 
 class Main_frame : public QFrame
 {
     Q_OBJECT
 private:
     QList<Object*> list;
+    QCheckBox *polygonCheckBox;
+
 public:
     explicit Main_frame(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event) override;
