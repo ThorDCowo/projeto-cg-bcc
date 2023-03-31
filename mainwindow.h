@@ -18,6 +18,9 @@ public:
 public slots:
     void slot1(int);
 
+private slots:
+    void on_translationButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

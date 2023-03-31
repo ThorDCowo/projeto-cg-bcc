@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1080</width>
-    <height>720</height>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,8 +38,8 @@
     <widget class="QLineEdit" name="lineEdit">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>70</y>
+       <x>80</x>
+       <y>30</y>
        <width>113</width>
        <height>20</height>
       </rect>
@@ -55,16 +55,16 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>130</y>
+       <y>60</y>
        <width>251</width>
-       <height>321</height>
+       <height>391</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">padding: 200px</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="rotationButton">
      <property name="geometry">
       <rect>
        <x>26</x>
@@ -81,57 +81,7 @@
       <string>Rotação</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>140</y>
-       <width>76</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white</string>
-     </property>
-     <property name="text">
-      <string>Ponto</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_2">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>160</y>
-       <width>76</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white
-</string>
-     </property>
-     <property name="text">
-      <string>Linha</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_3">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>180</y>
-       <width>91</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white
-</string>
-     </property>
-     <property name="text">
-      <string>Retangulo 1</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="scaleButton">
      <property name="geometry">
       <rect>
        <x>109</x>
@@ -148,7 +98,7 @@
       <string>Escala</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="translationButton">
      <property name="geometry">
       <rect>
        <x>191</x>
@@ -198,18 +148,25 @@
       </rect>
      </property>
     </widget>
+    <widget class="QListWidget" name="objectList">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>70</y>
+       <width>231</width>
+       <height>231</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
-   <widget class="Main_frame" name="frame" native="true">
+   <widget class="Screen" name="frame" native="true">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>-10</y>
-      <width>881</width>
-      <height>591</height>
+      <x>290</x>
+      <y>20</y>
+      <width>761</width>
+      <height>441</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: #2c2a3c;</string>
     </property>
    </widget>
   </widget>
@@ -219,7 +176,7 @@
      <x>0</x>
      <y>0</y>
      <width>1080</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -227,13 +184,10 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Main_frame</class>
+   <class>Screen</class>
    <extends>QWidget</extends>
-   <header>main_frame.h</header>
+   <header>screen.h</header>
    <container>1</container>
-   <slots>
-    <slot>muda()</slot>
-   </slots>
   </customwidget>
  </customwidgets>
  <resources/>

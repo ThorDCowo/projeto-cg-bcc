@@ -11,20 +11,22 @@ CONFIG += c++17
 SOURCES += \
     line.cpp \
     main.cpp \
-    main_frame.cpp \
     mainwindow.cpp \
     object.cpp \
+    object_list_factory.cpp \
     point.cpp \
     rect.cpp \
+    screen.cpp \
     window.cpp
 
 HEADERS += \
     line.h \
-    main_frame.h \
     mainwindow.h \
     object.h \
+    object_list_factory.h \
     point.h \
     rect.h \
+    screen.h \
     window.h
 
 FORMS += \

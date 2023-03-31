@@ -1,23 +1,16 @@
-#include "main_frame.h"
-#include <QPainter>
-#include <iostream>
-#include <QDebug>
-
-using namespace std;
-
+#include <QList>
+#include "object_list_factory.h"
 #include "object.h"
 #include "point.h"
 #include "line.h"
 #include "rect.h"
-#include "window.h"
 
-Main_frame::Main_frame(QWidget *parent)
-    : QFrame{parent}
+using namespace std;
+
+QList<Object*> ObjectListFactory::createObjectList()
 {
+    QList<Object*> list;
     QList<pair<int,int>> points;
-
-    polygonCheckBox = new QCheckBox("Checkbox Text", this);
-    polygonCheckBox->setChecked(false);
 
     points.append(pair<int, int>(200, 200));
     points.append(pair<int, int>(400, 200));
@@ -48,24 +41,9 @@ Main_frame::Main_frame(QWidget *parent)
     points.append(pair<int, int>(-900, 200));
     points.append(pair<int, int>(100, 200));
     points.append(pair<int, int>(100, 100));
-    
+
     list.append(new Rect(QString("Retangulo-03"), QList(points), Qt::yellow));
     points.clear();
-}
 
-void Main_frame::paintEvent(QPaintEvent *event)
-{
-    QFrame::paintEvent(event);
-    QPainter painter(this);
-    painter.setPen(QPen(Qt::red, 2));
-
-    for (int i = 0; i < list.size(); i++)
-    {
-        painter.setPen(QPen(list[i]->getColor(), 2));
-        printf(" %d \n", i);
-        list[i]->draw(painter);
-        list[i]->getName();
-    }
-}
-
-
+    return list;
+};
