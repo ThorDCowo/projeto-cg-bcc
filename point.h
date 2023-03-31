@@ -14,7 +14,8 @@ public:
 
     void draw(QPainter &painter);
     void translation(int dx, int dy);
-
+    void scale(float px, float py);
+    void rotation(int teta);
 };
 
 #endif // POINT_H

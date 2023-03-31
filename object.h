@@ -21,6 +21,7 @@ public:
     void nothing();
     virtual void draw(QPainter &painter)=0;
     virtual void translation(int dx, int dy)=0;
+    virtual void scale(float px, float py)=0;
 
     inline QString getName()const { return name; }
     inline QList<std::pair<int,int>> getPontos()const { return this->pointsList; }

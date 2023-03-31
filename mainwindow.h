@@ -21,6 +21,8 @@ public slots:
 private slots:
     void on_translationButton_clicked();
 
+    void on_scaleButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

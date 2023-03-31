@@ -12,3 +12,13 @@ void Point::translation(int dx, int dy)
 {
     pointsList[0] = pair<int, int>(pointsList[0].first + dx, pointsList[0].second + dy);
 }
+
+void Point::scale(float px, float py)
+{
+    
+}
+
+void Point::rotation(int teta)
+{
+    
+}
