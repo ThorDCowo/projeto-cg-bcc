@@ -19,10 +19,10 @@ void Rect::draw(QPainter &painter)
 
 void Rect::translation(int dx, int dy)
 {
-    double aux, x2, y2;
-
-    getCoords(&aux, &aux, &x2, &y2);
-    setCoords(x()+dx, y()+dy, x2+dx, y2+dy);
+    pointsList[0] = pair<int, int>(pointsList[0].first + dx, pointsList[0].second + dy);
+    pointsList[1] = pair<int, int>(pointsList[1].first + dx, pointsList[1].second + dy);
+    pointsList[2] = pair<int, int>(pointsList[2].first + dx, pointsList[2].second + dy);
+    pointsList[3] = pair<int, int>(pointsList[3].first + dx, pointsList[3].second + dy);
 }
 
 void Rect::scale(float px, float py)

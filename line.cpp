@@ -11,7 +11,8 @@ void Line::draw(QPainter &painter)
 
 void Line::translation(int dx, int dy)
 {
-    setLine(x1()+dx, y1()+dy, x2()+dx, y2()+dy);
+    pointsList[0] = pair<int, int>(pointsList[0].first + dx, pointsList[0].second + dy);
+    pointsList[1] = pair<int, int>(pointsList[1].first + dx, pointsList[1].second + dy);
 }
 
 void Line::scale(float px, float py)

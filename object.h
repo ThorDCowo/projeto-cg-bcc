@@ -7,6 +7,8 @@
 #include <QPainter>
 #include <QList>
 
+using namespace std;
+
 class Object
 {
 
@@ -18,6 +20,7 @@ public:
 
     void nothing();
     virtual void draw(QPainter &painter)=0;
+    virtual void translation(int dx, int dy)=0;
 
     inline QString getName()const { return name; }
     inline QList<std::pair<int,int>> getPontos()const { return this->pointsList; }

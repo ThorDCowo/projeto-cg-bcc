@@ -13,6 +13,7 @@ public:
     {}
 
     void draw(QPainter &painter);
+    void translation(int dx, int dy);
 
 };
 
