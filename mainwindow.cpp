@@ -1,5 +1,7 @@
 #include <iostream>
 #include <QList>
+#include <QListWidgetItem>
+#include <QBrush>
 
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
@@ -11,8 +13,6 @@
 #include "object_list_factory.h"
 using namespace std;
 
-
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -21,6 +21,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     QList<Object*> list = ObjectListFactory::createObjectList();
     ui->frame->setObjectList(list);
+
+    for (int i = 0; i < list.size(); i++){
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setText(list[i]->getName());
+        item->setCheckState(Qt::Unchecked);
+        item->setForeground(Qt::white);
+
+        ui->objectList->addItem(item);
+    }
 }
 
 MainWindow::~MainWindow()
