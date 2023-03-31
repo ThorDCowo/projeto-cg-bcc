@@ -14,22 +14,23 @@ class Object
 
 public:
 
-    Object(const QString &name, const QList<std::pair<int,int>> &pointsList, Qt::GlobalColor color):
+    Object(const QString &name, const QList<std::pair<float,float>> &pointsList, Qt::GlobalColor color):
         name(name), pointsList(pointsList), color(color)
     {}
 
     void nothing();
     virtual void draw(QPainter &painter)=0;
-    virtual void translation(int dx, int dy)=0;
-    virtual void scale(float px, float py)=0;
+    virtual void translate(float dx, float dy)=0;
+    virtual void scale(float factor)=0;
+    virtual void rotate(float teta)=0;
 
     inline QString getName()const { return name; }
-    inline QList<std::pair<int,int>> getPontos()const { return this->pointsList; }
+    inline QList<std::pair<float,float>> getPontos()const { return this->pointsList; }
     inline Qt::GlobalColor getColor()const { return color; }
 
 protected:
     QString name; //id do objeto instancido
-    QList<std::pair<int,int>> pointsList;
+    QList<std::pair<float,float>> pointsList;
     Qt::GlobalColor color;
 };
 

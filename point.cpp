@@ -8,17 +8,17 @@ void Point::draw(QPainter &painter)
     cout << "passou aqui-> Point::draw" << endl;
 }
 
-void Point::translation(int dx, int dy)
+void Point::translate(float dx, float dy)
 {
-    pointsList[0] = pair<int, int>(pointsList[0].first + dx, pointsList[0].second + dy);
+    pointsList[0] = pair<float, float>(pointsList[0].first + dx, pointsList[0].second + dy);
 }
 
-void Point::scale(float px, float py)
+void Point::scale(float factor)
 {
-    
+
 }
 
-void Point::rotation(int teta)
+void Point::rotate(float teta)
 {
     
 }

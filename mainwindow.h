@@ -23,6 +23,8 @@ private slots:
 
     void on_scaleButton_clicked();
 
+    void on_rotationButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

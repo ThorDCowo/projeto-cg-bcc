@@ -162,11 +162,14 @@
    <widget class="Screen" name="frame" native="true">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>20</y>
-      <width>761</width>
-      <height>441</height>
+      <x>270</x>
+      <y>0</y>
+      <width>811</width>
+      <height>501</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #2c2a3c;</string>
     </property>
    </widget>
   </widget>
@@ -176,7 +179,7 @@
      <x>0</x>
      <y>0</y>
      <width>1080</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
