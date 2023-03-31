@@ -138,16 +138,6 @@
       <string notr="true">background: opacity(0.3)</string>
      </property>
     </widget>
-    <widget class="QSpinBox" name="spinBox">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>340</y>
-       <width>42</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QListWidget" name="objectList">
      <property name="geometry">
       <rect>

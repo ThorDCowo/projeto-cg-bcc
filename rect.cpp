@@ -63,18 +63,16 @@ void Rect::scale(float factor)
 
 void Rect::rotate(float teta)
 {
-    /*
-    double aux, x2, y2;
-    getCoords(&aux, &aux, &x2, &y2);
+    pair<float, float> center = barycenter();
+    translate(-center.first, -center.second);
 
-    float auxX = (x() + x2) / 2;
-    float auxY = (y() + y2) / 2;
+    float radians = qDegreesToRadians(teta);
+    for(qsizetype i = 0; i < pointsList.size(); i++){
+        pointsList[i] = pair<float, float>(pointsList[i].first * qCos(radians) - (pointsList[i].second * qSin(radians)), 
+                                        pointsList[i].first * qSin(radians) + (pointsList[i].second * qCos(radians)));
+    }
 
-    setCoords(auxX-x(), auxY-y(), auxX-x2, auxY-y2);
-    //cout << qRadiansToDegrees(qSin(teta));
-    setCoords((x()*qRadiansToDegrees(qCos(teta))-(y()*qRadiansToDegrees(qSin(teta)))), (x()*qRadiansToDegrees(qSin(teta))+(y()*qRadiansToDegrees(qCos(teta)))), (x2*qRadiansToDegrees(qCos(teta))-(y2*qRadiansToDegrees(qSin(teta)))), (x2*qRadiansToDegrees(qSin(teta))+(y2*qRadiansToDegrees(qCos(teta)))));
-    setCoords(x()+auxY, y()+auxX, x2+auxY, y2+auxX);
-    */
+    translate(center.first, center.second);
 }
 
 /*

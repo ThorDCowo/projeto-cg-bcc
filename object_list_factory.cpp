@@ -45,5 +45,16 @@ QList<Object*> ObjectListFactory::createObjectList()
     list.append(new Rect(QString("Retangulo Amarelo"), QList(points), Qt::yellow));
     points.clear();
 
+    points.append(pair<float, float>(60, 190));
+    points.append(pair<float, float>(130, 110));
+    points.append(pair<float, float>(20, 90));
+    points.append(pair<float, float>(20, 70));
+    points.append(pair<float, float>(60, 170));
+    points.append(pair<float, float>(50, 70));
+    points.append(pair<float, float>(80, 40));
+
+    list.append(new Rect(QString("Poligono Branco"), QList(points), Qt::white));
+    points.clear();
+
     return list;
 };

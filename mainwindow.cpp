@@ -125,7 +125,7 @@ void transtateObject(Object* object) {
 }
 
 void rotateObject(Object* object) {
-    object->rotate(20.0);
+    object->rotate(45.0);
 }
 
 void scaleObject(Object* object) {
