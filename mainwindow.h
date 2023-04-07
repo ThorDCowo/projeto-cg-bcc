@@ -21,6 +21,20 @@ public slots:
 private slots:
     void on_translationButton_clicked();
 
+    void on_scaleButton_clicked();
+
+    void on_rotationButton_clicked();
+
+    void on_toolButton_3_clicked();
+
+    void on_upButton_clicked();
+
+    void on_rightButton_clicked();
+
+    void on_downButton_clicked();
+
+    void on_leftButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

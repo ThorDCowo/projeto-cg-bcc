@@ -23,9 +23,9 @@
    <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>-10</x>
-      <y>-20</y>
-      <width>281</width>
+      <x>0</x>
+      <y>0</y>
+      <width>280</width>
       <height>601</height>
      </rect>
     </property>
@@ -35,12 +35,279 @@
     <property name="styleSheet">
      <string notr="true">background-color: #323046</string>
     </property>
+    <widget class="QListWidget" name="objectList">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>250</width>
+       <height>191</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(190, 190, 190);</string>
+     </property>
+    </widget>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>250</y>
+       <width>250</width>
+       <height>215</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: (:/:/icons/border.jpg)color: rgb(190, 190, 190);</string>
+     </property>
+     <property name="tabShape">
+      <enum>QTabWidget::Triangular</enum>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="tab_show">
+      <attribute name="title">
+       <string>Exibição</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_control">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <attribute name="title">
+       <string>Controles</string>
+      </attribute>
+      <widget class="QDial" name="dial">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>25</y>
+         <width>60</width>
+         <height>60</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>155</y>
+         <width>200</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QToolButton" name="upButton">
+       <property name="geometry">
+        <rect>
+         <x>165</x>
+         <y>35</y>
+         <width>25</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(71, 69, 100)</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons.qrc">
+         <normaloff>:/:/icons/up_arrow.png</normaloff>:/:/icons/up_arrow.png</iconset>
+       </property>
+      </widget>
+      <widget class="QToolButton" name="downButton">
+       <property name="geometry">
+        <rect>
+         <x>165</x>
+         <y>95</y>
+         <width>25</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(71, 69, 100)</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons.qrc">
+         <normaloff>:/:/icons/down_arrow.png</normaloff>:/:/icons/down_arrow.png</iconset>
+       </property>
+      </widget>
+      <widget class="QToolButton" name="rightButton">
+       <property name="geometry">
+        <rect>
+         <x>195</x>
+         <y>65</y>
+         <width>25</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(71, 69, 100)</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons.qrc">
+         <normaloff>:/:/icons/right_arrow.png</normaloff>:/:/icons/right_arrow.png</iconset>
+       </property>
+      </widget>
+      <widget class="QToolButton" name="leftButton">
+       <property name="geometry">
+        <rect>
+         <x>135</x>
+         <y>65</y>
+         <width>25</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(71, 69, 100)</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="icons.qrc">
+         <normaloff>:/:/icons/left_arrow.png</normaloff>:/:/icons/left_arrow.png</iconset>
+       </property>
+      </widget>
+      <widget class="QLabel" name="RotationLabel">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>10</y>
+         <width>70</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(190, 190, 190)</string>
+       </property>
+       <property name="text">
+        <string>Rotacionar</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="translationButton">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>10</y>
+         <width>70</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(190, 190, 190)</string>
+       </property>
+       <property name="text">
+        <string>Transladar</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="escaleButton">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>130</y>
+         <width>70</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(190, 190, 190)</string>
+       </property>
+       <property name="text">
+        <string>Escalar</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="label_degree">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>90</y>
+         <width>40</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: white</string>
+       </property>
+       <property name="text">
+        <string>360</string>
+       </property>
+       <property name="maxLength">
+        <number>3</number>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+    </widget>
     <widget class="QLineEdit" name="lineEdit">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>30</y>
-       <width>113</width>
+       <x>170</x>
+       <y>20</y>
+       <width>71</width>
        <height>20</height>
       </rect>
      </property>
@@ -51,122 +318,40 @@
       <string>inicial</string>
      </property>
     </widget>
-    <widget class="QListView" name="listView">
+    <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>60</y>
-       <width>251</width>
-       <height>391</height>
+       <y>20</y>
+       <width>125</width>
+       <height>20</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">padding: 200px</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="rotationButton">
-     <property name="geometry">
-      <rect>
-       <x>26</x>
-       <y>421</y>
-       <width>75</width>
-       <height>24</height>
-      </rect>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+      </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background: opacity(0.3);
-</string>
+      <string notr="true">color: rgb(190, 190, 190)</string>
      </property>
      <property name="text">
-      <string>Rotação</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="scaleButton">
-     <property name="geometry">
-      <rect>
-       <x>109</x>
-       <y>421</y>
-       <width>75</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background: opacity(0.3);
-</string>
-     </property>
-     <property name="text">
-      <string>Escala</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="translationButton">
-     <property name="geometry">
-      <rect>
-       <x>191</x>
-       <y>421</y>
-       <width>75</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background: opacity(0.3);
-</string>
-     </property>
-     <property name="text">
-      <string>Translação</string>
-     </property>
-    </widget>
-    <widget class="QDial" name="dial">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>310</y>
-       <width>50</width>
-       <height>64</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>390</y>
-       <width>71</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background: opacity(0.3)</string>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="spinBox">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>340</y>
-       <width>42</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QListWidget" name="objectList">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>70</y>
-       <width>231</width>
-       <height>231</height>
-      </rect>
+      <string>Lista de Objetos</string>
      </property>
     </widget>
    </widget>
    <widget class="Screen" name="frame" native="true">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>20</y>
-      <width>761</width>
-      <height>441</height>
+      <x>270</x>
+      <y>0</y>
+      <width>811</width>
+      <height>501</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(44, 42, 60);</string>
     </property>
    </widget>
   </widget>
@@ -190,7 +375,9 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>slot1(int)</slot>

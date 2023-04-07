@@ -10,15 +10,6 @@ Screen::Screen(QWidget *parent)
     
 }
 
-
-void Screen::setObjectList(QList<Object*> list) {
-    this->list = list; 
-}
-
-QList<Object*> Screen::getObjectList() {
-    return this->list; 
-}
-
 void Screen::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
@@ -33,3 +24,18 @@ void Screen::paintEvent(QPaintEvent *event)
     }
 }
 
+QList<Object*> Screen::getObjectList() {
+    return this->list; 
+}
+
+void Screen::setObjectList(QList<Object*> list) {
+    this->list = list; 
+}
+
+void Screen::setWidth(int width){
+    this->width = width;
+}
+
+void Screen::setHeight(int height){
+    this->height = height;
+}

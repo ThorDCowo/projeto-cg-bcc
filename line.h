@@ -7,14 +7,15 @@
 class Line: public Object, public QLineF
 {
 public:
-    Line(const QString& name, const QList<std::pair<int,int>> &pointsList, Qt::GlobalColor color=Qt::black):
+    Line(const QString& name, const QList<std::pair<float,float>> &pointsList, Qt::GlobalColor color=Qt::black):
         Object(name, pointsList, color)
     {}
 
     void draw(QPainter &painter);
-    void translation(int dx, int dy);
-    void scale(float px, float py);
-    void rotation(int teta);
+    pair<float, float> barycenter();
+    void translate(float dx, float dy);
+    void scale(float factor);
+    void rotate(float teta);
 };
 
 #endif // LINE_H

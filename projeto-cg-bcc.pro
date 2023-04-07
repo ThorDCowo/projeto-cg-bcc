@@ -16,8 +16,7 @@ SOURCES += \
     object_list_factory.cpp \
     point.cpp \
     rect.cpp \
-    screen.cpp \
-    window.cpp
+    screen.cpp
 
 HEADERS += \
     line.h \
@@ -26,8 +25,7 @@ HEADERS += \
     object_list_factory.h \
     point.h \
     rect.h \
-    screen.h \
-    window.h
+    screen.h
 
 FORMS += \
     mainwindow.ui
@@ -36,3 +34,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icons.qrc
