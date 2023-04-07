@@ -157,13 +157,11 @@ void MainWindow::on_rightButton_clicked()
     update();
 }
 
-
 void MainWindow::on_downButton_clicked()
 {
     operateInCheckedObject(ui, transtateObjectDown);
     update();
 }
-
 
 void MainWindow::on_leftButton_clicked()
 {
@@ -171,3 +169,6 @@ void MainWindow::on_leftButton_clicked()
     update();
 }
 
+void scaleObject(Object* object) {
+    object->scale(0.2);
+}
