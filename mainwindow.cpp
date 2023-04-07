@@ -62,8 +62,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::slot1(int v)
 {
-    cout << "dentro do MainWindow::slot1" << endl;
-    ui->lineEdit->setText(QString("valor lido: ").append(QString::number(v)));
 
 }
 

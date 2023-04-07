@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1080</width>
-    <height>517</height>
+    <width>1050</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>280</width>
+      <width>250</width>
       <height>601</height>
      </rect>
     </property>
@@ -38,16 +38,22 @@
     <widget class="QListWidget" name="objectList">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>250</width>
-       <height>191</height>
+       <x>50</x>
+       <y>35</y>
+       <width>150</width>
+       <height>180</height>
       </rect>
      </property>
      <property name="font">
       <font>
        <family>Times New Roman</family>
       </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
      </property>
      <property name="styleSheet">
       <string notr="true">color: rgb(190, 190, 190);</string>
@@ -57,8 +63,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>250</y>
-       <width>250</width>
+       <y>230</y>
+       <width>230</width>
        <height>215</height>
       </rect>
      </property>
@@ -70,18 +76,344 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">border: (:/:/icons/border.jpg)color: rgb(190, 190, 190);</string>
+      <string notr="true">color: rgb(190, 190, 190);
+gridline-color: rgb(190, 190, 190);</string>
      </property>
      <property name="tabShape">
       <enum>QTabWidget::Triangular</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_show">
       <attribute name="title">
        <string>Exibição</string>
       </attribute>
+      <widget class="QLabel" name="windowLabel">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>10</y>
+         <width>70</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(190, 190, 190);</string>
+       </property>
+       <property name="text">
+        <string>Window</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="windowButton">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>70</y>
+         <width>70</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Aplicar</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="windowWidthLabel">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>40</y>
+         <width>50</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Largura :</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="windowHeightLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>40</y>
+         <width>50</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="windowHeightLabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>50</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Altura:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="windowWidthLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>40</y>
+         <width>50</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="windowPointLabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>50</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Centro:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="windowYLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>117</x>
+         <y>70</y>
+         <width>23</width>
+         <height>16</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="windowXLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>77</x>
+         <y>70</y>
+         <width>23</width>
+         <height>16</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="windowYLabel">
+       <property name="geometry">
+        <rect>
+         <x>105</x>
+         <y>70</y>
+         <width>10</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Y</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="windowXLabel">
+       <property name="geometry">
+        <rect>
+         <x>65</x>
+         <y>70</y>
+         <width>10</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>X</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="viewportLabel">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>110</y>
+         <width>70</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Viewport</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="viewportButton">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>160</y>
+         <width>70</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Aplicar</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="viewportHeightLabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>50</width>
+         <height>15</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Altura :</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="viewportHeightLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>140</y>
+         <width>50</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="viewportWidthLabel">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>140</y>
+         <width>50</width>
+         <height>15</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Largura :</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="viewportWidthLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>140</y>
+         <width>50</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab_control">
       <property name="font">
@@ -97,8 +429,8 @@
       <widget class="QDial" name="dial">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>25</y>
+         <x>35</x>
+         <y>35</y>
          <width>60</width>
          <height>60</height>
         </rect>
@@ -109,7 +441,7 @@
         <rect>
          <x>20</x>
          <y>155</y>
-         <width>200</width>
+         <width>190</width>
          <height>20</height>
         </rect>
        </property>
@@ -126,7 +458,7 @@
       <widget class="QToolButton" name="upButton">
        <property name="geometry">
         <rect>
-         <x>165</x>
+         <x>155</x>
          <y>35</y>
          <width>25</width>
          <height>25</height>
@@ -146,7 +478,7 @@
       <widget class="QToolButton" name="downButton">
        <property name="geometry">
         <rect>
-         <x>165</x>
+         <x>155</x>
          <y>95</y>
          <width>25</width>
          <height>25</height>
@@ -166,7 +498,7 @@
       <widget class="QToolButton" name="rightButton">
        <property name="geometry">
         <rect>
-         <x>195</x>
+         <x>185</x>
          <y>65</y>
          <width>25</width>
          <height>25</height>
@@ -186,7 +518,7 @@
       <widget class="QToolButton" name="leftButton">
        <property name="geometry">
         <rect>
-         <x>135</x>
+         <x>125</x>
          <y>65</y>
          <width>25</width>
          <height>25</height>
@@ -216,6 +548,7 @@
         <font>
          <family>Times New Roman</family>
          <pointsize>10</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">
@@ -231,7 +564,7 @@
       <widget class="QLabel" name="translationButton">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>130</x>
          <y>10</y>
          <width>70</width>
          <height>20</height>
@@ -241,6 +574,7 @@
         <font>
          <family>Times New Roman</family>
          <pointsize>10</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">
@@ -256,7 +590,7 @@
       <widget class="QLabel" name="escaleButton">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>80</x>
          <y>130</y>
          <width>70</width>
          <height>20</height>
@@ -266,6 +600,7 @@
         <font>
          <family>Times New Roman</family>
          <pointsize>10</pointsize>
+         <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">
@@ -281,9 +616,9 @@
       <widget class="QLineEdit" name="label_degree">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>90</y>
-         <width>40</width>
+         <x>50</x>
+         <y>105</y>
+         <width>30</width>
          <height>20</height>
         </rect>
        </property>
@@ -308,28 +643,12 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLabel" name="listLabel">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>20</y>
-       <width>71</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white</string>
-     </property>
-     <property name="text">
-      <string>inicial</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>125</width>
+       <x>75</x>
+       <y>10</y>
+       <width>100</width>
        <height>20</height>
       </rect>
      </property>
@@ -345,15 +664,18 @@
      <property name="text">
       <string>Lista de Objetos</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </widget>
    <widget class="Screen" name="frame" native="true">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>0</y>
-      <width>811</width>
-      <height>501</height>
+      <x>260</x>
+      <y>10</y>
+      <width>780</width>
+      <height>440</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -366,7 +688,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1080</width>
+     <width>1050</width>
      <height>21</height>
     </rect>
    </property>
