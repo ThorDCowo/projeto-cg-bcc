@@ -6,16 +6,6 @@ using namespace std;
 
 void Rect::draw(QPainter &painter)
 {
-    
-    // painter.drawLine(pointsList[0].first, pointsList[0].second,
-    //                  pointsList[1].first, pointsList[1].second);
-    // painter.drawLine(pointsList[1].first, pointsList[1].second,
-    //                  pointsList[2].first, pointsList[2].second);
-    // painter.drawLine(pointsList[2].first, pointsList[2].second,
-    //                  pointsList[3].first, pointsList[3].second);
-    // painter.drawLine(pointsList[3].first, pointsList[3].second,
-    //                  pointsList[0].first, pointsList[0].second);
-    
     for(qsizetype i = 0; i < pointsList.size(); i++){
         if(i == pointsList.size() - 1) {
             painter.drawLine(pointsList[i].first, pointsList[i].second,

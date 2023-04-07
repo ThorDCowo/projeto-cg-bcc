@@ -17,11 +17,7 @@ using namespace std;
 
 float MOVE_SPEED = 20.0;
 
-void executeOperationInList(
-    QList<QListWidgetItem*> checked, 
-    QList<Object*> list,
-    void (*cb)(Object*)
-);
+QList<QListWidgetItem*> filterListWidgetItemChecked(QListWidget* listWidget);
 void transtateObjectUp(Object* object);
 void transtateObjectDown(Object* object);
 void transtateObjectLeft(Object* object);
@@ -30,10 +26,14 @@ void transtateObjectRight(Object* object);
 void rotateObject(Object* object);
 void scaleObject(Object* object);
 
-QList<QListWidgetItem*> filterListWidgetItemChecked(QListWidget* listWidget);
 void operateInCheckedObject(
     Ui::MainWindow* ui, 
-    void (*cb)(Object*)
+    function<void(Object*)>operation
+);
+void executeOperationInList(
+    QList<QListWidgetItem*> checked, 
+    QList<Object*> list,
+    function<void(Object*)>operation
 );
 
 MainWindow::MainWindow(QWidget *parent)
@@ -67,21 +67,9 @@ void MainWindow::slot1(int v)
 
 }
 
-void MainWindow::on_scaleButton_clicked()
-{
-    operateInCheckedObject(ui, scaleObject);
-    update();
-}
-
-void MainWindow::on_rotationButton_clicked()
-{
-    operateInCheckedObject(ui, rotateObject);
-    update();
-}
-
 void operateInCheckedObject(
     Ui::MainWindow* ui, 
-    void (*cb)(Object*)
+    function<void(Object*)>operation
 ) {
     QList<Object*> objectList = ui->frame->getObjectList();
     QList<QListWidgetItem*> checked = filterListWidgetItemChecked(ui->objectList); 
@@ -89,7 +77,7 @@ void operateInCheckedObject(
     executeOperationInList(
         checked,
         objectList,
-        cb
+        operation
     );
 
     ui->frame->setObjectList(objectList);
@@ -110,12 +98,12 @@ QList<QListWidgetItem*> filterListWidgetItemChecked(QListWidget* listWidget) {
 void executeOperationInList(
     QList<QListWidgetItem*> checked, 
     QList<Object*> list,
-    void (*operationCallback)(Object*)
-) {
+    function<void(Object*)>operation)
+ {
     for(qsizetype i = 0; i < checked.length(); i++){
         for (qsizetype j = 0; j < list.length(); j++){
             if(checked.at(i)->text().compare(list[j]->getName(), Qt::CaseInsensitive) == 0){
-                operationCallback(list[j]);
+                operation(list[j]);
             }
         }
     }
@@ -147,28 +135,39 @@ void scaleObject(Object* object) {
 
 void MainWindow::on_upButton_clicked()
 {
-    operateInCheckedObject(ui, transtateObjectUp);
+    operateInCheckedObject(ui, &transtateObjectUp);
     update();
 }
 
 void MainWindow::on_rightButton_clicked()
 {
-    operateInCheckedObject(ui, transtateObjectRight);
+    operateInCheckedObject(ui, &transtateObjectRight);
     update();
 }
 
 void MainWindow::on_downButton_clicked()
 {
-    operateInCheckedObject(ui, transtateObjectDown);
+    operateInCheckedObject(ui, &transtateObjectDown);
     update();
 }
 
 void MainWindow::on_leftButton_clicked()
 {
-    operateInCheckedObject(ui, transtateObjectLeft);
+    operateInCheckedObject(ui, &transtateObjectLeft);
     update();
 }
 
-void scaleObject(Object* object) {
-    object->scale(0.2);
+
+void MainWindow::on_scaleSlider_valueChanged(int value)
+{
+    float factor = value/100;
+    operateInCheckedObject(
+        ui, 
+        [factor](Object* object) -> void {
+            cout << "factor " << factor << endl;
+            object->scale(factor);
+        }
+    );
+    update();
 }
+
