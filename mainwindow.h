@@ -15,9 +15,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-    void slot1(int);
-
 private slots:
 
     void on_upButton_clicked();
@@ -29,6 +26,10 @@ private slots:
     void on_leftButton_clicked();
 
     void on_scaleSlider_valueChanged(int value);
+
+    void on_rotationDial_sliderMoved(int position);
+
+    void on_viewportButton_clicked(int width, int height);
 
 private:
     Ui::MainWindow *ui;

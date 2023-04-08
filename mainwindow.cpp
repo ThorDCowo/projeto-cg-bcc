@@ -18,22 +18,23 @@ using namespace std;
 float MOVE_SPEED = 20.0;
 
 QList<QListWidgetItem*> filterListWidgetItemChecked(QListWidget* listWidget);
-void transtateObjectUp(Object* object);
-void transtateObjectDown(Object* object);
-void transtateObjectLeft(Object* object);
-void transtateObjectRight(Object* object);
-
-void rotateObject(Object* object);
-void scaleObject(Object* object);
+void translateObjectUp(Object* object);
+void translateObjectDown(Object* object);
+void translateObjectLeft(Object* object);
+void translateObjectRight(Object* object);
 
 void operateInCheckedObject(
     Ui::MainWindow* ui, 
-    function<void(Object*)>operation
+    function<void(Object*)> operation
 );
 void executeOperationInList(
     QList<QListWidgetItem*> checked, 
     QList<Object*> list,
-    function<void(Object*)>operation
+    function<void(Object*)> operation
+);
+void operateInViewport(
+    Ui::MainWindow* ui, 
+    function<void(Screen*)> screen
 );
 
 MainWindow::MainWindow(QWidget *parent)
@@ -43,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     QList<Object*> list = ObjectListFactory::createObjectList();
-    ui->frame->setObjectList(list);
+    ui->screen->setObjectList(list);
 
     for (int i = 0; i < list.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
@@ -60,16 +61,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::slot1(int v)
-{
-
-}
-
 void operateInCheckedObject(
     Ui::MainWindow* ui, 
     function<void(Object*)>operation
 ) {
-    QList<Object*> objectList = ui->frame->getObjectList();
+    QList<Object*> objectList = ui->screen->getObjectList();
     QList<QListWidgetItem*> checked = filterListWidgetItemChecked(ui->objectList); 
 
     executeOperationInList(
@@ -78,7 +74,7 @@ void operateInCheckedObject(
         operation
     );
 
-    ui->frame->setObjectList(objectList);
+    ui->screen->setObjectList(objectList);
 }
 
 QList<QListWidgetItem*> filterListWidgetItemChecked(QListWidget* listWidget) {
@@ -107,63 +103,84 @@ void executeOperationInList(
     }
 }
 
-void transtateObjectUp(Object* object) {
-    object->translate(0, MOVE_SPEED);
+void operateInViewport(
+    Ui::MainWindow* ui, 
+    function<void(Screen*)>screen
+) {
+
+    //ui->screen;
 }
 
-void transtateObjectDown(Object* object) {
+void translateObjectUp(Object* object) {
     object->translate(0, -MOVE_SPEED);
 }
 
-void transtateObjectLeft(Object* object) {
+void translateObjectDown(Object* object) {
+    object->translate(0, MOVE_SPEED);
+}
+
+void translateObjectLeft(Object* object) {
     object->translate(-MOVE_SPEED, 0);
 }
 
-void transtateObjectRight(Object* object) {
+void translateObjectRight(Object* object) {
     object->translate(MOVE_SPEED, 0);
-}
-
-void rotateObject(Object* object) {
-    object->rotate(45.0);
-}
-
-void scaleObject(Object* object) {
-    object->scale(0.2);
 }
 
 void MainWindow::on_upButton_clicked()
 {
-    operateInCheckedObject(ui, &transtateObjectUp);
+    operateInCheckedObject(ui, &translateObjectUp);
     update();
 }
 
 void MainWindow::on_rightButton_clicked()
 {
-    operateInCheckedObject(ui, &transtateObjectRight);
+    operateInCheckedObject(ui, &translateObjectRight);
     update();
 }
 
 void MainWindow::on_downButton_clicked()
 {
-    operateInCheckedObject(ui, &transtateObjectDown);
+    operateInCheckedObject(ui, &translateObjectDown);
     update();
 }
 
 void MainWindow::on_leftButton_clicked()
 {
-    operateInCheckedObject(ui, &transtateObjectLeft);
+    operateInCheckedObject(ui, &translateObjectLeft);
     update();
 }
 
-
 void MainWindow::on_scaleSlider_valueChanged(int value)
 {
-    float factor = value/100;
     operateInCheckedObject(
         ui, 
-        [factor](Object* object) -> void {
-            cout << "factor " << factor << endl;
-            object->scale(factor);
+        [value](Object* object) -> void {
+            object->scale(value);
+        }
+    );
+    update();
+}
+
+void MainWindow::on_rotationDial_sliderMoved(int position)
+{
+    //cout << "position: " << position << endl;
+    operateInCheckedObject(
+        ui,
+        [position](Object* object) -> void {
+            object->rotate(position);
+        }
+    );
+    update();
+}
+
+void MainWindow::on_viewportButton_clicked(int width, int height)
+{
+    operateInViewport(
+        ui, 
+        [width, height](Screen* screen) -> void {
+            screen->setWidth(width);
+            screen->setHeight(height);
         }
     );
     update();

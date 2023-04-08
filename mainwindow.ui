@@ -10,8 +10,14 @@
     <height>500</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Times New Roman</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Computação Gráfica</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(113, 113, 113);</string>
@@ -41,7 +47,7 @@
        <x>50</x>
        <y>35</y>
        <width>150</width>
-       <height>180</height>
+       <height>210</height>
       </rect>
      </property>
      <property name="font">
@@ -63,7 +69,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>230</y>
+       <y>270</y>
        <width>230</width>
        <height>215</height>
       </rect>
@@ -342,7 +348,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>140</y>
+         <y>135</y>
          <width>50</width>
          <height>15</height>
         </rect>
@@ -354,7 +360,7 @@ gridline-color: rgb(190, 190, 190);</string>
         </font>
        </property>
        <property name="text">
-        <string>Altura :</string>
+        <string>Altura:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -364,7 +370,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>60</x>
-         <y>140</y>
+         <y>135</y>
          <width>50</width>
          <height>16</height>
         </rect>
@@ -380,7 +386,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>120</x>
-         <y>140</y>
+         <y>135</y>
          <width>50</width>
          <height>15</height>
         </rect>
@@ -392,7 +398,7 @@ gridline-color: rgb(190, 190, 190);</string>
         </font>
        </property>
        <property name="text">
-        <string>Largura :</string>
+        <string>Largura:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -402,7 +408,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>170</x>
-         <y>140</y>
+         <y>135</y>
          <width>50</width>
          <height>16</height>
         </rect>
@@ -426,14 +432,17 @@ gridline-color: rgb(190, 190, 190);</string>
       <attribute name="title">
        <string>Controles</string>
       </attribute>
-      <widget class="QDial" name="dial">
+      <widget class="QDial" name="rotationDial">
        <property name="geometry">
         <rect>
-         <x>35</x>
-         <y>35</y>
-         <width>60</width>
-         <height>60</height>
+         <x>15</x>
+         <y>30</y>
+         <width>100</width>
+         <height>100</height>
         </rect>
+       </property>
+       <property name="maximum">
+        <number>360</number>
        </property>
       </widget>
       <widget class="QSlider" name="scaleSlider">
@@ -613,12 +622,37 @@ gridline-color: rgb(190, 190, 190);</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLineEdit" name="label_degree">
+     </widget>
+     <widget class="QWidget" name="createTab">
+      <attribute name="title">
+       <string>Criar</string>
+      </attribute>
+      <widget class="QPushButton" name="createButton">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>105</y>
-         <width>30</width>
+         <x>150</x>
+         <y>100</y>
+         <width>50</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Criar</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="nameLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>85</x>
+         <y>20</y>
+         <width>100</width>
          <height>20</height>
         </rect>
        </property>
@@ -628,14 +662,216 @@ gridline-color: rgb(190, 190, 190);</string>
          <pointsize>10</pointsize>
         </font>
        </property>
-       <property name="styleSheet">
-        <string notr="true">color: white</string>
+      </widget>
+      <widget class="QLabel" name="nameLabel">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>20</y>
+         <width>40</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+         <bold>true</bold>
+        </font>
        </property>
        <property name="text">
-        <string>360</string>
+        <string>Nome:</string>
        </property>
-       <property name="maxLength">
-        <number>3</number>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="colorLabel">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>50</y>
+         <width>40</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Cor:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="ColorComboBox">
+       <property name="geometry">
+        <rect>
+         <x>85</x>
+         <y>50</y>
+         <width>100</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>Qt::red</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Qt::green</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Qt::blue</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Qt::white</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Qt::grey</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Qt::black</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Qt::yellow</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Qt::cyan</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="addPointButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>130</y>
+         <width>70</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Adicionar</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="pointXLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>110</y>
+         <width>23</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="pointYLineEdit">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>110</y>
+         <width>23</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="pointYLabel">
+       <property name="geometry">
+        <rect>
+         <x>68</x>
+         <y>110</y>
+         <width>10</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Y</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="dotsLabel">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>90</y>
+         <width>50</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Pontos</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="pointXLabel">
+       <property name="geometry">
+        <rect>
+         <x>28</x>
+         <y>110</y>
+         <width>10</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>X</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -669,13 +905,13 @@ gridline-color: rgb(190, 190, 190);</string>
      </property>
     </widget>
    </widget>
-   <widget class="Screen" name="frame" native="true">
+   <widget class="Screen" name="screen" native="true">
     <property name="geometry">
      <rect>
       <x>260</x>
       <y>10</y>
       <width>780</width>
-      <height>440</height>
+      <height>480</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -683,17 +919,6 @@ gridline-color: rgb(190, 190, 190);</string>
     </property>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1050</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <customwidgets>
   <customwidget>

@@ -43,6 +43,7 @@ void Rect::scale(float factor)
 {
     pair<float, float> center = barycenter();
     translate(-center.first, -center.second);
+    factor = factor/100;
     factor = 1 + factor;
 
     for(qsizetype i = 0; i < pointsList.size(); i++){

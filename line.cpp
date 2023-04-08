@@ -28,6 +28,7 @@ void Line::scale(float factor)
 {
     pair<float, float> center = barycenter();
     translate(-center.first, -center.second);
+    factor = factor/100;
     factor = 1 + factor;
     pointsList[0] = pair<float, float>(pointsList[0].first * factor, pointsList[0].second * factor);
     pointsList[1] = pair<float, float>(pointsList[1].first * factor, pointsList[1].second * factor);
