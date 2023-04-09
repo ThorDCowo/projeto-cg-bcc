@@ -18,7 +18,7 @@ public:
         name(name), pointsList(pointsList), color(color)
     {}
 
-    void normalize(int width, int height);//transformada de viewport
+    void normalize(int width, int height);
     pair<float, float> barycenter();
     void draw(QPainter &painter);
     virtual void translate(float dx, float dy)=0;

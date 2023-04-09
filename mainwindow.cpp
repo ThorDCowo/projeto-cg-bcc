@@ -103,14 +103,6 @@ void executeOperationInList(
     }
 }
 
-void operateInViewport(
-    Ui::MainWindow* ui, 
-    function<void(Screen*)>screen
-) {
-
-    //ui->screen;
-}
-
 void translateObjectUp(Object* object) {
     object->translate(0, -MOVE_SPEED);
 }
@@ -173,24 +165,50 @@ void MainWindow::on_rotationDial_sliderMoved(int position)
     );
     update();
 }
-/*
-void MainWindow::on_viewportButton_clicked()
+
+// Beta
+void MainWindow::on_windowButton_clicked(float centerX, float centerY, float axisX, float axisY)
 {
-    int width;
-    int height;
-    
-    operateInViewport(
-        ui, 
-        [width, height](Screen* screen) -> void {
-            screen->setWidth(width);
-            screen->setHeight(height);
+    // Aqui que definimos onde esta o centro do campo de visão e a inclinação
+    // Tem que recalcular as cordenadas normalizadas
+
+    pair<float, float> center;
+    center.first = centerX;
+    center.second = centerY;
+    pair<float, float> axis;
+    axis.first = axisX;
+    axis.second = axisY;
+
+    float teta = angle(center, axis);
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+
+    operateInCheckedObject(
+        ui,
+        [teta, width, height](Object* object) -> void {
+            pair<float, float> objectCenter = object->barycenter();
+            object->translate(-objectCenter.first, -objectCenter.second);
+            object->rotate(teta);
+            object->normalize(width, height);
         }
     );
-
-    width = ui->screen->getWidth();
-    cout << "largura:" << width << endl;
-    height = ui->screen->getHeight();
-    cout << "altura:" << height << endl;
     update();
-}*/
+}
+
+void MainWindow::on_viewportButton_clicked(int width, int height)
+{
+    // Transformada de Viewport
+    // Aqui que definimos o tamanho da janela de visualização
+
+    ui->screen->setWidth(width);
+    ui->screen->setHeight(height);
+
+    update();
+}
+
+float MainWindow::angle(pair<float, float> center, pair<float, float> axis)
+{
+    // Calculos do angulo de inclinação
+    return 45.0;
+}
 
