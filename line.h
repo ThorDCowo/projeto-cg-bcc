@@ -12,7 +12,6 @@ public:
     {}
 
     void draw(QPainter &painter);
-    pair<float, float> barycenter();
     void translate(float dx, float dy);
     void scale(float factor);
     void rotate(float teta);

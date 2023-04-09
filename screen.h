@@ -19,10 +19,14 @@ private:
 public:
     explicit Screen(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent *event) override;
-    QList<Object*> getObjectList();
-    void setObjectList(QList<Object*> list);
-    void setWidth(int width);
-    void setHeight(int height);
+    
+    QList<Object*> getObjectList() const {return this->list;};
+    int getWidth()const {return  this->width;};
+    int getHeight()const {return this->height;};
+    
+    void setObjectList(QList<Object*> list) {this->list = list;};
+    void setWidth(int width) {this->width = width;};
+    void setHeight(int height) {this->height = height;};
 
 public slots:
 

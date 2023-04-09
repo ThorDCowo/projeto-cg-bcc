@@ -18,18 +18,13 @@ public:
 private slots:
 
     void on_upButton_clicked();
-
     void on_rightButton_clicked();
-
     void on_downButton_clicked();
-
     void on_leftButton_clicked();
-
     void on_scaleSlider_valueChanged(int value);
-
     void on_rotationDial_sliderMoved(int position);
 
-    void on_viewportButton_clicked(int width, int height);
+    //void on_viewportButton_clicked();
 
 private:
     Ui::MainWindow *ui;

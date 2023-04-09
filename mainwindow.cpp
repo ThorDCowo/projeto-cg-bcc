@@ -173,9 +173,12 @@ void MainWindow::on_rotationDial_sliderMoved(int position)
     );
     update();
 }
-
-void MainWindow::on_viewportButton_clicked(int width, int height)
+/*
+void MainWindow::on_viewportButton_clicked()
 {
+    int width;
+    int height;
+    
     operateInViewport(
         ui, 
         [width, height](Screen* screen) -> void {
@@ -183,6 +186,11 @@ void MainWindow::on_viewportButton_clicked(int width, int height)
             screen->setHeight(height);
         }
     );
+
+    width = ui->screen->getWidth();
+    cout << "largura:" << width << endl;
+    height = ui->screen->getHeight();
+    cout << "altura:" << height << endl;
     update();
-}
+}*/
 
