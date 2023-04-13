@@ -30,6 +30,7 @@ public:
     inline QList<std::pair<float,float>> getNormalizePoints()const { return this->normalizePointsList; }
     inline Qt::GlobalColor getColor()const { return color; }
 
+    float linearInterpolation(float x, float x0, float x1, float y0, float y1);
 protected:
     QString name; //id do objeto instancido
     QList<std::pair<float,float>> pointsList;

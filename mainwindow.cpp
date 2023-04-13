@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <QList>
 #include <QListWidget>
 #include <QListWidgetItem>
@@ -16,18 +17,20 @@
 using namespace std;
 
 float MOVE_SPEED = 20.0;
+int WIDTH = 1;
+int HEIGHT = 1;
+pair <float,float> CENTER = {0,0};
+pair <float,float> Y_AXIS = {1,0};
 
-QList<QListWidgetItem*> filterListWidgetItemChecked(QListWidget* listWidget);
-void translateObjectUp(Object* object);
-void translateObjectDown(Object* object);
-void translateObjectLeft(Object* object);
-void translateObjectRight(Object* object);
+QList<QListWidgetItem*> getCheckedListWidgetItems(QListWidget* listWidget);
 
-void operateInCheckedObject(
+void operateInCheckedObjects(
     Ui::MainWindow* ui, 
     function<void(Object*)> operation
 );
-void executeOperationInList(
+
+void applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation);
+void applyOperationInCheckedObjects(
     QList<QListWidgetItem*> checked, 
     QList<Object*> list,
     function<void(Object*)> operation
@@ -61,23 +64,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void operateInCheckedObject(
+void operateInCheckedObjects(
     Ui::MainWindow* ui, 
     function<void(Object*)>operation
 ) {
     QList<Object*> objectList = ui->screen->getObjectList();
-    QList<QListWidgetItem*> checked = filterListWidgetItemChecked(ui->objectList); 
+    QList<QListWidgetItem*> checked = getCheckedListWidgetItems(ui->objectList); 
 
-    executeOperationInList(
-        checked,
-        objectList,
-        operation
-    );
+   applyOperationInCheckedObjects(
+    checked,
+    objectList,
+    operation
+   );
 
     ui->screen->setObjectList(objectList);
 }
 
-QList<QListWidgetItem*> filterListWidgetItemChecked(QListWidget* listWidget) {
+QList<QListWidgetItem*> getCheckedListWidgetItems(QListWidget* listWidget) {
     QList<QListWidgetItem*> checked;
     
     for(qsizetype i = 0; i < listWidget->count(); i++)
@@ -89,7 +92,7 @@ QList<QListWidgetItem*> filterListWidgetItemChecked(QListWidget* listWidget) {
     return checked;
 }
 
-void executeOperationInList(
+void applyOperationInCheckedObjects(
     QList<QListWidgetItem*> checked, 
     QList<Object*> list,
     function<void(Object*)>operation)
@@ -103,49 +106,47 @@ void executeOperationInList(
     }
 }
 
-void translateObjectUp(Object* object) {
-    object->translate(0, -MOVE_SPEED);
-}
-
-void translateObjectDown(Object* object) {
-    object->translate(0, MOVE_SPEED);
-}
-
-void translateObjectLeft(Object* object) {
-    object->translate(-MOVE_SPEED, 0);
-}
-
-void translateObjectRight(Object* object) {
-    object->translate(MOVE_SPEED, 0);
+void applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation) {
+    for (qsizetype i = 0; i < list.length(); i++) {
+        operation(list[i]);
+    }
 }
 
 void MainWindow::on_upButton_clicked()
 {
-    operateInCheckedObject(ui, &translateObjectUp);
+    operateInCheckedObjects(ui, [](Object* object) {
+        object->translate(0, -MOVE_SPEED);
+    });
     update();
 }
 
 void MainWindow::on_rightButton_clicked()
 {
-    operateInCheckedObject(ui, &translateObjectRight);
+    operateInCheckedObjects(ui, [](Object* object) {
+        object->translate(MOVE_SPEED, 0);
+    });
     update();
 }
 
 void MainWindow::on_downButton_clicked()
 {
-    operateInCheckedObject(ui, &translateObjectDown);
+    operateInCheckedObjects(ui, [](Object* object) {
+        object->translate(0, MOVE_SPEED);
+    });
     update();
 }
 
 void MainWindow::on_leftButton_clicked()
-{
-    operateInCheckedObject(ui, &translateObjectLeft);
+{    
+    operateInCheckedObjects(ui, [](Object* object) {
+       object->translate(-MOVE_SPEED, 0);
+    });
     update();
 }
 
 void MainWindow::on_scaleSlider_valueChanged(int value)
 {
-    operateInCheckedObject(
+    operateInCheckedObjects(
         ui, 
         [value](Object* object) -> void {
             object->scale(value);
@@ -157,7 +158,7 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
 void MainWindow::on_rotationDial_sliderMoved(int position)
 {
     //cout << "position: " << position << endl;
-    operateInCheckedObject(
+    operateInCheckedObjects(
         ui,
         [position](Object* object) -> void {
             object->rotate(position);
@@ -167,48 +168,90 @@ void MainWindow::on_rotationDial_sliderMoved(int position)
 }
 
 // Beta
-void MainWindow::on_windowButton_clicked(float centerX, float centerY, float axisX, float axisY)
+void MainWindow::on_windowButton_clicked()
 {
     // Aqui que definimos onde esta o centro do campo de visão e a inclinação
     // Tem que recalcular as cordenadas normalizadas
 
-    pair<float, float> center;
-    center.first = centerX;
-    center.second = centerY;
-    pair<float, float> axis;
-    axis.first = axisX;
-    axis.second = axisY;
-
-    float teta = angle(center, axis);
+    ui->screen->setCenter(CENTER);
+    float teta = angle(CENTER, Y_AXIS);
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
 
-    operateInCheckedObject(
-        ui,
+    applyOperationInObjects(
+        ui->screen->getObjectList(),
         [teta, width, height](Object* object) -> void {
             pair<float, float> objectCenter = object->barycenter();
             object->translate(-objectCenter.first, -objectCenter.second);
             object->rotate(teta);
             object->normalize(width, height);
+            object->translate(objectCenter.first, objectCenter.second);
+            object->translate(CENTER.first, CENTER.second);
         }
     );
     update();
 }
 
-void MainWindow::on_viewportButton_clicked(int width, int height)
+void MainWindow::on_viewportButton_clicked()
 {
     // Transformada de Viewport
     // Aqui que definimos o tamanho da janela de visualização
-
-    ui->screen->setWidth(width);
-    ui->screen->setHeight(height);
+    // cout << "TESTE" << WIDTH << "TESTE" << endl;
+    ui->screen->setWidth(WIDTH);
+    ui->screen->setHeight(HEIGHT);
 
     update();
 }
 
 float MainWindow::angle(pair<float, float> center, pair<float, float> axis)
 {
-    // Calculos do angulo de inclinação
-    return 45.0;
+    // Definir o valor da view up
+    // QVector2D Y(0, 1);         // Vetor que aponta para cima na cena
+    // QVector2D viewUp = ...;     // Vetor que representa a direcao "para cima" da camera em coordenadas de mundo
+
+    // Produto escalar entre os vetores Y e Vup
+    // float dotProduct = Y.x() * viewUp.x() + Y.y() * viewUp.y();
+
+    // Produto do comprimento dos dois vetores
+    // float lengthProduct = Y.length() * viewUp.length();
+    // float angleRadians = qAcos(dotProduct / lengthProduct);
+    // float angleDegrees = qRadiansToDegrees(angleRadians);
+    
+    return 0.0;
 }
 
+void MainWindow::on_viewportHeightLineEdit_textEdited(const QString &input)
+{ 
+    bool ok;
+    HEIGHT = input.toInt(&ok, 10);
+}
+
+void MainWindow::on_viewportWidthLineEdit_textEdited(const QString &input)
+{
+    bool ok;
+    WIDTH = input.toInt(&ok, 10);
+}
+
+void MainWindow::on_centerXLineEdit_textEdited(const QString &input)
+{
+    bool ok;
+    CENTER.first = input.toFloat(&ok);
+}
+
+void MainWindow::on_centerYLineEdit_textEdited(const QString &input)
+{
+    bool ok;
+    CENTER.second = input.toFloat(&ok);
+}
+
+void MainWindow::on_yAxisXLineEdit_textEdited(const QString &input)
+{
+    bool ok;
+    Y_AXIS.second = input.toFloat(&ok);
+}
+
+void MainWindow::on_yAxisYLineEdit_textEdited(const QString &input)
+{
+    bool ok;
+    Y_AXIS.second = input.toFloat(&ok);
+}

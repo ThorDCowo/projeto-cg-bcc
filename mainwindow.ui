@@ -125,7 +125,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>160</x>
-         <y>40</y>
+         <y>35</y>
          <width>55</width>
          <height>55</height>
         </rect>
@@ -243,7 +243,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>125</x>
-         <y>35</y>
+         <y>40</y>
          <width>25</width>
          <height>16</height>
         </rect>
@@ -253,7 +253,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>65</x>
-         <y>35</y>
+         <y>40</y>
          <width>10</width>
          <height>16</height>
         </rect>
@@ -275,7 +275,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>110</x>
-         <y>35</y>
+         <y>40</y>
          <width>10</width>
          <height>16</height>
         </rect>
@@ -297,7 +297,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>35</y>
+         <y>40</y>
          <width>25</width>
          <height>16</height>
         </rect>
@@ -307,7 +307,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>35</y>
+         <y>40</y>
          <width>50</width>
          <height>16</height>
         </rect>
@@ -325,107 +325,11 @@ gridline-color: rgb(190, 190, 190);</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLineEdit" name="xAxisYLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>125</x>
-         <y>60</y>
-         <width>25</width>
-         <height>16</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="xAxisLabel">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>60</y>
-         <width>50</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Eixo X:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="xAxisXLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>60</y>
-         <width>25</width>
-         <height>16</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="xAxisXLabel">
-       <property name="geometry">
-        <rect>
-         <x>65</x>
-         <y>60</y>
-         <width>10</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>X</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="xAxisYLabel">
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>60</y>
-         <width>10</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Y</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="yAxisYLineEdit">
        <property name="geometry">
         <rect>
          <x>125</x>
-         <y>85</y>
-         <width>25</width>
-         <height>16</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="yAxisXLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>85</y>
+         <y>70</y>
          <width>25</width>
          <height>16</height>
         </rect>
@@ -435,7 +339,7 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>85</y>
+         <y>70</y>
          <width>50</width>
          <height>16</height>
         </rect>
@@ -453,33 +357,21 @@ gridline-color: rgb(190, 190, 190);</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLabel" name="yAxisYLabel">
+      <widget class="QLineEdit" name="yAxisXLineEdit">
        <property name="geometry">
         <rect>
-         <x>110</x>
-         <y>85</y>
-         <width>10</width>
+         <x>80</x>
+         <y>70</y>
+         <width>25</width>
          <height>16</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Y</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
        </property>
       </widget>
       <widget class="QLabel" name="yAxisXLabel">
        <property name="geometry">
         <rect>
          <x>65</x>
-         <y>85</y>
+         <y>70</y>
          <width>10</width>
          <height>16</height>
         </rect>
@@ -492,6 +384,28 @@ gridline-color: rgb(190, 190, 190);</string>
        </property>
        <property name="text">
         <string>X</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="yAxisYLabel">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>70</y>
+         <width>10</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Y</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -1020,7 +934,7 @@ gridline-color: rgb(190, 190, 190);</string>
   <customwidget>
    <class>Screen</class>
    <extends>QWidget</extends>
-   <header>screen.h</header>
+   <header location="global">screen.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
