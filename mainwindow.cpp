@@ -167,7 +167,6 @@ void MainWindow::on_rotationDial_sliderMoved(int position)
     update();
 }
 
-// Beta
 void MainWindow::on_windowButton_clicked()
 {
     // Aqui que definimos onde esta o centro do campo de visão e a inclinação
@@ -182,19 +181,19 @@ void MainWindow::on_windowButton_clicked()
         ui->screen->getObjectList(),
         [teta, width, height](Object* object) -> void {
             pair<float, float> objectCenter = object->barycenter();
-            object->translate(-objectCenter.first, -objectCenter.second);
-            object->rotate(teta);
+            //object->translate(-objectCenter.first, -objectCenter.second);
+            object->rotateWorld(teta);
+            //object->translate(objectCenter.first, objectCenter.second);
             object->normalize(width, height);
-            object->translate(objectCenter.first, objectCenter.second);
-            object->translate(CENTER.first, CENTER.second);
+            //object->translate(CENTER.first, CENTER.second);
         }
-    );
+    );  
+
     update();
 }
 
 void MainWindow::on_viewportButton_clicked()
 {
-    // Transformada de Viewport
     // Aqui que definimos o tamanho da janela de visualização
     // cout << "TESTE" << WIDTH << "TESTE" << endl;
     ui->screen->setWidth(WIDTH);

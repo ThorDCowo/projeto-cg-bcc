@@ -20,8 +20,8 @@ void Screen::paintEvent(QPaintEvent *event)
     {
         painter.setPen(QPen(list[i]->getColor(), 2));
         printf(" %d \n", i);
-        cout << "Width to normalize: " << getWidth() << endl;
-        cout << "Height to normalize: " << getHeight() << endl;
+        //cout << "Width to normalize: " << getWidth() << endl;
+        //cout << "Height to normalize: " << getHeight() << endl;
         list[i]->normalize(getWidth(), getHeight());
         list[i]->draw(painter);
     }

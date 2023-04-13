@@ -12,13 +12,13 @@ QList<Object*> ObjectListFactory::createObjectList()
     QList<Object*> list;
     QList<pair<float,float>> points;
 
+    //Coordenadas de Mundo
     points.append(pair<float, float>(210, 210));
     points.append(pair<float, float>(410, 210));
     points.append(pair<float, float>(410, 410));
     points.append(pair<float, float>(210, 410));
     list.append(new Rect(QString("Retangulo Vermelho"), QList(points), Qt::red));
     points.clear();
-
 
     points.append(pair<float, float>(110, 110));
     points.append(pair<float, float>(150, 180));
@@ -31,7 +31,6 @@ QList<Object*> ObjectListFactory::createObjectList()
     points.append(pair<float, float>(900, 100));
     list.append(new Line(QString("Linha Verde"), QList(points), Qt::green));
     points.clear();
-
 
     points.append(pair<float, float>(120, 120));
     list.append(new Point(QString("Ponto Branco"), QList(points), Qt::white));

@@ -13,8 +13,8 @@ class Screen : public QFrame
     Q_OBJECT
 private:
     QList<Object*> list;
-    int width = 1920;
-    int height = 1080;
+    int width = 854;
+    int height = 480;
     pair<float, float> center;
 
 public:
@@ -28,7 +28,7 @@ public:
     void setObjectList(QList<Object*> list) {this->list = list;};
     void setWidth(int width) {this->width = width;};
     void setHeight(int height) {this->height = height;};
-    void setCenter(pair<float, float> center) {this->center = center;};
+    void setCenter(pair<float, float> center) {this->center.first = center.first; this->center.second = center.second;};
 
 public slots:
 
