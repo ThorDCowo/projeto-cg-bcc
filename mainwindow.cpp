@@ -17,8 +17,8 @@
 using namespace std;
 
 float MOVE_SPEED = 20.0;
-int WIDTH = 1;
-int HEIGHT = 1;
+int WIDTH = 854;  //inicialize with viewport size
+int HEIGHT = 480; //inicialize with viewport size
 pair <float,float> CENTER = {0,0};
 pair <float,float> Y_AXIS = {1,0};
 
@@ -86,7 +86,6 @@ QList<QListWidgetItem*> getCheckedListWidgetItems(QListWidget* listWidget) {
     for(qsizetype i = 0; i < listWidget->count(); i++)
         if(listWidget->item(i)->checkState()) {
             checked.append(listWidget->item(i));
-            cout << listWidget->item(i)->text().toStdString() << endl;
         }
 
     return checked;
@@ -157,7 +156,6 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
 
 void MainWindow::on_rotationDial_sliderMoved(int position)
 {
-    //cout << "position: " << position << endl;
     operateInCheckedObjects(
         ui,
         [position](Object* object) -> void {
@@ -194,8 +192,8 @@ void MainWindow::on_windowButton_clicked()
 
 void MainWindow::on_viewportButton_clicked()
 {
+    // Não Existe mais essa função
     // Aqui que definimos o tamanho da janela de visualização
-    // cout << "TESTE" << WIDTH << "TESTE" << endl;
     ui->screen->setWidth(WIDTH);
     ui->screen->setHeight(HEIGHT);
 

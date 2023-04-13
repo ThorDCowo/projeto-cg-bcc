@@ -7,7 +7,7 @@ using namespace std;
 void Rect::translate(float dx, float dy)
 {
     for(qsizetype i = 0; i < pointsList.size(); i++){
-        pointsList[i] = pair<float, float>(pointsList[i].first + dx, pointsList[i].second + dy);
+            pointsList[i] = pair<float, float>(pointsList[i].first + dx, pointsList[i].second + dy);
     }
 }
 

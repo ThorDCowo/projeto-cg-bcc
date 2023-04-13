@@ -22,7 +22,7 @@ public:
     pair<float, float> barycenter();
     void draw(QPainter &painter);
     void rotateWorld(float teta);
-    void transformToViewport(int viewportWidth, int viewportHeight);
+    void transformToViewport(pair<float, float> center);
     virtual void translate(float dx, float dy)=0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta)=0;
