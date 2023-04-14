@@ -48,17 +48,26 @@ void drawWorldPoints(QList<std::pair<float,float>> pointsList, QPainter &painter
     }
 }
 
-void Object::normalize(int windowWidth, int windowHeight)
+void Object::normalize(int windowWidth, int windowHeight, pair<float, float> center)
 {
     normalizePointsList.erase(normalizePointsList.begin(),normalizePointsList.end());
     float newX = 0.0;
     float newY = 0.0;
+    float viewportWidth = 854.0; 
+    float viewportHeight = 480.0;
+    float windowXBegin = center.first - (viewportWidth/2);
+    float windowYBegin = center.second - (viewportHeight/2);
 
     for(qsizetype i = 0; i < pointsList.size(); i++){
-        newX = linearInterpolation(pointsList[i].first, 0, windowWidth, -1, 1);
-        newY = linearInterpolation(pointsList[i].second, 0, windowHeight, -1, 1);
+        //newX = linearInterpolation(pointsList[i].first, 0, windowWidth, -1, 1);
+        newX = (pointsList[i].first - windowXBegin)/(windowWidth) * viewportWidth;
+        newY = (pointsList[i].second - windowYBegin)/(windowHeight) * viewportHeight;
+
+        //cout << "(" << newX << ", " << newY << ")" << endl;
+        //newY = linearInterpolation(pointsList[i].second, 0, windowHeight, -1, 1);
         normalizePointsList.append(pair<float, float>(newX, newY));
     }
+
 }
 
 float Object::linearInterpolation(
@@ -75,16 +84,17 @@ float Object::linearInterpolation(
         ((secondIntervalRange) / (firstIntervalRange)) * 
         (valueInFirstIntervalToFindInSecondInterval - startFirstInterval);
 
-    cout << result << endl;
+    //cout << result << endl;
     return result;
 }
 
 void Object::rotateWorld(float teta)
 {
     float radians = qDegreesToRadians(teta);
-    for(qsizetype i = 0; i < normalizePointsList.size(); i++){
-        normalizePointsList[i] = pair<float, float>(normalizePointsList[i].first * qCos(radians) - (normalizePointsList[i].second * qSin(radians)), 
-                                        normalizePointsList[i].first * qSin(radians) + (normalizePointsList[i].second * qCos(radians)));
+
+    for(qsizetype i = 0; i < pointsList.size(); i++){
+        pointsList[i] = pair<float, float>(pointsList[i].first * qCos(radians) - (pointsList[i].second * qSin(radians)), 
+                                        pointsList[i].first * qSin(radians) + (pointsList[i].second * qCos(radians)));
     }
 }
 

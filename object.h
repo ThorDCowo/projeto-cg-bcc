@@ -18,7 +18,7 @@ public:
         name(name), pointsList(pointsList), color(color)
     {}
 
-    void normalize(int width, int height);
+    void normalize(int width, int height, pair<float, float> center);
     pair<float, float> barycenter();
     void draw(QPainter &painter);
     void rotateWorld(float teta);

@@ -19,8 +19,8 @@ void Screen::paintEvent(QPaintEvent *event)
     for (int i = 0; i < list.size(); i++)
     {
         painter.setPen(QPen(list[i]->getColor(), 2));
-        list[i]->normalize(getWidth(), getHeight());
-        list[i]->transformToViewport(getCenter());
+        list[i]->normalize(getWidth(), getHeight(), getCenter());
+        // list[i]->transformToViewport(getCenter());
         list[i]->draw(painter);
     }
 }

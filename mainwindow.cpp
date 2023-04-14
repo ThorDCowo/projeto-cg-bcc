@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <math.h>
+#include <cmath>
 #include <QList>
 #include <QListWidget>
 #include <QListWidgetItem>
@@ -20,7 +22,7 @@ float MOVE_SPEED = 20.0;
 int WIDTH = 854;  //inicialize with viewport size
 int HEIGHT = 480; //inicialize with viewport size
 pair <float,float> CENTER = {0,0};
-pair <float,float> Y_AXIS = {1,0};
+float TETA = 0.0;
 
 QList<QListWidgetItem*> getCheckedListWidgetItems(QListWidget* listWidget);
 
@@ -171,50 +173,22 @@ void MainWindow::on_windowButton_clicked()
     // Tem que recalcular as cordenadas normalizadas
 
     ui->screen->setCenter(CENTER);
-    float teta = angle(CENTER, Y_AXIS);
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
 
     applyOperationInObjects(
         ui->screen->getObjectList(),
-        [teta, width, height](Object* object) -> void {
+        [width, height](Object* object) -> void {
             pair<float, float> objectCenter = object->barycenter();
             //object->translate(-objectCenter.first, -objectCenter.second);
-            object->rotateWorld(teta);
+            object->rotateWorld(TETA);
             //object->translate(objectCenter.first, objectCenter.second);
-            object->normalize(width, height);
+            object->normalize(width, height, CENTER);
             //object->translate(CENTER.first, CENTER.second);
         }
     );  
 
     update();
-}
-
-void MainWindow::on_viewportButton_clicked()
-{
-    // Não Existe mais essa função
-    // Aqui que definimos o tamanho da janela de visualização
-    ui->screen->setWidth(WIDTH);
-    ui->screen->setHeight(HEIGHT);
-
-    update();
-}
-
-float MainWindow::angle(pair<float, float> center, pair<float, float> axis)
-{
-    // Definir o valor da view up
-    // QVector2D Y(0, 1);         // Vetor que aponta para cima na cena
-    // QVector2D viewUp = ...;     // Vetor que representa a direcao "para cima" da camera em coordenadas de mundo
-
-    // Produto escalar entre os vetores Y e Vup
-    // float dotProduct = Y.x() * viewUp.x() + Y.y() * viewUp.y();
-
-    // Produto do comprimento dos dois vetores
-    // float lengthProduct = Y.length() * viewUp.length();
-    // float angleRadians = qAcos(dotProduct / lengthProduct);
-    // float angleDegrees = qRadiansToDegrees(angleRadians);
-    
-    return 0.0;
 }
 
 void MainWindow::on_viewportHeightLineEdit_textEdited(const QString &input)
@@ -241,14 +215,21 @@ void MainWindow::on_centerYLineEdit_textEdited(const QString &input)
     CENTER.second = input.toFloat(&ok);
 }
 
-void MainWindow::on_yAxisXLineEdit_textEdited(const QString &input)
+void MainWindow::on_angleLineEdit_textChanged(const QString &input)
 {
     bool ok;
-    Y_AXIS.second = input.toFloat(&ok);
+    TETA = input.toFloat(&ok);
 }
 
-void MainWindow::on_yAxisYLineEdit_textEdited(const QString &input)
+void MainWindow::on_zoomSlider_valueChanged(int value)
 {
-    bool ok;
-    Y_AXIS.second = input.toFloat(&ok);
+    applyOperationInObjects(
+        ui->screen->getObjectList(), 
+        [value](Object* object) -> void {
+            object->scale(value);
+        }
+    );
+    update();
 }
+
+
