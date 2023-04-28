@@ -128,3 +128,19 @@ pair<float, float> Object::barycenter()
 
     return center;
 }
+
+// Tem que ser chamada sempre que altera a window !
+void OBject::regionCodeGenerate(float upper, float lower, float left, float right){
+        
+    // Talvez seja necessario iniciar com 0, para evitar lixo de memoria;    
+    for(qsizetype i = 0; i < normalizePointsList.size(); i++){
+        if(normalizePointsList[i].second > upper)
+            regionCodeList[i][0] = 1;
+        if(normalizePointsList[i].second > lower)
+            regionCodeList[i][1] = 1;
+        if(normalizePointsList[i].first > right)
+            regionCodeList[i][2] = 1;
+        if(normalizePointsList[i].first > left)
+            regionCodeList[i][3] = 1;
+    }
+}

@@ -2,16 +2,17 @@
 
 ## Todo list
 
-- Implementar a **Window** com coordenadas normalizadas;
-    - Criar método de normalizar vetor
-      - Intervalo [-1,1]
-    - Criar classe vectorTwo para representar nossos vetores no mundo 2D
-    - Mudar as operações com vetores para utilizar matrizes (dica: usar _operadores especiais_)
-- Transformar a **Window** para ter o efeito na área de desenho;
-    - ~~Alteração na UI para manipular a **Window**~~
-        - ~~Centro  O = (X0,Y0)~~
-        - Eixo Y  V = (Vx,Vy)
-        - Eixo X  U = (Ux,Uy)
-- Transformar as **Viewport** para ver o efeito na área de desenho;
-    - ~~Alteração na UI para alterar as dimensões da janela de visualização~~
-    - Criar método de transformada de **Viewport** [Veja o slide 26](https://moodle.utfpr.edu.br/pluginfile.php/2706442/mod_page/content/2/CG%20-%20Aula06%20-%20window%20e%20viewport.pdf)
+- Implementar o clipping 2D em seu sistema de visualização; 
+    - Algoritmo de **Cohen-Sutherland**;
+        - **Region Code** [Veja o slide 14](https://moodle.utfpr.edu.br/pluginfile.php/2741976/mod_page/content/3/CG%20-%20Aula10%20-%20Clipping.pdf);
+          - se o y de P1 é maior que y da borda superior: RC[1] = 1;
+          - se o y de P1 é maior que y da borda inferior: RC[2] = 1;
+          - se o x de P1 é maior que x da borda direita:  RC[3] = 1;
+          - se o x de P1 é menor que x da borda esquerda: RC[4] = 1;
+        - **Equação da Reta** para cada borda;
+          - Esquerda: Y = m * (Xe - X1) + Y1;
+          - Direita:  Y = m * (Xd - X1) + Y1;
+          - Topo:     X = X1 + 1/m * (Yt - Y1);
+          - Base:     X = X1 + 1/m * (Yf - Y1);
+- ~~Na área de desenho, desenhe uma moldura interna para representar sua viewport~~;
+- Modifique a window usando as transformações geométricas para ver o efeito em sua área de desenho;
