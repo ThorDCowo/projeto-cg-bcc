@@ -81,9 +81,9 @@ void Object::regionCodeGenerate(float upper, float lower, float left, float righ
         regionCode.assign(4, 0);
 
         regionCode.at(0) = normalizePointsList[i].second > upper;
-        regionCode.at(1) = normalizePointsList[i].second > lower;
+        regionCode.at(1) = normalizePointsList[i].second < lower;
         regionCode.at(2) = normalizePointsList[i].first > right;
-        regionCode.at(3) = normalizePointsList[i].first > left;
+        regionCode.at(3) = normalizePointsList[i].first < left;
 
         regionCodeList.append(regionCode);
     }
@@ -97,76 +97,89 @@ void Object::clipping(int windowWidth, int windowHeight, pair<float, float> cent
     float right = center.first + (windowWidth / 2);
 
     regionCodeGenerate(upper, lower, left, right);
-
-    QList<vector<bool>> regionCodeList = getRegionCode();
-
+    
     for (qsizetype i = 0; i < regionCodeList.size(); i++)
     {
+        
         if (i == regionCodeList.size() - 1)
         {
-            // Completamente dentro da window RC de p1 | p2 == 0 0 0 0
-            if (
-                regionCodeList[i - 1][0] && regionCodeList[i][0] == 0 &&
-                regionCodeList[i - 1][1] && regionCodeList[i][1] == 0 &&
-                regionCodeList[i - 1][2] && regionCodeList[i][2] == 0 &&
-                regionCodeList[i - 1][3] && regionCodeList[i][3] == 0
+           debugRegionCodes(regionCodeList[i], regionCodeList[0]);
 
-            )
+            if (isLineFullyInsideWindow(regionCodeList[i], regionCodeList[0])) 
+                break;
+
+            if (isLineFullyOutsideWindow(regionCodeList[i], regionCodeList[0]))
             {
-                // continue;
+                normalizePointsList.erase(normalizePointsList.begin(), normalizePointsList.end());
+                break;
             }
-            // Totalmente fora da window RC de p1 & p2 != 0 0 0 0
-            if (
-                (regionCodeList[i - 1][0] == 1 && regionCodeList[i][0] == 1) ||
-                (regionCodeList[i - 1][1] == 1 && regionCodeList[i][1] == 1) ||
-                (regionCodeList[i - 1][2] == 1 && regionCodeList[i][2] == 1) ||
-                (regionCodeList[i - 1][3] == 1 && regionCodeList[i][3] == 1))
-            {
-                normalizePointsList.removeAt(i);
-            }
-            // Parcialmente dentro da window RC de p1 & p2 == 0 0 0 0
-            if (
-                (regionCodeList[i - 1][0] == 0 || regionCodeList[i][0] == 0) &&
-                (regionCodeList[i - 1][1] == 0 || regionCodeList[i][1] == 0) &&
-                (regionCodeList[i - 1][2] == 0 || regionCodeList[i][2] == 0) &&
-                (regionCodeList[i - 1][3] == 0 || regionCodeList[i][3] == 0))
-            {
-                // return equação
-            }
+            
+            // Entra se TODOS os pares possuem ao menos um 0
+            // return equação da reta
+            break;
         }
-        else
+
+        debugRegionCodes(regionCodeList[i], regionCodeList[i + 1]);
+
+        if (isLineFullyInsideWindow(regionCodeList[i], regionCodeList[i + 1])) 
+            continue;
+
+        if (isLineFullyOutsideWindow(regionCodeList[i], regionCodeList[i + 1]))
         {
-            // Completamente dentro da window RC de p1 | p2 == 0 0 0 0
-            if (
-                regionCodeList[i][0] && regionCodeList[i + 1][0] == 0 &&
-                regionCodeList[i][1] && regionCodeList[i + 1][1] == 0 &&
-                regionCodeList[i][2] && regionCodeList[i + 1][2] == 0 &&
-                regionCodeList[i][3] && regionCodeList[i + 1][3] == 0
-
-            )
-            {
-                // continue;
-            }
-            // Totalmente fora da window RC de p1 & p2 != 0 0 0 0
-            if (
-                (regionCodeList[i][0] == 1 && regionCodeList[i + 1][0] == 1) ||
-                (regionCodeList[i][1] == 1 && regionCodeList[i + 1][1] == 1) ||
-                (regionCodeList[i][2] == 1 && regionCodeList[i + 1][2] == 1) ||
-                (regionCodeList[i][3] == 1 && regionCodeList[i + 1][3] == 1))
-            {
-                normalizePointsList.remove(i);
-            }
-            // Parcialmente dentro da window RC de p1 & p2 == 0 0 0 0
-            if (
-                (regionCodeList[i][0] == 0 || regionCodeList[i + 1][0] == 0) &&
-                (regionCodeList[i][1] == 0 || regionCodeList[i + 1][1] == 0) &&
-                (regionCodeList[i][2] == 0 || regionCodeList[i + 1][2] == 0) &&
-                (regionCodeList[i][3] == 0 || regionCodeList[i + 1][3] == 0))
-            {
-                // return equação
-            }
+            cout << "i: " << i << endl;
+            cout << "normalizePointsList.size(): " << normalizePointsList.size() << endl;
+            normalizePointsList.erase(normalizePointsList.begin(), normalizePointsList.end());
+            continue;
         }
+            
+        // Parcialmente dentro da window RC de p1 & p2 == 0 0 0 0   
+        // equação da reta
+        
     }
+}
+
+void Object::debugRegionCodes(
+    vector<bool> pointOneRegionCode, 
+    vector<bool> pointTwoRegionCode
+) {
+    cout << "Analise do RC" << endl; 
+    cout << "upper Primeiro: " << pointOneRegionCode[0] << endl;
+    cout << "upper Segundo: " << pointTwoRegionCode[0] << endl;
+    cout << "lower Primeiro: " << pointOneRegionCode[1] << endl;
+    cout << "lower Segundo: " << pointTwoRegionCode[1] << endl;
+    cout << "left Primeiro: " << pointOneRegionCode[2] << endl;
+    cout << "left Segundo: " << pointTwoRegionCode[2] << endl;
+    cout << "right Primeiro: " << pointOneRegionCode[3] << endl;
+    cout << "right Segundo: " << pointTwoRegionCode[3] << endl;
+    cout << "ou em RC:" << endl;
+    cout << "P1: " << pointOneRegionCode[0] << " " << pointOneRegionCode[1] << " " << pointOneRegionCode[2] << " " << pointOneRegionCode[3] << endl;
+    cout << "P2: " << pointTwoRegionCode[0] << " " << pointTwoRegionCode[1] << " " << pointTwoRegionCode[2] << " " << pointTwoRegionCode[3] << endl;
+}
+
+// Totalmente dentro da window RC de pi & p2 == 0 0 0 0
+bool Object::isLineFullyInsideWindow(
+    vector<bool> pointOneRegionCode, 
+    vector<bool> pointTwoRegionCode
+) {
+    return (
+        !pointOneRegionCode[0] && !pointTwoRegionCode[0] &&
+        !pointOneRegionCode[1] && !pointTwoRegionCode[1] &&
+        !pointOneRegionCode[2] && !pointTwoRegionCode[2] &&
+        !pointOneRegionCode[3] && !pointTwoRegionCode[3]
+    );
+}
+
+// Totalmente fora da window RC de p1 & p2 != 0 0 0 0
+bool Object::isLineFullyOutsideWindow(
+    vector<bool> pointOneRegionCode, 
+    vector<bool> pointTwoRegionCode
+) {
+    return (
+        (pointOneRegionCode[0] && pointTwoRegionCode[0]) ||
+        (pointOneRegionCode[1] && pointTwoRegionCode[1]) ||
+        (pointOneRegionCode[2] && pointTwoRegionCode[2]) ||
+        (pointOneRegionCode[3] && pointTwoRegionCode[3])
+    );
 }
 
 float Object::linearInterpolation(

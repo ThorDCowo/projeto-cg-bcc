@@ -55,51 +55,57 @@ QList<Object*> ObjectListFactory::createObjectList()
 //    list.append(new Rect(QString("Poligono Branco"), QList(points), Qt::white));
 //    points.clear();
 
-    points.append(pair<float, float>(600, 100));
-    points.append(pair<float, float>(650, 50));
-    points.append(pair<float, float>(700, 100));
-    points.append(pair<float, float>(600, 100));
-    points.append(pair<float, float>(600, 200));
-    points.append(pair<float, float>(700, 200));
-    points.append(pair<float, float>(700, 100));
+    // points.append(pair<float, float>(600, 100));
+    // points.append(pair<float, float>(650, 50));
+    // points.append(pair<float, float>(700, 100));
+    // points.append(pair<float, float>(600, 100));
+    // points.append(pair<float, float>(600, 200));
+    // points.append(pair<float, float>(700, 200));
+    // points.append(pair<float, float>(700, 100));
 
-    list.append(new Rect(QString("Casa"), QList(points), Qt::magenta));
+    // list.append(new Rect(QString("Casa"), QList(points), Qt::magenta));
+    // points.clear();
+
+    points.append(pair<float, float>(50, 200));
+    points.append(pair<float, float>(150, -100));
+
+    list.append(new Rect(QString("Linha"), QList(points), Qt::blue));
     points.clear();
 
-    points.append(pair<float, float>(625, 200));
-    points.append(pair<float, float>(625, 150));
-    points.append(pair<float, float>(675, 150));
-    points.append(pair<float, float>(675, 200));
+    // points.append(pair<float, float>(625, 200));
+    // points.append(pair<float, float>(625, 150));
+    // points.append(pair<float, float>(675, 150));
+    // points.append(pair<float, float>(675, 200));
 
-    list.append(new Rect(QString("Porta"), QList(points), Qt::magenta));
-    points.clear();
+    // list.append(new Rect(QString("Porta"), QList(points), Qt::magenta));
+    // points.clear();
 
-    points.append(pair<float, float>(625, 115));
-    points.append(pair<float, float>(625, 130));
-    points.append(pair<float, float>(640, 130));
-    points.append(pair<float, float>(640, 115));
+    // points.append(pair<float, float>(625, 115));
+    // points.append(pair<float, float>(625, 130));
+    // points.append(pair<float, float>(640, 130));
+    // points.append(pair<float, float>(640, 115));
 
-    list.append(new Rect(QString("Janela"), QList(points), Qt::magenta));
-    points.clear();
+    // list.append(new Rect(QString("Janela"), QList(points), Qt::magenta));
+    // points.clear();
 
-    points.append(pair<float, float>(660, 115));
-    points.append(pair<float, float>(660, 130));
-    points.append(pair<float, float>(675, 130));
-    points.append(pair<float, float>(675, 115));
+    // points.append(pair<float, float>(660, 115));
+    // points.append(pair<float, float>(660, 130));
+    // points.append(pair<float, float>(675, 130));
+    // points.append(pair<float, float>(675, 115));
 
-    list.append(new Rect(QString("Janela 2"), QList(points), Qt::magenta));
-    points.clear();
+    // list.append(new Rect(QString("Janela 2"), QList(points), Qt::magenta));
+    // points.clear();
 
-    points.append(pair<float, float>(1200, 200));
-    points.append(pair<float, float>(1300, 100));
-    points.append(pair<float, float>(1400, 200));
-    points.append(pair<float, float>(1200, 200));
-    points.append(pair<float, float>(1200, 400));
-    points.append(pair<float, float>(1400, 400));
-    points.append(pair<float, float>(1400, 200));
+    // points.append(pair<float, float>(1200, 200));
+    // points.append(pair<float, float>(1300, 100));
+    // points.append(pair<float, float>(1400, 200));
+    // points.append(pair<float, float>(1200, 200));
+    // points.append(pair<float, float>(1200, 400));
+    // points.append(pair<float, float>(1400, 400));
+    // points.append(pair<float, float>(1400, 200));
 
-    list.append(new Rect(QString("Casa Fora"), QList(points), Qt::blue));
-    points.clear();
+    // list.append(new Rect(QString("Casa Fora"), QList(points), Qt::blue));
+    // points.clear();
 
     return list;
 };

@@ -27,15 +27,18 @@ public:
     void normalize(int width, int height, pair<float, float> center);
     void clipping(int windowWidth, int windowHeight, pair<float, float> center);
     float lineEquation(float upper, float lower, float left, float right, float x1, float y1, float x2, float y2);
+    bool isLineFullyInsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
+    bool isLineFullyOutsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
+    void debugRegionCodes(vector<bool> pointOneRegionCode, vector<bool> pointTwoRegionCode); 
 
     virtual void translate(float dx, float dy)=0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta)=0;
     
     inline QString getName()const { return name; }
-    inline QList<std::pair<float,float>> getPoints()const { return this->pointsList; }
-    inline QList<std::pair<float,float>> getNormalizePoints()const { return this->normalizePointsList; }
-    inline QList<std::vector<bool>> getRegionCode() {return this->regionCodeList;} 
+    inline QList<pair<float,float>> getPoints()const { return this->pointsList; }
+    inline QList<pair<float,float>> getNormalizePoints()const { return this->normalizePointsList; }
+    inline QList<vector<bool>> getRegionCode() {return this->regionCodeList;} 
     inline Qt::GlobalColor getColor()const { return color; }
 
     float linearInterpolation(float x, float x0, float x1, float y0, float y1);
