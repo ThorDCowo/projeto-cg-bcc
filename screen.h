@@ -8,6 +8,7 @@
 #include <QCheckBox>
 #include <object.h>
 
+
 class Screen : public QFrame
 {
     Q_OBJECT
@@ -19,7 +20,10 @@ private:
     pair<float, float> center = {429.0,240.0};
 
 public:
-    explicit Screen(QWidget *parent = nullptr);
+
+    explicit Screen(QWidget *parent = nullptr): QFrame(parent)
+    {}
+    
     void paintEvent(QPaintEvent *event) override;
     
     QList<Object*> getObjectList() const {return this->list;};
@@ -28,9 +32,9 @@ public:
     pair<float, float> getCenter()const {return this->center;};
     
     void setObjectList(QList<Object*> list) {this->list = list;};
-    void setWidth(int width) {this->width = width;};
-    void setHeight(int height) {this->height = height;};
-    void setCenter(pair<float, float> center) {this->center.first = center.first; this->center.second = center.second;};
+    void setWidth(int width);
+    void setHeight(int height);
+    void setCenter(pair<float, float> center);
 
 public slots:
 

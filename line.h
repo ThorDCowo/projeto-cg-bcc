@@ -7,7 +7,7 @@
 class Line: public Object, public QLineF
 {
 public:
-    Line(const QString& name, const QList<std::pair<float,float>> &pointsList, Qt::GlobalColor color=Qt::black):
+    Line(const QString& name, const QList<pair<float,float>> &pointsList, Qt::GlobalColor color=Qt::black):
         Object(name, pointsList, color)
     {}
 

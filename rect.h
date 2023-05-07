@@ -7,7 +7,7 @@
 class Rect : public Object, public QRectF
 {
 public:
-    Rect(const QString& name, const QList<std::pair<float,float>> &pointsList, Qt::GlobalColor color=Qt::black):
+    Rect(const QString& name, const QList<pair<float,float>> &pointsList, Qt::GlobalColor color=Qt::black):
         Object(name, pointsList, color)
     {}
 

@@ -8,7 +8,7 @@
 class Point : public Object, public QPointF
 {
 public:
-    Point(const QString& name, const QList<std::pair<float,float>> &pointsList, Qt::GlobalColor color=Qt::black):
+    Point(const QString& name, const QList<pair<float,float>> &pointsList, Qt::GlobalColor color=Qt::black):
         Object(name, pointsList, color)
     {}
 

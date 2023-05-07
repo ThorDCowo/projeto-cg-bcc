@@ -7,6 +7,7 @@
 #include <QString>
 #include <QPainter>
 #include <QList>
+#include "border.h"
 
 using namespace std;
 
@@ -15,21 +16,23 @@ class Object
 
 public:
 
-    Object(const QString &name, const QList<std::pair<float,float>> &pointsList, Qt::GlobalColor color):
+    Object(const QString &name, const QList<pair<float,float>> &pointsList, Qt::GlobalColor color):
         name(name), pointsList(pointsList), color(color)
     {}
 
     pair<float, float> barycenter();
+    pair<float, float> lineClipping(Border border, qsizetype index1, qsizetype index2);
     void draw(QPainter &painter);
     void rotateWorld(float teta);
     void transformToViewport(pair<float, float> center);
-    void regionCodeGenerate(float upper, float lower, float left, float right);
+    void regionCodeGenerate(Border border);
     void normalize(int width, int height, pair<float, float> center);
-    void clipping(int windowWidth, int windowHeight, pair<float, float> center);
-    float lineEquation(float upper, float lower, float left, float right, float x1, float y1, float x2, float y2);
+    void clipping(Border border);
+    void debugRegionCodes(vector<bool> pointOneRegionCode, vector<bool> pointTwoRegionCode); 
     bool isLineFullyInsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
     bool isLineFullyOutsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
-    void debugRegionCodes(vector<bool> pointOneRegionCode, vector<bool> pointTwoRegionCode); 
+    bool hasSomeRegionCodeTruly(vector<bool> regionCode);
+    void clippingTwoPointsByIndex(Border border, qsizetype pointOneIndex, qsizetype pointTwoIndex);
 
     virtual void translate(float dx, float dy)=0;
     virtual void scale(float factor)=0;
