@@ -190,19 +190,27 @@ void Object::clippingTwoPointsByIndex(
     // return equação da reta
     // tem que atualizar o ponto que esta fora da window por um na borda 
     if( hasSomeRegionCodeTruly(regionCodeList[pointOneIndex])){
+        pair <float, float> aux = normalizePointsList[pointOneIndex];
         normalizePointsList[pointOneIndex] = lineClipping(
             border,
-            pointOneIndex,
-            pointTwoIndex
+            pointTwoIndex,
+            pointOneIndex
         );
+        if(aux == normalizePointsList[pointOneIndex])
+            normalizePointsList.removeAt(pointOneIndex);
+            
         return;
     }
 
+    pair <float, float> aux = normalizePointsList[pointTwoIndex];
     normalizePointsList[pointTwoIndex] = lineClipping(
         border,
-        pointTwoIndex,
-        pointOneIndex
+        pointOneIndex,
+        pointTwoIndex
     );
+
+    if(aux == normalizePointsList[pointOneIndex])
+        normalizePointsList.removeAt(pointOneIndex);
 }
 
 void Object::debugRegionCodes(
@@ -258,43 +266,65 @@ bool Object::hasSomeRegionCodeTruly(vector<bool> regionCode) {
     );
 }
 
-// Trocar o Retorno pra um pair ?
-pair<float, float> Object::lineClipping(Border border, qsizetype index1, qsizetype index2)
+pair<float, float> Object::lineClipping(Border border, qsizetype insidePointIndex, qsizetype outsidePointIndex)
 {
-    float angularCoefficient = ((normalizePointsList[index2].second - normalizePointsList[index1].second) 
-                            / (normalizePointsList[index2].first - normalizePointsList[index1].first));
+    float angularCoefficient = ((normalizePointsList[insidePointIndex].second - normalizePointsList[outsidePointIndex].second) 
+                            / (normalizePointsList[insidePointIndex].first - normalizePointsList[outsidePointIndex].first));
     pair<float,float> newPoint;
 
-    if (normalizePointsList[index2].second > border.getUpper())
+    if (normalizePointsList[outsidePointIndex].second > border.getUpper())
     {
-        newPoint.first = normalizePointsList[index2].first * (border.getUpper() - normalizePointsList[index2].second) / angularCoefficient;
-        newPoint.second = normalizePointsList[index1].second;
+        float newX = angularCoefficient * (border.getUpper() - normalizePointsList[insidePointIndex].second) 
+            + normalizePointsList[insidePointIndex].first;
+
+        if (newX >= border.getLeft() && newX <= border.getRight()) {
+            newPoint.first = newX;
+            newPoint.second = border.getUpper();
+            return newPoint;
+        }
+
+        return normalizePointsList[outsidePointIndex];
+    }
+
+    if (normalizePointsList[outsidePointIndex].second < border.getLower())
+    {
+         float newX = angularCoefficient * (border.getLower() - normalizePointsList[insidePointIndex].second) 
+            + normalizePointsList[insidePointIndex].first;
+
+        if (newX >= border.getLeft() && newX <= border.getRight()) {
+            newPoint.first = newX;
+            newPoint.second = border.getLower();
+            return newPoint;
+        }
+
+        return normalizePointsList[outsidePointIndex];
+    }
+
+   
+    if (normalizePointsList[outsidePointIndex].first > border.getRight())
+    {
+         float newY = angularCoefficient * (border.getRight() - normalizePointsList[insidePointIndex].first) 
+            + normalizePointsList[insidePointIndex].second;
+
+        if (newY >= border.getLower() && newY <= border.getUpper()) {
+            newPoint.first = border.getRight();
+            newPoint.second = newY;
+            return newPoint;
+        }
+
+        return normalizePointsList[outsidePointIndex];
+    }
+
+    
+     float newY = angularCoefficient * (border.getLeft() - normalizePointsList[insidePointIndex].first) 
+            + normalizePointsList[insidePointIndex].second;
+
+    if (newY >= border.getLower() && newY <= border.getUpper()) {
+        newPoint.first = border.getLeft();
+        newPoint.second = newY;
         return newPoint;
     }
 
-    if (normalizePointsList[index2].second > border.getLower())
-    {
-        newPoint.first = normalizePointsList[index2].first * (border.getLower() - normalizePointsList[index2].second) / angularCoefficient;
-        newPoint.second = normalizePointsList[index1].second;
-        return newPoint;
-    }
-
-    if (border.getLower() < normalizePointsList[index2].second && normalizePointsList[index2].second < border.getUpper())
-    {
-        if (normalizePointsList[index2].first > border.getRight())
-        {
-            newPoint.second = angularCoefficient * (border.getRight() - normalizePointsList[index2].first) + normalizePointsList[index2].second;
-            newPoint.first = normalizePointsList[index1].first;
-            return newPoint;
-        }
-        if (normalizePointsList[index2].first < border.getLeft())
-        {
-            newPoint.second = angularCoefficient * (border.getLeft() - normalizePointsList[index2].first) + normalizePointsList[index2].second;
-            newPoint.first = normalizePointsList[index1].first;
-            return newPoint;
-        }
-    }
-
-    return newPoint;
+    return normalizePointsList[outsidePointIndex];
     
 };
