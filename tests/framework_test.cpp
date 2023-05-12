@@ -2,21 +2,20 @@
 #include "framework_test.h"
 using namespace std;
 
-void FrameworkTest::test(const char* testMessage, bool testResult)
+bool FrameworkTest::expectToBeEqual(const char* testMessage, float value, float expectedValue)
 {
+    bool result = value == expectedValue;
     cout << testMessage << ": ";
 
-    if (!testResult) {
-        cout << "Test failed!" << endl;
-        return;
+    if (!result) {
+        cout << "Falhou!" << endl;
+        cout << "Valor Recebido: " << value << endl;
+        cout << "Valor Esperado: " << expectedValue << endl;
+        return false;
     }
 
-    cout << "Test passed!" << endl;
-}
-
-bool FrameworkTest::expectToBeEqual(float value, float expectedValue)
-{
-    return value == expectedValue;
+    cout << "Sucesso!" << endl;
+    return result;
 }
 
 void FrameworkTest::registerTest(TestSuite* testSuite)
@@ -29,4 +28,8 @@ void FrameworkTest::run()
     for (TestSuite* testSuite : this->testSuites) {
         testSuite->run();
     }
+
+    cout << "-----------------------" << endl;
+    cout << "Fim dos testes" << endl;
+    cout << "-----------------------" << endl;
 }

@@ -32,6 +32,14 @@ void Line::rotate(float teta)
     translate(center.first, center.second);
 }
 
+void Line::clipping(Border border)
+{  
+    regionCodeGenerate(border);    
+    // regionCodeList e normalizePointsList são listas com relação de 1 pra 1, o mesmo indice pode ser utilizado por ambas
+    
+    clippingTwoPointsByIndex(border, 0, 1);
+}
+
 /*
 void Line:: transformWindow(float windowX,float windowY)
 {

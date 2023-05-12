@@ -11,8 +11,7 @@ class FrameworkTest
 {
 
 public:
-    void static test(const char* testMessage, bool testResult);
-    bool static expectToBeEqual(float a, float b);
+    bool static expectToBeEqual(const char* testMessage, float value, float expectedValue);
     void run();
     void registerTest(TestSuite* testSuite);
 

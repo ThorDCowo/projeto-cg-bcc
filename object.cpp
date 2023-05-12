@@ -217,16 +217,16 @@ void Object::debugRegionCodes(
     vector<bool> pointOneRegionCode, 
     vector<bool> pointTwoRegionCode
 ) {
-    cout << "Analise do RC" << endl; 
-    cout << "P1 upper: " << pointOneRegionCode[0] << endl;
-    cout << "P2 upper: " << pointTwoRegionCode[0] << endl;
-    cout << "P1 lower: " << pointOneRegionCode[1] << endl;
-    cout << "P2 lower: " << pointTwoRegionCode[1] << endl;
-    cout << "P1 left: " << pointOneRegionCode[2] << endl;
-    cout << "P2 left: " << pointTwoRegionCode[2] << endl;
-    cout << "P1 right: " << pointOneRegionCode[3] << endl;
-    cout << "P2 right: " << pointTwoRegionCode[3] << endl;
-    cout << "ou em RC:" << endl;
+    cout << " \n Analise do RC" << endl; 
+    // cout << "P1 upper: " << pointOneRegionCode[0] << endl;
+    // cout << "P2 upper: " << pointTwoRegionCode[0] << endl;
+    // cout << "P1 lower: " << pointOneRegionCode[1] << endl;
+    // cout << "P2 lower: " << pointTwoRegionCode[1] << endl;
+    // cout << "P1 left: " << pointOneRegionCode[2] << endl;
+    // cout << "P2 left: " << pointTwoRegionCode[2] << endl;
+    // cout << "P1 right: " << pointOneRegionCode[3] << endl;
+    // cout << "P2 right: " << pointTwoRegionCode[3] << endl;
+    // cout << "ou em RC:" << endl;
     cout << "P1: " << pointOneRegionCode[0] << " " << pointOneRegionCode[1] << " " << pointOneRegionCode[2] << " " << pointOneRegionCode[3] << endl;
     cout << "P2: " << pointTwoRegionCode[0] << " " << pointTwoRegionCode[1] << " " << pointTwoRegionCode[2] << " " << pointTwoRegionCode[3] << endl;
 }

@@ -47,7 +47,7 @@ public:
     float linearInterpolation(float x, float x0, float x1, float y0, float y1);
 
 protected:
-    QString name; //id do objeto instancido
+    QString name; //id do objeto instanciado
     QList<pair<float,float>> pointsList;
     QList<pair<float,float>> normalizePointsList;
     QList<vector<bool>> regionCodeList; 

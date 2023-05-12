@@ -13,12 +13,13 @@ void Screen::paintEvent(QPaintEvent *event)
 
     Border border(getWidth(), getHeight(), getCenter());
 
-    cout << "paiting loop" << endl;
+    cout << "\n painting loop" << endl;
     for (int i = 0; i < list.size(); i++)
     {
         painter.setPen(QPen(list[i]->getColor(), 2));
         list[i]->normalize(getWidth(), getHeight(), getCenter());
-        list[i]->clipping(border);
+        list[i]->clipping(border); 
+        list[i]->transformToViewport(getCenter());
         list[i]->draw(painter);
     }
 }

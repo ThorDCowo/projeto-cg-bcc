@@ -115,7 +115,7 @@ void applyOperationInObjects(QList<Object*> list, function<void(Object*)>operati
 void MainWindow::on_upButton_clicked()
 {
     operateInCheckedObjects(ui, [](Object* object) {
-        object->translate(0, -MOVE_SPEED);
+        object->translate(0, MOVE_SPEED);
     });
     update();
 }
@@ -131,7 +131,7 @@ void MainWindow::on_rightButton_clicked()
 void MainWindow::on_downButton_clicked()
 {
     operateInCheckedObjects(ui, [](Object* object) {
-        object->translate(0, MOVE_SPEED);
+        object->translate(0, -MOVE_SPEED);
     });
     update();
 }

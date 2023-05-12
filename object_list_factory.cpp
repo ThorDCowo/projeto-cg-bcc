@@ -66,11 +66,23 @@ QList<Object*> ObjectListFactory::createObjectList()
     // list.append(new Rect(QString("Casa"), QList(points), Qt::magenta));
     // points.clear();
 
-    points.append(pair<float, float>(50, 200));
-    points.append(pair<float, float>(150, -100));
+    // points.append(pair<float, float>(50, 200));
+    // points.append(pair<float, float>(150, -100));
 
-    list.append(new Rect(QString("Linha"), QList(points), Qt::blue));
+    // list.append(new Rect(QString("Linha"), QList(points), Qt::blue));
+    // points.clear();
+
+    points.append(pair<float, float>(500, 200));
+    points.append(pair<float, float>(350, 100));
+
+    list.append(new Rect(QString("Linha Dentro"), QList(points), Qt::blue));
     points.clear();
+
+    // points.append(pair<float, float>(-50, 200));
+    // points.append(pair<float, float>(-150, -100));
+
+    // list.append(new Rect(QString("Linha Fora"), QList(points), Qt::blue));
+    // points.clear();
 
     // points.append(pair<float, float>(625, 200));
     // points.append(pair<float, float>(625, 150));

@@ -31,7 +31,14 @@ public:
     void interpolateTest3();
     void run();
       
-    
+    void isLineFullyInsideWindowTest(
+        const char* testMessage,
+        bool expectedValue,
+        vector<bool> pointOneRC,
+        vector<bool> pointTwoRC
+    );
+
+    void isLineFullyInsideWindowTest1();
 };
 
 #endif // OBJECT_TEST_H
