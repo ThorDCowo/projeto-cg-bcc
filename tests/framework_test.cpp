@@ -23,6 +23,33 @@ void FrameworkTest::registerTest(TestSuite* testSuite)
     this->testSuites.push_back(testSuite);
 }
 
+bool FrameworkTest::expectToBeTruly(const char* testMessage, bool value) {
+    cout << testMessage << ": ";
+
+    if (value) {
+        cout << "Falhou!" << endl;
+        cout << "Valor Recebido: " << value << endl;
+        cout << "Valor Esperado: " << true << endl;
+        return false;
+    }
+
+    cout << "Sucesso!" << endl;
+    return true;
+}
+bool FrameworkTest::expectToBeFalsy(const char* testMessage, bool value) {
+    cout << testMessage << ": ";
+
+    if (!value) {
+        cout << "Falhou!" << endl;
+        cout << "Valor Recebido: " << value << endl;
+        cout << "Valor Esperado: " << false << endl;
+        return false;
+    }
+
+    cout << "Sucesso!" << endl;
+    return true;
+}
+
 void FrameworkTest::run()
 {
     for (TestSuite* testSuite : this->testSuites) {

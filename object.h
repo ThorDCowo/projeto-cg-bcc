@@ -2,6 +2,7 @@
 #define OBJECT_H
 
 #include <vector>
+#include <iostream>
 #include <QObject>
 #include <QWidget>
 #include <QString>
@@ -27,7 +28,6 @@ public:
     void transformToViewport(pair<float, float> center);
     void regionCodeGenerate(Border border);
     void normalize(int width, int height, pair<float, float> center);
-    void clipping(Border border);
     void debugRegionCodes(vector<bool> pointOneRegionCode, vector<bool> pointTwoRegionCode); 
     bool isLineFullyInsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
     bool isLineFullyOutsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
@@ -37,6 +37,9 @@ public:
     virtual void translate(float dx, float dy)=0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta)=0;
+    virtual void clipping(Border border)=0;
+
+    virtual void transformFromWorldToViewport(int width, int height, pair<float, float> center);
     
     inline QString getName()const { return name; }
     inline QList<pair<float,float>> getPoints()const { return this->pointsList; }

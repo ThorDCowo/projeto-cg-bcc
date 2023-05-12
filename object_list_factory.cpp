@@ -75,7 +75,7 @@ QList<Object*> ObjectListFactory::createObjectList()
     points.append(pair<float, float>(500, 200));
     points.append(pair<float, float>(350, 100));
 
-    list.append(new Rect(QString("Linha Dentro"), QList(points), Qt::blue));
+    list.append(new Line(QString("Linha Dentro"), QList(points), Qt::blue));
     points.clear();
 
     // points.append(pair<float, float>(-50, 200));

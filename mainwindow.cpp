@@ -50,8 +50,14 @@ MainWindow::MainWindow(QWidget *parent)
     QList<Object*> list = ObjectListFactory::createObjectList();
     ui->screen->setObjectList(list);
 
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+    pair<float, float> center = ui->screen->getCenter();
+
     for (int i = 0; i < list.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
+        list[i]->transformFromWorldToViewport(width, height, center);
+
         item->setText(list[i]->getName());
         item->setCheckState(Qt::Unchecked);
         item->setForeground(Qt::white);
@@ -114,42 +120,67 @@ void applyOperationInObjects(QList<Object*> list, function<void(Object*)>operati
 
 void MainWindow::on_upButton_clicked()
 {
-    operateInCheckedObjects(ui, [](Object* object) {
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+    pair<float, float> center = ui->screen->getCenter();
+
+    operateInCheckedObjects(ui, [width, height, center](Object* object) {
         object->translate(0, MOVE_SPEED);
+        object->transformFromWorldToViewport(width, height, center);
     });
     update();
 }
 
 void MainWindow::on_rightButton_clicked()
 {
-    operateInCheckedObjects(ui, [](Object* object) {
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+    pair<float, float> center = ui->screen->getCenter();
+
+    operateInCheckedObjects(ui, [width, height, center](Object* object) {
         object->translate(MOVE_SPEED, 0);
+        object->transformFromWorldToViewport(width, height, center);
     });
     update();
 }
 
 void MainWindow::on_downButton_clicked()
 {
-    operateInCheckedObjects(ui, [](Object* object) {
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+    pair<float, float> center = ui->screen->getCenter();
+
+    operateInCheckedObjects(ui, [width, height, center](Object* object) {
         object->translate(0, -MOVE_SPEED);
+        object->transformFromWorldToViewport(width, height, center);
     });
     update();
 }
 
 void MainWindow::on_leftButton_clicked()
 {    
-    operateInCheckedObjects(ui, [](Object* object) {
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+    pair<float, float> center = ui->screen->getCenter();
+
+    operateInCheckedObjects(ui, [width, height, center](Object* object) {
        object->translate(-MOVE_SPEED, 0);
+       object->transformFromWorldToViewport(width, height, center);
     });
     update();
 }
 
 void MainWindow::on_scaleSlider_valueChanged(int value)
 {
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+    pair<float, float> center = ui->screen->getCenter();
+
     operateInCheckedObjects(
         ui, 
-        [value](Object* object) -> void {
+        [value, width, height, center](Object* object) -> void {
             object->scale(value);
+            object->transformFromWorldToViewport(width, height, center);
         }
     );
     update();
@@ -157,10 +188,15 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
 
 void MainWindow::on_rotationDial_sliderMoved(int position)
 {
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+    pair<float, float> center = ui->screen->getCenter();
+
     operateInCheckedObjects(
         ui,
-        [position](Object* object) -> void {
+        [position, width, height, center](Object* object) -> void {
             object->rotate(position);
+            object->transformFromWorldToViewport(width, height, center);
         }
     );
     update();
@@ -179,11 +215,8 @@ void MainWindow::on_windowButton_clicked()
         ui->screen->getObjectList(),
         [width, height](Object* object) -> void {
             pair<float, float> objectCenter = object->barycenter();
-            //object->translate(-objectCenter.first, -objectCenter.second);
             object->rotateWorld(TETA);
-            //object->translate(objectCenter.first, objectCenter.second);
             object->normalize(width, height, CENTER);
-            //object->translate(CENTER.first, CENTER.second);
         }
     );  
 

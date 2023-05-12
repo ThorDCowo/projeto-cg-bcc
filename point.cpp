@@ -10,3 +10,36 @@ void Point::translate(float dx, float dy)
 void Point::scale(float factor){}
 
 void Point::rotate(float teta){}
+
+void Point::clipping(Border border){
+    regionCodeGenerate(border);
+    
+    if (isInsideWindow(regionCodeList[0])) 
+        return;
+
+    if (isOutsideWindow(regionCodeList[0]))
+    {
+        normalizePointsList.removeAt(0);
+        return;
+    }
+}
+
+bool Point::isInsideWindow(
+    vector<bool> pointRegionCode
+) {
+    return (
+        !pointRegionCode[0] && 
+        !pointRegionCode[1] && 
+        !pointRegionCode[2] && 
+        !pointRegionCode[3]    );
+}
+
+bool Point::isOutsideWindow(
+    vector<bool> pointRegionCode
+) {
+    return (
+        pointRegionCode[0] || 
+        pointRegionCode[1] || 
+        pointRegionCode[2] || 
+        pointRegionCode[3]    );
+}

@@ -16,6 +16,10 @@ public:
     void translate(float dx, float dy);
     void scale(float factor);
     void rotate(float teta);
+    void clipping(Border border);
+    bool isInsideWindow(vector<bool> pointRegionCode);
+    bool isOutsideWindow(vector<bool> pointRegionCode);
+
 };
 
 #endif // POINT_H

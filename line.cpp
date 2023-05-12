@@ -37,6 +37,7 @@ void Line::clipping(Border border)
     regionCodeGenerate(border);    
     // regionCodeList e normalizePointsList são listas com relação de 1 pra 1, o mesmo indice pode ser utilizado por ambas
     
+    cout << "Linha" << endl;
     clippingTwoPointsByIndex(border, 0, 1);
 }
 

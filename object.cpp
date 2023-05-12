@@ -1,7 +1,10 @@
-#include "object.h"
-#include "screen.h"
 #include <iostream>
 #include <assert.h>
+
+#include "object.h"
+#include "screen.h"
+#include "border.h"
+
 using namespace std;
 
 void drawNormalizedPoints(
@@ -10,6 +13,14 @@ void drawNormalizedPoints(
     QPainter &painter);
 
 void drawWorldPoints(QList<pair<float, float>> pointsList, QPainter &painter);
+
+void Object::transformFromWorldToViewport(int width, int height, pair<float, float> center) {
+    Border border(width, height, center);
+    
+    this->normalize(width, height, center);
+    this->clipping(border); 
+    this->transformToViewport(center);
+}
 
 void Object::draw(QPainter &painter)
 {
@@ -91,23 +102,6 @@ void Object::regionCodeGenerate(Border border)
     }
 }
 
-void Object::clipping(Border border)
-{  
-    regionCodeGenerate(border);
-    
-    // regionCodeList e normalizePointsList são listas com relação de 1 pra 1, o mesmo indice pode ser utilizado por ambas
-    for (qsizetype i = 0; i < regionCodeList.size(); i++)
-    {        
-        if (i == regionCodeList.size() - 1)
-        {
-            clippingTwoPointsByIndex(border, i, 0);
-            break;           
-        }
-
-        clippingTwoPointsByIndex(border, i, i + 1);
-    }
-}
-
 void Object::rotateWorld(float teta)
 {
     float radians = qDegreesToRadians(teta);
@@ -174,6 +168,7 @@ void Object::clippingTwoPointsByIndex(
     qsizetype pointTwoIndex
 ) 
 {
+   
     debugRegionCodes(regionCodeList[pointOneIndex], regionCodeList[pointTwoIndex]);
 
     if (isLineFullyInsideWindow(regionCodeList[pointOneIndex], regionCodeList[pointTwoIndex])) 

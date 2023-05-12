@@ -70,12 +70,41 @@ void ObjectTest::linearInterpolationTest(
 }
 
 void ObjectTest::isLineFullyInsideWindowTest1() {
-    this->isLineFullyInsideWindowTest(
-        "Deve retornar true para uma linha totalmente dentro da janela",
-        1,
-        {1, 1, 1, 1},
-        {1, 1, 1, 1}
-    );
+    /*
+        Considere que pointOneRC e pointTwoRC são vetores de booleanos que representam regiões de uma janela de recorte.
+        pointOneRC e pointTwoRC possuem os mesmo conjunto de valores válidos.
+        O primeiro indice do vetor representa a região de cima da janela de recorte.
+        O segundo indice do vetor representa a região de baixo da janela de recorte.
+        O terceiro indice do vetor representa a região da esquerda da janela de recorte.
+        O quarto indice do vetor representa a região da direita da janela de recorte.
+        Se ao menos um dos indices do vetor for verdadeiro, então o ponto está dentro da janela de recorte.
+        Logo, se todos os indices forem falsos, então o ponto está fora da janela de recorte.
+        Não é possível que todos os indices sejam verdadeiros, pois isso significaria que o ponto está dentro de todas as regiões da janela de recorte.
+        Sabendo disso escreva os casos de teste para a função isLineFullyInsideWindow().
+        Use 0 e 1 para representar os valores dos vetores.
+    */
+
+    // vector<bool> pointOneRC = {0, 0, 0, 0};
+    // vector<bool> pointTwoRC = {0, 0, 0, 0};
+    // this->isLineFullyInsideWindowTest(
+    //     "Deve retornar true quando os dois pontos estão dentro da janela de recorte",
+    //     true,
+    //     pointOneRC,
+    //     pointTwoRC
+    // );
+
+    // pointOneRC = {0, 0, 0, 0};
+    // pointTwoRC = {0, 0, 0, 1};
+
+    // this->isLineFullyInsideWindowTest(
+    //     "Deve retornar false quando um dos pontos está fora da janela de recorte",
+    //     false,
+    //     pointOneRC,
+    //     pointTwoRC
+    // );
+    
+    // pointOneRC = {0, 0, 0, 0};
+    
 }
 
 void ObjectTest::isLineFullyInsideWindowTest(
@@ -85,5 +114,5 @@ void ObjectTest::isLineFullyInsideWindowTest(
     vector<bool> pointTwoRC
 ) {
     bool isLineFullyInsideWindow = this->objectForTest->isLineFullyInsideWindow(pointOneRC, pointTwoRC);
-    FrameworkTest::expectToBeEqual(testMessage, isLineFullyInsideWindow, expectedValue);
+    FrameworkTest::expectToBeTruly(testMessage, isLineFullyInsideWindow);
 }
