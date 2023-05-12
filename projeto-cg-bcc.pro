@@ -10,6 +10,9 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    tests\framework_test.cpp \
+    tests\object_test.cpp \
+    tests\tests_register.cpp \
     border.cpp \
     line.cpp \
     main.cpp \
@@ -21,6 +24,9 @@ SOURCES += \
     screen.cpp
 
 HEADERS += \
+    tests\framework_test.h \
+    tests\object_test.h \
+    tests\test_suite.h \
     border.h \
     line.h \
     mainwindow.h \

@@ -189,7 +189,7 @@ void Object::clippingTwoPointsByIndex(
     // Entra se TODOS os pares possuem ao menos um 0
     // return equação da reta
     // tem que atualizar o ponto que esta fora da window por um na borda 
-    if( hasSomeRegionCodeTruly(regionCodeList[pointOneIndex])){
+    if(hasSomeRegionCodeTruly(regionCodeList[pointOneIndex])){
         pair <float, float> aux = normalizePointsList[pointOneIndex];
         normalizePointsList[pointOneIndex] = lineClipping(
             border,

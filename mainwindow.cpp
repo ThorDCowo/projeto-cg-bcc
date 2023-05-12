@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 #include <math.h>
 #include <cmath>
 #include <QList>
