@@ -188,8 +188,8 @@ void Object::clippingTwoPointsByIndex(
         pair <float, float> aux = normalizePointsList[pointOneIndex];
         normalizePointsList[pointOneIndex] = lineClipping(
             border,
-            pointTwoIndex,
-            pointOneIndex
+            normalizePointsList[pointTwoIndex],
+            normalizePointsList[pointOneIndex]
         );
         if(aux == normalizePointsList[pointOneIndex])
             normalizePointsList.removeAt(pointOneIndex);
@@ -200,8 +200,8 @@ void Object::clippingTwoPointsByIndex(
     pair <float, float> aux = normalizePointsList[pointTwoIndex];
     normalizePointsList[pointTwoIndex] = lineClipping(
         border,
-        pointOneIndex,
-        pointTwoIndex
+        normalizePointsList[pointOneIndex],
+        normalizePointsList[pointTwoIndex]
     );
 
     if(aux == normalizePointsList[pointOneIndex])
@@ -261,16 +261,20 @@ bool Object::hasSomeRegionCodeTruly(vector<bool> regionCode) {
     );
 }
 
-pair<float, float> Object::lineClipping(Border border, qsizetype insidePointIndex, qsizetype outsidePointIndex)
+pair<float, float> Object::lineClipping(
+    Border border, 
+    pair<float, float> insidePoint, 
+    pair<float, float> outsidePoint
+)
 {
-    float angularCoefficient = ((normalizePointsList[insidePointIndex].second - normalizePointsList[outsidePointIndex].second) 
-                            / (normalizePointsList[insidePointIndex].first - normalizePointsList[outsidePointIndex].first));
+    float angularCoefficient = ((insidePoint.second - outsidePoint.second) 
+                            / (insidePoint.first - outsidePoint.first));
     pair<float,float> newPoint;
 
-    if (normalizePointsList[outsidePointIndex].second > border.getUpper())
+    if (outsidePoint.second > border.getUpper())
     {
-        float newX = angularCoefficient * (border.getUpper() - normalizePointsList[insidePointIndex].second) 
-            + normalizePointsList[insidePointIndex].first;
+        float newX = angularCoefficient * (border.getUpper() - insidePoint.second) 
+            + insidePoint.first;
 
         if (newX >= border.getLeft() && newX <= border.getRight()) {
             newPoint.first = newX;
@@ -278,13 +282,13 @@ pair<float, float> Object::lineClipping(Border border, qsizetype insidePointInde
             return newPoint;
         }
 
-        return normalizePointsList[outsidePointIndex];
+        return outsidePoint;
     }
 
-    if (normalizePointsList[outsidePointIndex].second < border.getLower())
+    if (outsidePoint.second < border.getLower())
     {
-         float newX = angularCoefficient * (border.getLower() - normalizePointsList[insidePointIndex].second) 
-            + normalizePointsList[insidePointIndex].first;
+         float newX = angularCoefficient * (border.getLower() - insidePoint.second) 
+            + insidePoint.first;
 
         if (newX >= border.getLeft() && newX <= border.getRight()) {
             newPoint.first = newX;
@@ -292,14 +296,14 @@ pair<float, float> Object::lineClipping(Border border, qsizetype insidePointInde
             return newPoint;
         }
 
-        return normalizePointsList[outsidePointIndex];
+        return outsidePoint;
     }
 
    
-    if (normalizePointsList[outsidePointIndex].first > border.getRight())
+    if (outsidePoint.first > border.getRight())
     {
-         float newY = angularCoefficient * (border.getRight() - normalizePointsList[insidePointIndex].first) 
-            + normalizePointsList[insidePointIndex].second;
+         float newY = angularCoefficient * (border.getRight() - insidePoint.first) 
+            + insidePoint.second;
 
         if (newY >= border.getLower() && newY <= border.getUpper()) {
             newPoint.first = border.getRight();
@@ -307,12 +311,12 @@ pair<float, float> Object::lineClipping(Border border, qsizetype insidePointInde
             return newPoint;
         }
 
-        return normalizePointsList[outsidePointIndex];
+        return outsidePoint;
     }
 
     
-     float newY = angularCoefficient * (border.getLeft() - normalizePointsList[insidePointIndex].first) 
-            + normalizePointsList[insidePointIndex].second;
+     float newY = angularCoefficient * (border.getLeft() - insidePoint.first) 
+            + insidePoint.second;
 
     if (newY >= border.getLower() && newY <= border.getUpper()) {
         newPoint.first = border.getLeft();
@@ -320,6 +324,105 @@ pair<float, float> Object::lineClipping(Border border, qsizetype insidePointInde
         return newPoint;
     }
 
-    return normalizePointsList[outsidePointIndex];
+    return outsidePoint;
     
 };
+
+pair<float, float> Object::lineClipping(
+    Border border, 
+    pair<float, float> insidePoint, 
+    pair<float, float> outsidePoint
+)
+{
+    float angularCoefficient = ((insidePoint.second - outsidePoint.second) 
+                            / (insidePoint.first - outsidePoint.first));
+    pair<float,float> newPoint;
+
+    if (outsidePoint.second > border.getUpper())
+        return clippingAbove(border, insidePoint, outsidePoint, angularCoefficient);
+
+    if (outsidePoint.second < border.getLower())
+        return clippingBelow(border, insidePoint, outsidePoint, angularCoefficient);
+
+    if (outsidePoint.first > border.getRight())
+        return clippingight(border, insidePoint, outsidePoint, angularCoefficient);
+
+    
+    return clippingLeft(border, insidePoint, outsidePoint, angularCoefficient);
+};
+
+pair<float, float> Object::clippingAbove(
+    Border border, 
+    pair<float, float> insidePoint, 
+    pair<float, float> outsidePoint,
+    float angularCoefficient
+)
+{
+    float newX = angularCoefficient * (border.getUpper() - insidePoint.second) 
+        + insidePoint.first;
+
+    if (newX >= border.getLeft() && newX <= border.getRight()) {
+        newPoint.first = newX;
+        newPoint.second = border.getUpper();
+        return newPoint;
+    }
+
+    return outsidePoint;
+}
+
+pair<float, float> Object::clippingBelow(
+    Border border, 
+    pair<float, float> insidePoint, 
+    pair<float, float> outsidePoint,
+    float angularCoefficient
+)
+{    
+    float newX = angularCoefficient * (border.getLower() - insidePoint.second) 
+        + insidePoint.first;
+
+    if (newX >= border.getLeft() && newX <= border.getRight()) {
+        newPoint.first = newX;
+        newPoint.second = border.getLower();
+        return newPoint;
+    }
+
+    return outsidePoint;
+}
+
+pair<float, float> Object::clippingight(
+    Border border, 
+    pair<float, float> insidePoint, 
+    pair<float, float> outsidePoint,
+    float angularCoefficient
+)
+{   
+    float newY = angularCoefficient * (border.getRight() - insidePoint.first) 
+        + insidePoint.second;
+
+    if (newY >= border.getLower() && newY <= border.getUpper()) {
+        newPoint.first = border.getRight();
+        newPoint.second = newY;
+        return newPoint;
+    }
+
+    return outsidePoint;
+}
+
+pair<float, float> Object::clippingLeft(
+    Border border, 
+    pair<float, float> insidePoint, 
+    pair<float, float> outsidePoint,
+    float angularCoefficient
+)
+{
+    float newY = angularCoefficient * (border.getLeft() - insidePoint.first) 
+            + insidePoint.second;
+
+    if (newY >= border.getLower() && newY <= border.getUpper()) {
+        newPoint.first = border.getLeft();
+        newPoint.second = newY;
+        return newPoint;
+    }
+
+    return outsidePoint;
+}

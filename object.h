@@ -22,7 +22,11 @@ public:
     {}
 
     pair<float, float> barycenter();
-    pair<float, float> lineClipping(Border border, qsizetype index1, qsizetype index2);
+    pair<float, float> Object::lineClipping(
+        Border border, 
+        pair<float, float> insidePoint, 
+        pair<float, float> outsidePoint
+    );
     void draw(QPainter &painter);
     void rotateWorld(float teta);
     void transformToViewport(pair<float, float> center);
@@ -55,6 +59,34 @@ protected:
     QList<pair<float,float>> normalizePointsList;
     QList<vector<bool>> regionCodeList; 
     Qt::GlobalColor color;
+
+    pair<float, float> clippingAbove(
+        Border border, 
+        pair<float, float> insidePoint, 
+        pair<float, float> outsidePoint,
+        float angularCoefficient
+    );
+
+    pair<float, float> clippingBelow(
+        Border border, 
+        pair<float, float> insidePoint, 
+        pair<float, float> outsidePoint,
+        float angularCoefficient
+    );
+
+    pair<float, float> clippingight(
+        Border border, 
+        pair<float, float> insidePoint, 
+        pair<float, float> outsidePoint,
+        float angularCoefficient
+    );
+
+    pair<float, float> clippingLeft(
+        Border border, 
+        pair<float, float> insidePoint, 
+        pair<float, float> outsidePoint,
+        float angularCoefficient
+    );
 };
 
 #endif // OBJECT_H
