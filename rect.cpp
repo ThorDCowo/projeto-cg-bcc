@@ -37,22 +37,22 @@ void Rect::rotate(float teta)
 
     translate(center.first, center.second);
 }
-
+    
 void Rect::clipping(Border border)
 {  
     regionCodeGenerate(border);
-     cout << "Objects" << endl;
+     cout << "Polygon -> Clipping" << endl;
     
     // regionCodeList e normalizePointsList são listas com relação de 1 pra 1, o mesmo indice pode ser utilizado por ambas
     for (qsizetype i = 0; i < regionCodeList.size(); i++)
     {        
         if (i == regionCodeList.size() - 1)
         {
-            clippingTwoPointsByIndex(border, i, 0);
+            lineClipping(border, i, 0);
             break;           
         }
 
-        clippingTwoPointsByIndex(border, i, i + 1);
+        lineClipping(border, i, i + 1);
     }
 }
 

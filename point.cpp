@@ -7,9 +7,9 @@ void Point::translate(float dx, float dy)
     pointsList[0] = pair<float, float>(pointsList[0].first + dx, pointsList[0].second + dy);
 }
 
-void Point::scale(float factor){}
+void Point::scale(){}
 
-void Point::rotate(float teta){}
+void Point::rotate(){}
 
 void Point::clipping(Border border){
     regionCodeGenerate(border);

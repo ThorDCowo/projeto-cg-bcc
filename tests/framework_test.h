@@ -12,6 +12,7 @@ class FrameworkTest
 
 public:
     bool static expectToBeEqual(const char* testMessage, float value, float expectedValue);
+    bool static expectToBeEqual(const char* testMessage, pair<float, float> value, pair<float, float> expectedValue);
     bool static expectToBeTruly(const char* testMessage, bool value);
     bool static expectToBeFalsy(const char* testMessage, bool value);
     void run();

@@ -162,13 +162,20 @@ float Object::linearInterpolation(
     return result;
 }
 
-void Object::clippingTwoPointsByIndex(
+void Object::lineClipping(
     Border border,
     qsizetype pointOneIndex,
     qsizetype pointTwoIndex
 ) 
 {
-   
+    cout << "border upper: " << border.getUpper() << endl;
+    cout << "border lower: " << border.getLower() << endl;
+    cout << "border left: " << border.getLeft() << endl;
+    cout << "border right: " << border.getRight() << endl;
+
+    cout << "pointOneIndex: " << pointOneIndex << endl;
+    cout << "pointTwoIndex: " << pointTwoIndex << endl;
+
     debugRegionCodes(regionCodeList[pointOneIndex], regionCodeList[pointTwoIndex]);
 
     if (isLineFullyInsideWindow(regionCodeList[pointOneIndex], regionCodeList[pointTwoIndex])) 
@@ -176,36 +183,66 @@ void Object::clippingTwoPointsByIndex(
 
     if (isLineFullyOutsideWindow(regionCodeList[pointOneIndex], regionCodeList[pointTwoIndex]))
     {
-        normalizePointsList.removeAt(pointOneIndex);
+        cout << "Index: " << pointOneIndex << " " << pointTwoIndex << endl;
+        cout << normalizePointsList.size() << endl;
         normalizePointsList.removeAt(pointTwoIndex);
+        normalizePointsList.removeAt(pointOneIndex);
         return;
     }
-    
-    // Entra se TODOS os pares possuem ao menos um 0
-    // return equação da reta
-    // tem que atualizar o ponto que esta fora da window por um na borda 
-    if(hasSomeRegionCodeTruly(regionCodeList[pointOneIndex])){
-        pair <float, float> aux = normalizePointsList[pointOneIndex];
-        normalizePointsList[pointOneIndex] = lineClipping(
+
+    if(hasTwoRegionCodeTruly(regionCodeList[pointOneIndex])){
+        pair <float, float> control = normalizePointsList[pointOneIndex];
+        normalizePointsList[pointOneIndex] = diagonalClipping(
             border,
             normalizePointsList[pointTwoIndex],
             normalizePointsList[pointOneIndex]
         );
-        if(aux == normalizePointsList[pointOneIndex])
+
+        if(control == normalizePointsList[pointOneIndex]){
+            cout << "Edging 1" << endl;
             normalizePointsList.removeAt(pointOneIndex);
-            
-        return;
+            return;
+        }
+
+    }
+
+    if(hasTwoRegionCodeTruly(regionCodeList[pointTwoIndex])){
+        pair <float, float> control = normalizePointsList[pointTwoIndex];
+        normalizePointsList[pointTwoIndex] = diagonalClipping(
+            border,
+            normalizePointsList[pointOneIndex],
+            normalizePointsList[pointTwoIndex]
+        );
+
+        if(control == normalizePointsList[pointTwoIndex]){            
+            cout << "Edging 2" << endl;
+            normalizePointsList.removeAt(pointTwoIndex);
+            return;
+        }
+
+    }
+
+    if(hasSomeRegionCodeTruly(regionCodeList[pointOneIndex])){
+        pair <float, float> aux = normalizePointsList[pointOneIndex];
+        normalizePointsList[pointOneIndex] = parallelToAxisClipping(
+            border,
+            normalizePointsList[pointTwoIndex],
+            normalizePointsList[pointOneIndex]
+        );
+        if(aux == normalizePointsList[pointOneIndex]){
+            cout << "Killing Machine" << endl;
+            normalizePointsList.removeAt(pointTwoIndex);
+            normalizePointsList.removeAt(pointOneIndex);
+            return;
+        }
     }
 
     pair <float, float> aux = normalizePointsList[pointTwoIndex];
-    normalizePointsList[pointTwoIndex] = lineClipping(
+    normalizePointsList[pointTwoIndex] = parallelToAxisClipping(
         border,
         normalizePointsList[pointOneIndex],
         normalizePointsList[pointTwoIndex]
     );
-
-    if(aux == normalizePointsList[pointOneIndex])
-        normalizePointsList.removeAt(pointOneIndex);
 }
 
 void Object::debugRegionCodes(
@@ -213,15 +250,6 @@ void Object::debugRegionCodes(
     vector<bool> pointTwoRegionCode
 ) {
     cout << " \n Analise do RC" << endl; 
-    // cout << "P1 upper: " << pointOneRegionCode[0] << endl;
-    // cout << "P2 upper: " << pointTwoRegionCode[0] << endl;
-    // cout << "P1 lower: " << pointOneRegionCode[1] << endl;
-    // cout << "P2 lower: " << pointTwoRegionCode[1] << endl;
-    // cout << "P1 left: " << pointOneRegionCode[2] << endl;
-    // cout << "P2 left: " << pointTwoRegionCode[2] << endl;
-    // cout << "P1 right: " << pointOneRegionCode[3] << endl;
-    // cout << "P2 right: " << pointTwoRegionCode[3] << endl;
-    // cout << "ou em RC:" << endl;
     cout << "P1: " << pointOneRegionCode[0] << " " << pointOneRegionCode[1] << " " << pointOneRegionCode[2] << " " << pointOneRegionCode[3] << endl;
     cout << "P2: " << pointTwoRegionCode[0] << " " << pointTwoRegionCode[1] << " " << pointTwoRegionCode[2] << " " << pointTwoRegionCode[3] << endl;
 }
@@ -261,168 +289,154 @@ bool Object::hasSomeRegionCodeTruly(vector<bool> regionCode) {
     );
 }
 
-pair<float, float> Object::lineClipping(
+bool Object::hasTwoRegionCodeTruly(vector<bool> regionCode) {
+    return (
+        ((regionCode[0] ||
+        regionCode[1] )&&
+        (regionCode[2] ||
+        regionCode[3]) )
+    );
+}
+
+pair<float, float> Object::parallelToAxisClipping(
     Border border, 
     pair<float, float> insidePoint, 
     pair<float, float> outsidePoint
 )
 {
+    cout << "Vertical or Horizontal Clipping " << endl;
     float angularCoefficient = ((insidePoint.second - outsidePoint.second) 
                             / (insidePoint.first - outsidePoint.first));
-    pair<float,float> newPoint;
 
     if (outsidePoint.second > border.getUpper())
-    {
-        float newX = angularCoefficient * (border.getUpper() - insidePoint.second) 
-            + insidePoint.first;
-
-        if (newX >= border.getLeft() && newX <= border.getRight()) {
-            newPoint.first = newX;
-            newPoint.second = border.getUpper();
-            return newPoint;
-        }
-
-        return outsidePoint;
-    }
+        return clippingAbove(border,  outsidePoint, angularCoefficient);
 
     if (outsidePoint.second < border.getLower())
-    {
-         float newX = angularCoefficient * (border.getLower() - insidePoint.second) 
-            + insidePoint.first;
+        return clippingBelow(border, outsidePoint, angularCoefficient);
 
-        if (newX >= border.getLeft() && newX <= border.getRight()) {
-            newPoint.first = newX;
-            newPoint.second = border.getLower();
-            return newPoint;
-        }
-
-        return outsidePoint;
-    }
-
-   
     if (outsidePoint.first > border.getRight())
-    {
-         float newY = angularCoefficient * (border.getRight() - insidePoint.first) 
-            + insidePoint.second;
-
-        if (newY >= border.getLower() && newY <= border.getUpper()) {
-            newPoint.first = border.getRight();
-            newPoint.second = newY;
-            return newPoint;
-        }
-
-        return outsidePoint;
-    }
+        return clippingRight(border, outsidePoint, angularCoefficient);
 
     
-     float newY = angularCoefficient * (border.getLeft() - insidePoint.first) 
-            + insidePoint.second;
-
-    if (newY >= border.getLower() && newY <= border.getUpper()) {
-        newPoint.first = border.getLeft();
-        newPoint.second = newY;
-        return newPoint;
-    }
-
-    return outsidePoint;
-    
+    return clippingLeft(border, outsidePoint, angularCoefficient);
 };
 
-pair<float, float> Object::lineClipping(
+pair<float, float> Object:: diagonalClipping(   
     Border border, 
     pair<float, float> insidePoint, 
     pair<float, float> outsidePoint
 )
 {
+    cout << "Diagonal Clipping " << endl;
+    pair <float, float> control = outsidePoint;
     float angularCoefficient = ((insidePoint.second - outsidePoint.second) 
                             / (insidePoint.first - outsidePoint.first));
-    pair<float,float> newPoint;
 
-    if (outsidePoint.second > border.getUpper())
-        return clippingAbove(border, insidePoint, outsidePoint, angularCoefficient);
+    if (outsidePoint.second > border.getUpper()){
+        outsidePoint = clippingAbove(border, outsidePoint, angularCoefficient);
+        
+        if(control != outsidePoint) return outsidePoint;
+    }
 
-    if (outsidePoint.second < border.getLower())
-        return clippingBelow(border, insidePoint, outsidePoint, angularCoefficient);
+    if (outsidePoint.second < border.getLower()){
+        outsidePoint = clippingBelow(border, outsidePoint, angularCoefficient);
 
-    if (outsidePoint.first > border.getRight())
-        return clippingight(border, insidePoint, outsidePoint, angularCoefficient);
+        if(control != outsidePoint) return outsidePoint;
+    }
 
-    
-    return clippingLeft(border, insidePoint, outsidePoint, angularCoefficient);
+    if (outsidePoint.first > border.getRight()){
+        outsidePoint = clippingRight(border, outsidePoint, angularCoefficient);
+
+        if(control != outsidePoint) return outsidePoint;
+    }
+
+    if (outsidePoint.first > border.getLeft())
+        return clippingLeft(border, outsidePoint, angularCoefficient);
+
 };
 
 pair<float, float> Object::clippingAbove(
     Border border, 
-    pair<float, float> insidePoint, 
     pair<float, float> outsidePoint,
     float angularCoefficient
 )
 {
-    float newX = angularCoefficient * (border.getUpper() - insidePoint.second) 
-        + insidePoint.first;
+    cout << "Above" << endl;
+    float newX = outsidePoint.first + (border.getUpper() - outsidePoint.second) / angularCoefficient;
+    pair<float,float> newPoint;
 
     if (newX >= border.getLeft() && newX <= border.getRight()) {
+        cout << "Accepted !" << endl;
         newPoint.first = newX;
         newPoint.second = border.getUpper();
         return newPoint;
     }
 
+    cout << "Not Accepted" << endl;
     return outsidePoint;
 }
 
 pair<float, float> Object::clippingBelow(
     Border border, 
-    pair<float, float> insidePoint, 
     pair<float, float> outsidePoint,
     float angularCoefficient
 )
 {    
-    float newX = angularCoefficient * (border.getLower() - insidePoint.second) 
-        + insidePoint.first;
+    cout << "Below" << endl;
+    float newX = outsidePoint.first + (1  / angularCoefficient) * (border.getLower() - outsidePoint.second);
+    pair<float,float> newPoint;
 
     if (newX >= border.getLeft() && newX <= border.getRight()) {
+        cout << "Accepted !" << endl;
         newPoint.first = newX;
         newPoint.second = border.getLower();
         return newPoint;
     }
 
+    cout << "Not Accepted" << endl;
     return outsidePoint;
 }
 
-pair<float, float> Object::clippingight(
-    Border border, 
-    pair<float, float> insidePoint, 
+pair<float, float> Object::clippingRight(
+    Border border,  
     pair<float, float> outsidePoint,
     float angularCoefficient
 )
 {   
-    float newY = angularCoefficient * (border.getRight() - insidePoint.first) 
-        + insidePoint.second;
+    cout << "Right" << endl;
+    float newY = angularCoefficient * (border.getRight() - outsidePoint.first) 
+        + outsidePoint.second;
+    pair<float,float> newPoint;
 
     if (newY >= border.getLower() && newY <= border.getUpper()) {
+        cout << "Accepted !" << endl;
         newPoint.first = border.getRight();
         newPoint.second = newY;
         return newPoint;
     }
 
+    cout << "Not Accepted" << endl;
     return outsidePoint;
 }
 
 pair<float, float> Object::clippingLeft(
-    Border border, 
-    pair<float, float> insidePoint, 
+    Border border,  
     pair<float, float> outsidePoint,
     float angularCoefficient
 )
 {
-    float newY = angularCoefficient * (border.getLeft() - insidePoint.first) 
-            + insidePoint.second;
+    cout << "Left" << endl;
+    float newY = angularCoefficient * (border.getLeft() - outsidePoint.first) 
+        + outsidePoint.second;
+    pair<float,float> newPoint;
 
     if (newY >= border.getLower() && newY <= border.getUpper()) {
+        cout << "Accepted !" << endl;
         newPoint.first = border.getLeft();
         newPoint.second = newY;
         return newPoint;
     }
 
+    cout << "Not Accepted" << endl;
     return outsidePoint;
 }

@@ -14,8 +14,8 @@ public:
 
     void draw(QPainter &painter);   
     void translate(float dx, float dy);
-    void scale(float factor);
-    void rotate(float teta);
+    void scale();
+    void rotate();
     void clipping(Border border);
     bool isInsideWindow(vector<bool> pointRegionCode);
     bool isOutsideWindow(vector<bool> pointRegionCode);

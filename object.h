@@ -21,12 +21,10 @@ public:
         name(name), pointsList(pointsList), color(color)
     {}
 
+    void lineClipping(Border border, qsizetype pointOneIndex, qsizetype pointTwoIndex);
+    virtual void clipping(Border border)=0;
+
     pair<float, float> barycenter();
-    pair<float, float> Object::lineClipping(
-        Border border, 
-        pair<float, float> insidePoint, 
-        pair<float, float> outsidePoint
-    );
     void draw(QPainter &painter);
     void rotateWorld(float teta);
     void transformToViewport(pair<float, float> center);
@@ -36,12 +34,21 @@ public:
     bool isLineFullyInsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
     bool isLineFullyOutsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
     bool hasSomeRegionCodeTruly(vector<bool> regionCode);
-    void clippingTwoPointsByIndex(Border border, qsizetype pointOneIndex, qsizetype pointTwoIndex);
+    bool hasTwoRegionCodeTruly(vector<bool> regionCode);
+    pair<float, float> parallelToAxisClipping(
+        Border border, 
+        pair<float, float> insidePoint, 
+        pair<float, float> outsidePoint
+    );
+    pair<float, float> diagonalClipping(
+        Border border, 
+        pair<float, float> insidePoint, 
+        pair<float, float> outsidePoint
+    );
 
     virtual void translate(float dx, float dy)=0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta)=0;
-    virtual void clipping(Border border)=0;
 
     virtual void transformFromWorldToViewport(int width, int height, pair<float, float> center);
     
@@ -61,29 +68,25 @@ protected:
     Qt::GlobalColor color;
 
     pair<float, float> clippingAbove(
-        Border border, 
-        pair<float, float> insidePoint, 
+        Border border,
         pair<float, float> outsidePoint,
         float angularCoefficient
     );
 
     pair<float, float> clippingBelow(
-        Border border, 
-        pair<float, float> insidePoint, 
+        Border border,  
         pair<float, float> outsidePoint,
         float angularCoefficient
     );
 
-    pair<float, float> clippingight(
+    pair<float, float> clippingRight(
         Border border, 
-        pair<float, float> insidePoint, 
         pair<float, float> outsidePoint,
         float angularCoefficient
     );
 
     pair<float, float> clippingLeft(
         Border border, 
-        pair<float, float> insidePoint, 
         pair<float, float> outsidePoint,
         float angularCoefficient
     );

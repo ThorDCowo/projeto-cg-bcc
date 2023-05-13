@@ -17,7 +17,7 @@ private:
     QList<Object*> list;
     int width = 854;  //inicialize with viewport size
     int height = 480; //inicialize with viewport size
-    pair<float, float> center = {429.0,240.0};
+    pair<float, float> center = {427.0,240.0};
 
 public:
 

@@ -57,7 +57,6 @@ MainWindow::MainWindow(QWidget *parent)
     for (int i = 0; i < list.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
         list[i]->transformFromWorldToViewport(width, height, center);
-
         item->setText(list[i]->getName());
         item->setCheckState(Qt::Unchecked);
         item->setForeground(Qt::white);
@@ -214,7 +213,6 @@ void MainWindow::on_windowButton_clicked()
     applyOperationInObjects(
         ui->screen->getObjectList(),
         [width, height](Object* object) -> void {
-            pair<float, float> objectCenter = object->barycenter();
             object->rotateWorld(TETA);
             object->normalize(width, height, CENTER);
         }

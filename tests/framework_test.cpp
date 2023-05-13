@@ -2,6 +2,11 @@
 #include "framework_test.h"
 using namespace std;
 
+void FrameworkTest::registerTest(TestSuite* testSuite)
+{
+    this->testSuites.push_back(testSuite);
+}
+
 bool FrameworkTest::expectToBeEqual(const char* testMessage, float value, float expectedValue)
 {
     bool result = value == expectedValue;
@@ -18,9 +23,23 @@ bool FrameworkTest::expectToBeEqual(const char* testMessage, float value, float 
     return result;
 }
 
-void FrameworkTest::registerTest(TestSuite* testSuite)
+bool FrameworkTest::expectToBeEqual(const char* testMessage, pair<float, float> value, pair<float, float> expectedValue)
 {
-    this->testSuites.push_back(testSuite);
+    bool result = 
+        (value.first == expectedValue.first) &&
+        (value.second == expectedValue.second);
+
+    cout << testMessage << ": ";
+
+    if (!result) {
+        cout << "Falhou!" << endl;
+        cout << "Valor Recebido: (" << value.first << ", " << value.second << ")" << endl;
+        cout << "Valor Esperado: (" << expectedValue.first << ", " << expectedValue.second << ")" << endl;
+        return false;
+    }
+
+    cout << "Sucesso!" << endl;
+    return result;
 }
 
 bool FrameworkTest::expectToBeTruly(const char* testMessage, bool value) {

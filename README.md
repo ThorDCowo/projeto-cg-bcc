@@ -21,4 +21,9 @@ Implementar o clipping 2D em seu sistema de visualização;
         - ~~Base:     X = X1 + 1/m * (Yf - Y1)~~;
 - ~~Na área de desenho, desenhe uma moldura interna para representar sua viewport~~;
 - **Validação** de todo o processo de Clipping;
+    - Conclusões lógicas:    - 
+      -  Um ponto, após o clipping, é rejeitado se ele estiver fora da janela.
+      - Dado que ao menos um dos pontos do segmento paralelo ao eixo é rejeitado, após o clipping, não existe a possibilidade do outro ponto ser aceito após o clipping.
+      -  Dado que ao menos um dos pontos do segmento paralelo ao eixo é aceito, não existe a possibilidade do outro ponto estar fora da janela.
+      - [Conclusões sobre segmentos paralelos aos eixos](https://media.discordapp.net/attachments/816351059743080488/1106797022847184977/image.png?width=1039&height=554))
 - Modifique a window usando as transformações geométricas para ver o efeito em sua área de desenho;
