@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
+
 
 #include "../../object.h"
 #include "../../border.h"
@@ -23,21 +25,23 @@ public:
         cout << "Teste de lineClipping()" << endl;
         cout << "-----------------------" << endl;
 
-        this->parallelToAxisClipping2();
-        this->parallelToAxisClipping3();
-        this->parallelToAxisClipping4();
-        this->parallelToAxisClipping5();
-        this->parallelToAxisClipping6();
-        this->parallelToAxisClipping7();
-        this->parallelToAxisClipping8();
-        this->parallelToAxisClipping9();
-        this->parallelToAxisClipping10();
-        this->parallelToAxisClipping11();
-        this->parallelToAxisClippingCritical1();
+        this->lineClippingTest2();
+        this->lineClippingTest3();
+        this->lineClippingTest4();
+        this->lineClippingTest5();
+        this->lineClippingTest6();
+        this->lineClippingTest7();
+        this->lineClippingTest8();
+        this->lineClippingTest9();
+        this->lineClippingTest10();
+        this->lineClippingTest11();
+        this->lineClippingTestCritical1();
+        this->lineClippingTestCritical2();
+        
     }
 
     // F - E Line
-    void parallelToAxisClipping2()
+    void lineClippingTest2()
     {
         int width = 15;
         int height = 10;
@@ -72,7 +76,7 @@ public:
     }
 
     // K - L Line
-    void parallelToAxisClipping3()
+    void lineClippingTest3()
     {
         int width = 15;
         int height = 10;
@@ -90,8 +94,8 @@ public:
         pointsList.append(upperLeftPoint);
         pointsList.append(lowerRightPoint);
         
-        pair<float, float> expectedValueForLowerRightPoint(13.15, 0);
-        pair<float, float> expectedValueForUpperLeftPoint(0, 9.61);
+        pair<float, float> expectedValueForLowerRightPoint(1315, 0);
+        pair<float, float> expectedValueForUpperLeftPoint(0, 961);
 
         this->clipper->lineClipping(
             border,
@@ -99,6 +103,12 @@ public:
             lowerRightPointIndex,
             &pointsList
         );
+
+        pointsList[lowerRightPointIndex].first = truncl(pointsList[lowerRightPointIndex].first * 100);
+        pointsList[lowerRightPointIndex].second = truncl(pointsList[lowerRightPointIndex].second * 100);
+        
+        pointsList[upperLeftPointIndex].first = truncl(pointsList[upperLeftPointIndex].first * 100);
+        pointsList[upperLeftPointIndex].second = truncl(pointsList[upperLeftPointIndex].second * 100);
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clippling o clipping por baixo alterarndo o ponto (20, -5) para (13.15, 0)",
@@ -114,7 +124,7 @@ public:
     }
 
     // R - Q Line
-    void parallelToAxisClipping4()
+    void lineClippingTest4()
     {
         int width = 15;
         int height = 10;
@@ -149,7 +159,7 @@ public:
     }
 
     //J - I Line
-    void parallelToAxisClipping5()
+    void lineClippingTest5()
     {
         int width = 15;
         int height = 10;
@@ -184,7 +194,7 @@ public:
     }
 
     //O - P Line
-    void parallelToAxisClipping6()
+    void lineClippingTest6()
     {
         int width = 15;
         int height = 10;
@@ -219,7 +229,7 @@ public:
     }
 
     // S - T Line
-    void parallelToAxisClipping7()
+    void lineClippingTest7()
     {
         int width = 15;
         int height = 10;
@@ -254,7 +264,7 @@ public:
     }
 
     //U - V Line
-    void parallelToAxisClipping8()
+    void lineClippingTest8()
     {
         int width = 15;
         int height = 10;
@@ -289,7 +299,7 @@ public:
     }
 
     // M - N Line
-    void parallelToAxisClipping9()
+    void lineClippingTest9()
     {
         int width = 15;
         int height = 10;
@@ -324,7 +334,7 @@ public:
     }
 
     // G - H Line
-    void parallelToAxisClipping10()
+    void lineClippingTest10()
     {
         int width = 15;
         int height = 10;
@@ -359,7 +369,7 @@ public:
 
     }
 
-    void parallelToAxisClipping11()
+    void lineClippingTest11()
     {
         int width = 15;
         int height = 10;
@@ -395,7 +405,7 @@ public:
 
     }
     
-    void parallelToAxisClippingCritical1()
+    void lineClippingTestCritical1()
     {
         int width = 854;
         int height = 480;
@@ -424,6 +434,40 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve rejeitar a linha dos pontos (900, -100) e (1000, 100)",
+            pointsList.size(),
+            expectedValue
+        );
+    }
+
+     void lineClippingTestCritical2()
+    {
+        int width = 854;
+        int height = 480;
+        pair<float, float> center = {427, 240};
+        Border border(width, height, center);
+
+        qsizetype upperLeftPointIndex = 0;
+        qsizetype lowerRightPointIndex = 1;
+
+        QList<pair<float,float>> pointsList;
+
+        pair<float, float> upperLeftPoint(-1100, 666);
+        pair<float, float> lowerRightPoint(960, -700);
+
+        pointsList.append(upperLeftPoint);
+        pointsList.append(lowerRightPoint);
+
+        qsizetype expectedValue = 0;
+
+        this->clipper->lineClipping(
+            border,
+            upperLeftPointIndex,
+            lowerRightPointIndex,
+            &pointsList
+        );
+
+        FrameworkTest::expectToBeEqual(
+            "Deve rejeitar a linha dos pontos (-1100, 666) e (960, -700), que cruza pelas quinas superior esquerda e inferior direita, mas não passa por dentro",
             pointsList.size(),
             expectedValue
         );

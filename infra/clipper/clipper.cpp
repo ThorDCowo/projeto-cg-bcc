@@ -73,16 +73,19 @@ void Clipper::lineClipping(
     //Ou aceita (atualiza) ambos os pontos ou nao aceita nada remove ambos
     if(isLineFullyDiagonal(regionCodeList[regionCodeFirstIndex], regionCodeList[regionCodeSecondIndex])){
         pair <float, float> control = (*pointsList)[pointOneIndex];
+        cout << "Fully Diagonal" << endl;
         (*pointsList)[pointOneIndex] = diagonalClipping(
             border,
             (*pointsList)[pointTwoIndex],
             (*pointsList)[pointOneIndex]
         );
         if(control == (*pointsList)[pointOneIndex]){
+            cout << "Removendo linha diagonal" << endl;
             pointsList->removeAt(pointTwoIndex);
             pointsList->removeAt(pointOneIndex);
             return;
         }
+        cout << "Second Point" << endl;
         (*pointsList)[pointTwoIndex] = diagonalClipping(
             border,
             (*pointsList)[pointOneIndex],
@@ -129,7 +132,6 @@ void Clipper::lineClipping(
             (*pointsList)[pointOneIndex]
         );
         if(aux == (*pointsList)[pointOneIndex]){
-            cout << "Killing Machine" << endl;
             pointsList->removeAt(pointTwoIndex);
             pointsList->removeAt(pointOneIndex);
             return;
@@ -279,8 +281,11 @@ pair<float, float> Clipper:: diagonalClipping(
 {
     cout << "Diagonal Clipping " << endl;
     pair <float, float> control = outsidePoint;
-    float angularCoefficient = ((insidePoint.second - outsidePoint.second) 
-                            / (insidePoint.first - outsidePoint.first));
+
+    float angularCoefficient = (
+        (insidePoint.second - outsidePoint.second) /
+        (insidePoint.first - outsidePoint.first)
+    );
 
     if (outsidePoint.second > border.getUpper()){
         outsidePoint = clippingAbove(border, outsidePoint, angularCoefficient);
@@ -300,7 +305,7 @@ pair<float, float> Clipper:: diagonalClipping(
         if(control != outsidePoint) return outsidePoint;
     }
 
-    if (outsidePoint.first > border.getLeft())
+    if (outsidePoint.first < border.getLeft())
         return clippingLeft(border, outsidePoint, angularCoefficient);
 
 };
