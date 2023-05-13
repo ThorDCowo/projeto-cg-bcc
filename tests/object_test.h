@@ -15,7 +15,6 @@ public:
         this->objectForTest = _objectForTest;
     }
     
-
     void linearInterpolationTest(
         const char* testMessage,
         float expectedValue,
@@ -28,18 +27,7 @@ public:
 
     void interpolateTest1();
     void interpolateTest2();
-    void interpolateTest3();
-    void parallelToAxisClipping2();
-    void parallelToAxisClipping3();
-    void parallelToAxisClipping4();
-    void parallelToAxisClipping5();
-    void parallelToAxisClipping6();
-    void parallelToAxisClipping7();
-    void parallelToAxisClipping8();
-    void parallelToAxisClipping9();
-    void parallelToAxisClipping10();
-    void parallelToAxisClipping11();
-    void parallelToAxisClippingCritical1();
+    void interpolateTest3();    
     void run();
       
     void isLineFullyInsideWindowTest(

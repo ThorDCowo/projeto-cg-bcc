@@ -10,6 +10,9 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    infra\clipper\clipper.cpp \
+    infra\clipper\clipper.test.cpp \
+    use_cases\clipp_object.use_case.cpp \
     tests\framework_test.cpp \
     tests\object_test.cpp \
     tests\tests_register.cpp \
@@ -20,10 +23,12 @@ SOURCES += \
     object.cpp \
     object_list_factory.cpp \
     point.cpp \
-    rect.cpp \
+    polygon.cpp \
     screen.cpp
 
 HEADERS += \
+    infra\clipper\clipper.h \
+    use_cases\clipp_object.use_case.h \
     tests\framework_test.h \
     tests\object_test.h \
     tests\test_suite.h \
@@ -33,7 +38,7 @@ HEADERS += \
     object.h \
     object_list_factory.h \
     point.h \
-    rect.h \
+    polygon.h \
     screen.h \
 
 FORMS += \

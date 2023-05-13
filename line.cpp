@@ -25,20 +25,17 @@ void Line::rotate(float teta)
     translate(-center.first, -center.second);
 
     float radians = qDegreesToRadians(teta);
-    pointsList[0] = pair<float, float>(pointsList[0].first * qCos(radians) - (pointsList[0].second * qSin(radians)), 
-                                        pointsList[0].first * qSin(radians) + (pointsList[0].second * qCos(radians)));
-    pointsList[1] = pair<float, float>(pointsList[1].first * qCos(radians) - (pointsList[1].second * qSin(radians)), 
-                                        pointsList[1].first * qSin(radians) + (pointsList[1].second * qCos(radians)));
+    pointsList[0] = pair<float, float>(
+        pointsList[0].first * qCos(radians) - (pointsList[0].second * qSin(radians)),
+        pointsList[0].first * qSin(radians) + (pointsList[0].second * qCos(radians))
+    );
+
+    pointsList[1] = pair<float, float>(
+        pointsList[1].first * qCos(radians) - (pointsList[1].second * qSin(radians)), 
+        pointsList[1].first * qSin(radians) + (pointsList[1].second * qCos(radians))
+    );
+
     translate(center.first, center.second);
-}
-
-void Line::clipping(Border border)
-{  
-    // regionCodeList e normalizePointsList são listas com relação de 1 pra 1, o mesmo indice pode ser utilizado por ambas
-    regionCodeGenerate(border);
-
-    cout << "Linha -> Clipping" << endl;
-    lineClipping(border, 0, 1);
 }
 
 /*

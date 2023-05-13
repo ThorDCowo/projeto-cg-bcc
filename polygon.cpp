@@ -1,17 +1,17 @@
-#include "rect.h"
+#include "Polygon.h"
 #include <iostream>
 #include <QtMath>
 
 using namespace std;
 
-void Rect::translate(float dx, float dy)
+void Polygon::translate(float dx, float dy)
 {
     for(qsizetype i = 0; i < pointsList.size(); i++){
             pointsList[i] = pair<float, float>(pointsList[i].first + dx, pointsList[i].second + dy);
     }
 }
 
-void Rect::scale(float factor)
+void Polygon::scale(float factor)
 {
     pair<float, float> center = barycenter();
     translate(-center.first, -center.second);
@@ -24,7 +24,7 @@ void Rect::scale(float factor)
     translate(center.first, center.second);
 }
 
-void Rect::rotate(float teta)
+void Polygon::rotate(float teta)
 {
     pair<float, float> center = barycenter();
     translate(-center.first, -center.second);
@@ -37,27 +37,9 @@ void Rect::rotate(float teta)
 
     translate(center.first, center.second);
 }
-    
-void Rect::clipping(Border border)
-{  
-    regionCodeGenerate(border);
-     cout << "Polygon -> Clipping" << endl;
-    
-    // regionCodeList e normalizePointsList são listas com relação de 1 pra 1, o mesmo indice pode ser utilizado por ambas
-    for (qsizetype i = 0; i < regionCodeList.size(); i++)
-    {        
-        if (i == regionCodeList.size() - 1)
-        {
-            lineClipping(border, i, 0);
-            break;           
-        }
-
-        lineClipping(border, i, i + 1);
-    }
-}
 
 /*
-void Rect::transformWindow(float windowX,float windowY)
+void Polygon::transformWindow(float windowX,float windowY)
 {
     double aux, x2, y2;
 
@@ -65,7 +47,7 @@ void Rect::transformWindow(float windowX,float windowY)
     setCoords(x() - windowX, y() - windowY, x2 - windowX, y2 - windowY);
 }
 
-void Rect::transformViewport(float viewHeight, float viewWidth)
+void Polygon::transformViewport(float viewHeight, float viewWidth)
 {
     double aux, x2, y2;
 

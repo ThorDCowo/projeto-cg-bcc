@@ -1,14 +1,13 @@
-#ifndef POINT_H
-#define POINT_H
+#ifndef POLYGON_H
+#define POLYGON_H
 
 #include "object.h"
+#include <QRect>
 
-#include <QPoint>
-
-class Point : public Object, public QPointF
+class Polygon : public Object, public QRectF
 {
 public:
-    Point(
+    Polygon(
         const QString& name, 
         const QList<pair<float,float>> &pointsList, 
         Qt::GlobalColor color=Qt::black
@@ -16,17 +15,15 @@ public:
         Object(name, pointsList, color)
     {}
 
-    void draw(QPainter &painter);   
+
+    void draw(QPainter &painter);
     void translate(
         float dx, 
         float dy
     );
-    void scale();
-    void rotate();
+    void scale(float factor);
+    void rotate(float teta);
     void clipping(Border border);
-    bool isInsideWindow(vector<bool> pointRegionCode);
-    bool isOutsideWindow(vector<bool> pointRegionCode);
-
 };
 
-#endif // POINT_H
+#endif // POLYGON_H

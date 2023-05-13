@@ -13,7 +13,7 @@
 #include "object.h"
 #include "point.h"
 #include "line.h"
-#include "rect.h"
+#include "polygon.h"
 #include "object_list_factory.h"
 using namespace std;
 

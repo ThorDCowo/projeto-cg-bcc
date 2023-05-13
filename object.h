@@ -17,79 +17,58 @@ class Object
 
 public:
 
-    Object(const QString &name, const QList<pair<float,float>> &pointsList, Qt::GlobalColor color):
-        name(name), pointsList(pointsList), color(color)
+    Object(
+        const QString &name, 
+        const QList<pair<float,float>> &pointsList, 
+        Qt::GlobalColor color
+    ):
+        name(name), 
+        pointsList(pointsList), 
+        color(color)
     {}
-
-    void lineClipping(Border border, qsizetype pointOneIndex, qsizetype pointTwoIndex);
-    virtual void clipping(Border border)=0;
 
     pair<float, float> barycenter();
     void draw(QPainter &painter);
     void rotateWorld(float teta);
     void transformToViewport(pair<float, float> center);
-    void regionCodeGenerate(Border border);
-    void normalize(int width, int height, pair<float, float> center);
-    void debugRegionCodes(vector<bool> pointOneRegionCode, vector<bool> pointTwoRegionCode); 
-    bool isLineFullyInsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
-    bool isLineFullyOutsideWindow(vector<bool> pointOneRC, vector<bool> pointTwoRC);
-    bool hasSomeRegionCodeTruly(vector<bool> regionCode);
-    bool hasTwoRegionCodeTruly(vector<bool> regionCode);
-    pair<float, float> parallelToAxisClipping(
-        Border border, 
-        pair<float, float> insidePoint, 
-        pair<float, float> outsidePoint
-    );
-    pair<float, float> diagonalClipping(
-        Border border, 
-        pair<float, float> insidePoint, 
-        pair<float, float> outsidePoint
+    void normalize(
+        int width, 
+        int height, 
+        pair<float, float> center
     );
 
-    virtual void translate(float dx, float dy)=0;
+    virtual void translate(
+        float dx, 
+        float dy
+    )=0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta)=0;
 
-    virtual void transformFromWorldToViewport(int width, int height, pair<float, float> center);
+    virtual void transformFromWorldToViewport(
+        int width, 
+        int height, 
+        pair<float, float> center
+    );
     
-    inline QString getName()const { return name; }
+    inline QString getName()const{ return name; }
     inline QList<pair<float,float>> getPoints()const { return this->pointsList; }
-    inline QList<pair<float,float>> getNormalizePoints()const { return this->normalizePointsList; }
-    inline QList<vector<bool>> getRegionCode() {return this->regionCodeList;} 
+    inline QList<pair<float,float>> getNormalizedPoints()const { return this->normalizePointsList; } 
     inline Qt::GlobalColor getColor()const { return color; }
 
-    float linearInterpolation(float x, float x0, float x1, float y0, float y1);
+    float linearInterpolation(
+        float x, 
+        float x0, 
+        float x1, 
+        float y0, 
+        float y1
+    );
 
 protected:
     QString name; //id do objeto instanciado
     QList<pair<float,float>> pointsList;
     QList<pair<float,float>> normalizePointsList;
-    QList<vector<bool>> regionCodeList; 
     Qt::GlobalColor color;
 
-    pair<float, float> clippingAbove(
-        Border border,
-        pair<float, float> outsidePoint,
-        float angularCoefficient
-    );
-
-    pair<float, float> clippingBelow(
-        Border border,  
-        pair<float, float> outsidePoint,
-        float angularCoefficient
-    );
-
-    pair<float, float> clippingRight(
-        Border border, 
-        pair<float, float> outsidePoint,
-        float angularCoefficient
-    );
-
-    pair<float, float> clippingLeft(
-        Border border, 
-        pair<float, float> outsidePoint,
-        float angularCoefficient
-    );
 };
 
 #endif // OBJECT_H

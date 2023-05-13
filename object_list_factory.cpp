@@ -3,7 +3,7 @@
 #include "object.h"
 #include "point.h"
 #include "line.h"
-#include "rect.h"
+#include "polygon.h"
 
 using namespace std;
 

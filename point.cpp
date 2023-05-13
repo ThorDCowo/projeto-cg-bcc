@@ -11,19 +11,6 @@ void Point::scale(){}
 
 void Point::rotate(){}
 
-void Point::clipping(Border border){
-    regionCodeGenerate(border);
-    
-    if (isInsideWindow(regionCodeList[0])) 
-        return;
-
-    if (isOutsideWindow(regionCodeList[0]))
-    {
-        normalizePointsList.removeAt(0);
-        return;
-    }
-}
-
 bool Point::isInsideWindow(
     vector<bool> pointRegionCode
 ) {
