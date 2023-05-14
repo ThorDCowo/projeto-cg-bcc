@@ -3,8 +3,8 @@
 #include <iostream>
 #include <QList>
 
-#include "../object.h"
-#include "../infra/clipper/clipper.h"
+#include "../../object.h"
+#include "../../infra/clipper/clipper.h"
 
 class ClippObjectUseCase {
 private:
