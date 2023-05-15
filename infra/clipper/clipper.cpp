@@ -138,7 +138,6 @@ void Clipper::lineClipping(
         }
     }
 
-    pair <float, float> aux = (*pointsList)[pointTwoIndex];
     (*pointsList)[pointTwoIndex] = parallelToAxisClipping(
         border,
         (*pointsList)[pointOneIndex],
@@ -167,12 +166,18 @@ vector<bool> Clipper::generateRegionCode(
 {
     vector<bool> regionCode;
     regionCode.assign(4, 0);
+    cout << "point: " << point.first << " " << point.second << endl;
 
     regionCode.at(0) = point.second > border.getUpper();
     regionCode.at(1) = point.second < border.getLower();
     regionCode.at(2) = point.first > border.getRight();
     regionCode.at(3) = point.first < border.getLeft();
 
+    cout << "regioncodes: " << endl;
+    cout << regionCode.at(0) << endl;
+    cout << regionCode.at(1) << endl;
+    cout << regionCode.at(2) << endl;
+    cout << regionCode.at(3) << endl;
     return regionCode;
 }
 
@@ -305,8 +310,7 @@ pair<float, float> Clipper:: diagonalClipping(
         if(control != outsidePoint) return outsidePoint;
     }
 
-    if (outsidePoint.first < border.getLeft())
-        return clippingLeft(border, outsidePoint, angularCoefficient);
+    return clippingLeft(border, outsidePoint, angularCoefficient);
 
 };
 
