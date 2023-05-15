@@ -10,6 +10,6 @@ void TransformFromWorldToViewportUseCase::execute(
     Border border(width, height, center);
     
     object->normalize(width, height, center);
-    object->transformToViewport(center);
     this->clippObjectUseCase->execute(object, border);
+    object->transformToViewport(center);
 }
