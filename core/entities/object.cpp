@@ -2,8 +2,6 @@
 #include <assert.h>
 
 #include "object.h"
-#include "screen.h"
-#include "border.h"
 
 using namespace std;
 
@@ -13,14 +11,6 @@ void drawNormalizedPoints(
     QPainter &painter);
 
 void drawWorldPoints(QList<pair<float, float>> pointsList, QPainter &painter);
-
-void Object::transformFromWorldToViewport(int width, int height, pair<float, float> center) {
-    Border border(width, height, center);
-    
-    this->normalize(width, height, center);
-    // this->clipping(border); 
-    this->transformToViewport(center);
-}
 
 void Object::draw(QPainter &painter)
 {

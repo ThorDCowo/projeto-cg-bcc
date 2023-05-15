@@ -1,9 +1,9 @@
 #include <QList>
 #include "object_list_factory.h"
-#include "object.h"
-#include "point.h"
-#include "line.h"
-#include "polygon.h"
+#include "../core/entities/object.h"
+#include "../core/entities/point.h"
+#include "../core/entities/line.h"
+#include "../core/entities/polygon.h"
 
 using namespace std;
 

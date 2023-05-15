@@ -1,7 +1,7 @@
 #ifndef OBJECT_TEST_H
 #define OBJECT_TEST_H
 
-#include "../object.h"
+#include "../core/entities/object.h"
 #include "test_suite.h"
 
 class ObjectTest : public TestSuite

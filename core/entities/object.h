@@ -43,12 +43,6 @@ public:
     )=0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta)=0;
-
-    virtual void transformFromWorldToViewport(
-        int width, 
-        int height, 
-        pair<float, float> center
-    );
     
     inline QString getName()const{ return name; }
     inline QList<pair<float,float>> getPoints()const { return this->pointsList; }

@@ -9,12 +9,13 @@
 
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
-#include "screen.h"
-#include "object.h"
-#include "point.h"
-#include "line.h"
-#include "polygon.h"
-#include "object_list_factory.h"
+#include "../screen.h"
+#include "../core/entities/object.h"
+#include "../infra/object_list_factory.h"
+#include "../use_cases/transform_from_world_to_viewport/transform_from_world_to_viewport.use_case.h"
+#include "../use_cases/clipp_object/clipp_object.use_case.h"
+#include "../infra/clipper/clipper.h"
+
 using namespace std;
 
 float MOVE_SPEED = 20.0;
@@ -23,27 +24,14 @@ int HEIGHT = 480; //inicialize with viewport size
 pair <float,float> CENTER = {0,0};
 float TETA = 0.0;
 
-QList<QListWidgetItem*> getCheckedListWidgetItems(QListWidget* listWidget);
 
-void operateInCheckedObjects(
-    Ui::MainWindow* ui, 
-    function<void(Object*)> operation
-);
-
-void applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation);
-void applyOperationInCheckedObjects(
-    QList<QListWidgetItem*> checked, 
-    QList<Object*> list,
-    function<void(Object*)> operation
-);
-void operateInViewport(
-    Ui::MainWindow* ui, 
-    function<void(Screen*)> screen
-);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    transformFromWorldToViewportUseCase(new TransformFromWorldToViewportUseCase(
+        new ClippObjectUseCase(new Clipper())
+    ))
 {
     ui->setupUi(this);
 
@@ -56,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     for (int i = 0; i < list.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
-        list[i]->transformFromWorldToViewport(width, height, center);
+        this->transformFromWorldToViewportUseCase->execute(list[i], width, height, center);
         item->setText(list[i]->getName());
         item->setCheckState(Qt::Unchecked);
         item->setForeground(Qt::white);
@@ -70,62 +58,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void operateInCheckedObjects(
-    Ui::MainWindow* ui, 
-    function<void(Object*)>operation
-) {
-    QList<Object*> objectList = ui->screen->getObjectList();
-    QList<QListWidgetItem*> checked = getCheckedListWidgetItems(ui->objectList); 
-
-   applyOperationInCheckedObjects(
-    checked,
-    objectList,
-    operation
-   );
-
-    ui->screen->setObjectList(objectList);
-}
-
-QList<QListWidgetItem*> getCheckedListWidgetItems(QListWidget* listWidget) {
-    QList<QListWidgetItem*> checked;
-    
-    for(qsizetype i = 0; i < listWidget->count(); i++)
-        if(listWidget->item(i)->checkState()) {
-            checked.append(listWidget->item(i));
-        }
-
-    return checked;
-}
-
-void applyOperationInCheckedObjects(
-    QList<QListWidgetItem*> checked, 
-    QList<Object*> list,
-    function<void(Object*)>operation)
- {
-    for(qsizetype i = 0; i < checked.length(); i++){
-        for (qsizetype j = 0; j < list.length(); j++){
-            if(checked.at(i)->text().compare(list[j]->getName(), Qt::CaseInsensitive) == 0){
-                operation(list[j]);
-            }
-        }
-    }
-}
-
-void applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation) {
-    for (qsizetype i = 0; i < list.length(); i++) {
-        operation(list[i]);
-    }
-}
-
 void MainWindow::on_upButton_clicked()
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
     pair<float, float> center = ui->screen->getCenter();
 
-    operateInCheckedObjects(ui, [width, height, center](Object* object) {
+    operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(0, MOVE_SPEED);
-        object->transformFromWorldToViewport(width, height, center);
+        this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
     });
     update();
 }
@@ -136,9 +77,9 @@ void MainWindow::on_rightButton_clicked()
     int height = ui->screen->getHeight();
     pair<float, float> center = ui->screen->getCenter();
 
-    operateInCheckedObjects(ui, [width, height, center](Object* object) {
+    operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(MOVE_SPEED, 0);
-        object->transformFromWorldToViewport(width, height, center);
+        this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
     });
     update();
 }
@@ -149,9 +90,9 @@ void MainWindow::on_downButton_clicked()
     int height = ui->screen->getHeight();
     pair<float, float> center = ui->screen->getCenter();
 
-    operateInCheckedObjects(ui, [width, height, center](Object* object) {
+    operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(0, -MOVE_SPEED);
-        object->transformFromWorldToViewport(width, height, center);
+        this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
     });
     update();
 }
@@ -162,9 +103,9 @@ void MainWindow::on_leftButton_clicked()
     int height = ui->screen->getHeight();
     pair<float, float> center = ui->screen->getCenter();
 
-    operateInCheckedObjects(ui, [width, height, center](Object* object) {
+    operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
        object->translate(-MOVE_SPEED, 0);
-       object->transformFromWorldToViewport(width, height, center);
+       this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
     });
     update();
 }
@@ -177,9 +118,9 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
 
     operateInCheckedObjects(
         ui, 
-        [value, width, height, center](Object* object) -> void {
+        [this, value, width, height, center](Object* object) -> void {
             object->scale(value);
-            object->transformFromWorldToViewport(width, height, center);
+            this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
         }
     );
     update();
@@ -193,9 +134,9 @@ void MainWindow::on_rotationDial_sliderMoved(int position)
 
     operateInCheckedObjects(
         ui,
-        [position, width, height, center](Object* object) -> void {
+        [this, position, width, height, center](Object* object) -> void {
             object->rotate(position);
-            object->transformFromWorldToViewport(width, height, center);
+            this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
         }
     );
     update();
@@ -212,9 +153,9 @@ void MainWindow::on_windowButton_clicked()
 
     applyOperationInObjects(
         ui->screen->getObjectList(),
-        [width, height](Object* object) -> void {
+        [this, width, height](Object* object) -> void {
             object->rotateWorld(TETA);
-            object->normalize(width, height, CENTER);
+            this->transformFromWorldToViewportUseCase->execute(object, width, height, CENTER);
         }
     );  
 
@@ -250,4 +191,49 @@ void MainWindow::on_zoomSlider_valueChanged(int value)
     update();
 }
 
+void MainWindow::operateInCheckedObjects(
+    Ui::MainWindow* ui, 
+    function<void(Object*)>operation
+) {
+    QList<Object*> objectList = ui->screen->getObjectList();
+    QList<QListWidgetItem*> checked = getCheckedListWidgetItems(ui->objectList); 
 
+   applyOperationInCheckedObjects(
+    checked,
+    objectList,
+    operation
+   );
+
+    ui->screen->setObjectList(objectList);
+}
+
+QList<QListWidgetItem*> MainWindow::getCheckedListWidgetItems(QListWidget* listWidget) {
+    QList<QListWidgetItem*> checked;
+    
+    for(qsizetype i = 0; i < listWidget->count(); i++)
+        if(listWidget->item(i)->checkState()) {
+            checked.append(listWidget->item(i));
+        }
+
+    return checked;
+}
+
+void MainWindow::applyOperationInCheckedObjects(
+    QList<QListWidgetItem*> checked, 
+    QList<Object*> list,
+    function<void(Object*)>operation)
+ {
+    for(qsizetype i = 0; i < checked.length(); i++){
+        for (qsizetype j = 0; j < list.length(); j++){
+            if(checked.at(i)->text().compare(list[j]->getName(), Qt::CaseInsensitive) == 0){
+                operation(list[j]);
+            }
+        }
+    }
+}
+
+void MainWindow::applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation) {
+    for (qsizetype i = 0; i < list.length(); i++) {
+        operation(list[i]);
+    }
+}

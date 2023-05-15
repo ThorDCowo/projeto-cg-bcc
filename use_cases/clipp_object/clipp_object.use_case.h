@@ -3,7 +3,7 @@
 #include <iostream>
 #include <QList>
 
-#include "../../object.h"
+#include "../../core/entities/object.h"
 #include "../../infra/clipper/clipper.h"
 
 class ClippObjectUseCase {

@@ -1,6 +1,6 @@
 #include "framework_test.h"
 #include "object_test.h"
-#include "../line.h"
+#include "../core/entities/line.h"
 #include "../infra/clipper/clipper.test.cpp"
 
 void runTests() {

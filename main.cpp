@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "mainwindow.h"
+#include "presentation/mainwindow.h"
 #include "tests/tests_register.cpp"
 
 int main(int argc, char *argv[])

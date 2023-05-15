@@ -6,8 +6,7 @@
 #include <QRect>
 #include <QList>
 #include <QCheckBox>
-#include <object.h>
-
+#include "core/entities/object.h"
 
 class Screen : public QFrame
 {

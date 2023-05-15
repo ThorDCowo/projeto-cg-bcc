@@ -22,9 +22,11 @@ SOURCES += \
     tests\object_test.cpp \
     tests\tests_register.cpp \
     presentation\mainwindow.cpp \
-    presentation\screen.cpp \
     use_cases\clipp_object\clipp_object.use_case.cpp \
-    main.cpp
+    use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.cpp \
+    use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.test.cpp \
+    main.cpp \
+    screen.cpp
 
 HEADERS += \
     core\entities\border.h \
@@ -35,11 +37,12 @@ HEADERS += \
     infra\clipper\clipper.h \
     infra\object_list_factory.h \
     presentation\mainwindow.h \
-    presentation\screen.h \
     tests\framework_test.h \
     tests\object_test.h \
     tests\test_suite.h \
-    use_cases\clipp_object\clipp_object.use_case.h
+    use_cases\clipp_object\clipp_object.use_case.h \
+    use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.h \
+    screen.h
 
 FORMS += \
     presentation\mainwindow.ui

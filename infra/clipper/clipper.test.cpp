@@ -3,8 +3,8 @@
 #include <cmath>
 
 
-#include "../../object.h"
-#include "../../border.h"
+#include "../../core/entities/object.h"
+#include "../../core/entities/border.h"
 #include "../../tests/framework_test.h"
 #include "../../tests/test_suite.h"
 #include "../../tests/object_test.h"

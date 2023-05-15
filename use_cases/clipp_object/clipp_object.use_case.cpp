@@ -1,7 +1,7 @@
 #include <iostream>
 #include <QList>
 #include "clipp_object.use_case.h"
-#include "../../object.h"
+#include "../../core/entities/object.h"
 
 using namespace std;
 

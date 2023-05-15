@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <QList>
-#include "border.h"
+#include "../../core/entities/object.h"
 
 using namespace std;
 

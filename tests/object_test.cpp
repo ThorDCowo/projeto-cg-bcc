@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "../object.h"
-#include "../border.h"
+#include "../core/entities/object.h"
+#include "../core/entities/border.h"
 #include "framework_test.h"
 #include "test_suite.h"
 #include "object_test.h"

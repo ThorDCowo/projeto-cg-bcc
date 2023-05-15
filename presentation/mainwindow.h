@@ -2,7 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QList>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include "../use_cases/transform_from_world_to_viewport/transform_from_world_to_viewport.use_case.h"
+#include "../screen.h"
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -14,7 +18,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -32,6 +36,25 @@ private slots:
     void on_zoomSlider_valueChanged(int value);
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
+    TransformFromWorldToViewportUseCase* transformFromWorldToViewportUseCase;
+
+    QList<QListWidgetItem*> getCheckedListWidgetItems(QListWidget* listWidget);
+
+    void operateInCheckedObjects(
+        Ui::MainWindow* ui, 
+        function<void(Object*)> operation
+    );
+
+    void applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation);
+    void applyOperationInCheckedObjects(
+        QList<QListWidgetItem*> checked, 
+        QList<Object*> list,
+        function<void(Object*)> operation
+    );
+    void operateInViewport(
+        Ui::MainWindow* ui, 
+        function<void(Screen*)> screen
+    );
 };
 #endif // MAINWINDOW_H

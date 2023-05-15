@@ -360,7 +360,7 @@ gridline-color: rgb(190, 190, 190);</string>
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="icons.qrc">
+        <iconset resource="../icons.qrc">
          <normaloff>:/:/icons/up_arrow.png</normaloff>:/:/icons/up_arrow.png</iconset>
        </property>
       </widget>
@@ -380,7 +380,7 @@ gridline-color: rgb(190, 190, 190);</string>
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="icons.qrc">
+        <iconset resource="../icons.qrc">
          <normaloff>:/:/icons/down_arrow.png</normaloff>:/:/icons/down_arrow.png</iconset>
        </property>
       </widget>
@@ -400,7 +400,7 @@ gridline-color: rgb(190, 190, 190);</string>
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="icons.qrc">
+        <iconset resource="../icons.qrc">
          <normaloff>:/:/icons/right_arrow.png</normaloff>:/:/icons/right_arrow.png</iconset>
        </property>
       </widget>
@@ -420,7 +420,7 @@ gridline-color: rgb(190, 190, 190);</string>
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="icons.qrc">
+        <iconset resource="../icons.qrc">
          <normaloff>:/:/icons/left_arrow.png</normaloff>:/:/icons/left_arrow.png</iconset>
        </property>
       </widget>
@@ -809,7 +809,7 @@ gridline-color: rgb(190, 190, 190);</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons.qrc"/>
+  <include location="../icons.qrc"/>
  </resources>
  <connections/>
  <slots>
