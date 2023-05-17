@@ -6,7 +6,7 @@
 using namespace std;
 
 void ClippObjectUseCase::execute(Object* object, Border border) {
-    QList<pair<float,float>> normalizedPoints = object->getNormalizedPoints();
+    QList<Coordinate> normalizedPoints = object->getNormalizedPoints();
 
     qsizetype size = normalizedPoints.size();
     qsizetype firstIndex = 0;

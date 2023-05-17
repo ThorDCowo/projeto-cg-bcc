@@ -1,5 +1,6 @@
 #ifndef BORDER_H
 #define BORDER_H
+#include "coordinate.h"
 
 #include <iostream>
 using namespace std;
@@ -13,20 +14,19 @@ private:
     float right; 
 
 public:
-    Border(float width, float height, pair<float, float> center) {
-        this->upper = center.second + (height / 2);
-        this->lower = center.second - (height / 2);
-        this->left = center.first - (width / 2);
-        this->right = center.first + (width / 2);
+    Border(float width, float height, Coordinate center) {
+        this->upper = center.y + (height / 2);
+        this->lower = center.y - (height / 2);
+        this->left = center.x - (width / 2);
+        this->right = center.x + (width / 2);
     }
        
-
     float getUpper()const {return this->upper;};
     float getLower()const {return this->lower;};
     float getLeft()const {return this->left;};
     float getRight()const {return this->right;};
 
-    void setBorder(float width, float height, pair<float, float> center);
+    void setBorder(float width, float height, Coordinate center);
 };
 
 #endif // BORDER_H

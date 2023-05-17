@@ -11,7 +11,7 @@
 #include "mainwindow.h"
 #include "../screen.h"
 #include "../core/entities/object.h"
-#include "../infra/object_list_factory.h"
+#include "../infra/object_list_factory/object_list_factory.h"
 #include "../use_cases/transform_from_world_to_viewport/transform_from_world_to_viewport.use_case.h"
 #include "../use_cases/clipp_object/clipp_object.use_case.h"
 #include "../infra/clipper/clipper.h"
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
-    pair<float, float> center = ui->screen->getCenter();
+    Coordinate center = ui->screen->getCenter();
 
     for (int i = 0; i < list.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
@@ -62,7 +62,7 @@ void MainWindow::on_upButton_clicked()
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
-    pair<float, float> center = ui->screen->getCenter();
+    Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(0, MOVE_SPEED);
@@ -75,7 +75,7 @@ void MainWindow::on_rightButton_clicked()
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
-    pair<float, float> center = ui->screen->getCenter();
+    Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(MOVE_SPEED, 0);
@@ -88,7 +88,7 @@ void MainWindow::on_downButton_clicked()
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
-    pair<float, float> center = ui->screen->getCenter();
+    Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(0, -MOVE_SPEED);
@@ -101,7 +101,7 @@ void MainWindow::on_leftButton_clicked()
 {    
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
-    pair<float, float> center = ui->screen->getCenter();
+    Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
        object->translate(-MOVE_SPEED, 0);
@@ -114,7 +114,7 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
-    pair<float, float> center = ui->screen->getCenter();
+    Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(
         ui, 
@@ -130,12 +130,13 @@ void MainWindow::on_rotationDial_sliderMoved(int position)
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
-    pair<float, float> center = ui->screen->getCenter();
+    Coordinate center = ui->screen->getCenter();
+    Coordinate axis(0,0,1);
 
     operateInCheckedObjects(
         ui,
         [this, position, width, height, center](Object* object) -> void {
-            object->rotate(position);
+            object->rotate(position, axis);
             this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
         }
     );
@@ -150,11 +151,12 @@ void MainWindow::on_windowButton_clicked()
     ui->screen->setCenter(CENTER);
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
+    Coordinate axis(0,0,1);
 
     applyOperationInObjects(
         ui->screen->getObjectList(),
         [this, width, height](Object* object) -> void {
-            object->rotateWorld(TETA);
+            object->rotateWorld(TETA, axis);
             this->transformFromWorldToViewportUseCase->execute(object, width, height, CENTER);
         }
     );  
@@ -165,13 +167,13 @@ void MainWindow::on_windowButton_clicked()
 void MainWindow::on_centerXLineEdit_textEdited(const QString &input)
 {
     bool ok;
-    CENTER.first = input.toFloat(&ok);
+    CENTER.x = input.toFloat(&ok);
 }
 
 void MainWindow::on_centerYLineEdit_textEdited(const QString &input)
 {
     bool ok;
-    CENTER.second = input.toFloat(&ok);
+    CENTER.y = input.toFloat(&ok);
 }
 
 void MainWindow::on_angleLineEdit_textChanged(const QString &input)

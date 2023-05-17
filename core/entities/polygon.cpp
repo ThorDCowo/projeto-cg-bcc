@@ -1,41 +1,67 @@
 #include "Polygon.h"
 #include <iostream>
 #include <QtMath>
+#include "coordinate.h"
 
 using namespace std;
 
-void Polygon::translate(float dx, float dy)
+void Polygon::translate(float dx, float dy, float dz)
 {
     for(qsizetype i = 0; i < pointsList.size(); i++){
-            pointsList[i] = pair<float, float>(pointsList[i].first + dx, pointsList[i].second + dy);
+            pointsList[i] = Coordinate(pointsList[i].x + dx, pointsList[i].y + dy, pointsList[i].z + dz);
     }
 }
 
 void Polygon::scale(float factor)
-{
-    pair<float, float> center = barycenter();
-    translate(-center.first, -center.second);
+{ 
+    Coordinate center = barycenter();
+    translate(-center.x, -center.y, -center.z);
     factor = factor/100;
     factor = 1 + factor;
 
     for(qsizetype i = 0; i < pointsList.size(); i++){
-        pointsList[i] = pair<float, float>(pointsList[i].first * factor, pointsList[i].second * factor);
+        pointsList[i] = Coordinate(pointsList[i].x * factor, pointsList[i].y * factor, pointsList[i].z * factor);
     }
-    translate(center.first, center.second);
+    translate(center.x, center.y, center.z);
 }
 
-void Polygon::rotate(float teta)
+void Polygon::rotate(float teta, Coordinate axis)
 {
-    pair<float, float> center = barycenter();
-    translate(-center.first, -center.second);
-
     float radians = qDegreesToRadians(teta);
-    for(qsizetype i = 0; i < pointsList.size(); i++){
-        pointsList[i] = pair<float, float>(pointsList[i].first * qCos(radians) - (pointsList[i].second * qSin(radians)), 
-                                        pointsList[i].first * qSin(radians) + (pointsList[i].second * qCos(radians)));
+    Coordinate center = barycenter();
+    translate(-center.x, -center.y, -center.z);
+
+    if(axis.x) {
+        for(qsizetype i = 0; i < pointsList.size(); i++){
+            pointsList[i] = Coordinate(
+                pointsList[i].x,
+                pointsList[i].y * qCos(radians) - (pointsList[i].z * qSin(radians)),
+                pointsList[i].y * qSin(radians) + (pointsList[i].z * qCos(radians))
+            );
+        }
+        
+        return;
+    } if(axis.y) {
+        for(qsizetype i = 0; i < pointsList.size(); i++){
+            pointsList[i] = Coordinate(
+                pointsList[i].x * qCos(radians) + (pointsList[i].z * qSin(radians)),
+                pointsList[i].y,
+                pointsList[i].z * qCos(radians) - (pointsList[i].x * qSin(radians))
+            );
+        }
+        
+        return;
     }
 
-    translate(center.first, center.second);
+    for(qsizetype i = 0; i < pointsList.size(); i++){
+        pointsList[i] = Coordinate(
+            pointsList[i].x * qCos(radians) - (pointsList[i].y * qSin(radians)),
+            pointsList[i].x * qSin(radians) + (pointsList[i].y * qCos(radians)),
+            pointsList[i].z
+        );
+    }
+
+    translate(center.x, center.y, center.z);
 }
 
 /*

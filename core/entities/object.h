@@ -9,6 +9,7 @@
 #include <QPainter>
 #include <QList>
 #include "border.h"
+#include "coordinate.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ public:
 
     Object(
         const QString &name, 
-        const QList<pair<float,float>> &pointsList, 
+        const QList<Coordinate> &pointsList, 
         Qt::GlobalColor color
     ):
         name(name), 
@@ -27,26 +28,29 @@ public:
         color(color)
     {}
 
-    pair<float, float> barycenter();
+    Coordinate barycenter();
     void draw(QPainter &painter);
-    void rotateWorld(float teta);
-    void transformToViewport(pair<float, float> center);
+    void rotateWorld(float teta, Coordinate axis);
+    void transformToViewport(Coordinate center);
+    void orthogonalProjection(Coordinate axis);
     void normalize(
         int width, 
         int height, 
-        pair<float, float> center
+        Coordinate center,
+        Coordinate axis
     );
 
     virtual void translate(
         float dx, 
-        float dy
+        float dy,
+        float dz
     )=0;
     virtual void scale(float factor)=0;
-    virtual void rotate(float teta)=0;
+    virtual void rotate(float teta, Coordinate axis)=0;
     
     inline QString getName()const{ return name; }
-    inline QList<pair<float,float>> getPoints()const { return this->pointsList; }
-    inline QList<pair<float,float>> getNormalizedPoints()const { return this->normalizePointsList; } 
+    inline QList<Coordinate> getPoints()const { return this->pointsList; }
+    inline QList<Coordinate> getNormalizedPoints()const { return this->normalizePointsList; } 
     inline Qt::GlobalColor getColor()const { return color; }
 
     float linearInterpolation(
@@ -59,8 +63,8 @@ public:
 
 protected:
     QString name; //id do objeto instanciado
-    QList<pair<float,float>> pointsList;
-    QList<pair<float,float>> normalizePointsList;
+    QList<Coordinate> pointsList;
+    QList<Coordinate> normalizePointsList;
     Qt::GlobalColor color;
 
 };

@@ -16,7 +16,7 @@ public:
         Object* object,
         int width,
         int height,
-        pair<float, float> center
+        Coordinate center
     );
 
 };

@@ -6,7 +6,7 @@
 void runTests() {
     FrameworkTest frameworkTest;
 
-    Line line("line", QList<pair<float,float>>{pair<float,float>(0,0), pair<float,float>(1,1)});
+    Line line("line", QList<Coordinate>{pair<float,float>(0,0), pair<float,float>(1,1)});
     ObjectTest objectTest(&line);
 
     Clipper clipper;

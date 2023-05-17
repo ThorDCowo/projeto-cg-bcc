@@ -13,17 +13,17 @@ class Clipper
 public:
     void pointClipping(
         Border border, 
-        QList<pair<float, float>>* pointsList
+        QList<Coordinate>* pointsList
     );
     void lineClipping(
         Border border, 
         qsizetype pointOneIndex, 
         qsizetype pointTwoIndex,    
-        QList<pair<float, float>>* pointsList
+        QList<Coordinate>* pointsList
     );
     void polygonClipping(
         Border border, 
-        QList<pair<float, float>>* pointsList
+        QList<Coordinate>* pointsList
     );    
 
 protected:
@@ -31,12 +31,12 @@ protected:
 
     vector<bool> generateRegionCode(
         Border border, 
-        pair<float, float> point
+        Coordinate point
     );
     QList<vector<bool>> generateRegionCodeList(
         Border border, 
-        pair<float, float> pointOneIndex, 
-        pair<float, float> pointTwoIndex
+        Coordinate pointOneIndex, 
+        Coordinate pointTwoIndex
     );
     void debugRegionCodes(
         vector<bool> pointOneRegionCode, 
@@ -63,42 +63,42 @@ protected:
     bool hasTwoRegionCodeTruly(
         vector<bool> regionCode
     );
-    pair<float, float> parallelToAxisClipping(
+    Coordinate parallelToAxisClipping(
         Border border, 
-        pair<float, float> insidePoint, 
-        pair<float, float> outsidePoint
+        Coordinate insidePoint, 
+        Coordinate outsidePoint
     );
-    pair<float, float> diagonalClipping(
+    Coordinate diagonalClipping(
         Border border, 
-        pair<float, float> insidePoint, 
-        pair<float, float> outsidePoint
+        Coordinate insidePoint, 
+        Coordinate outsidePoint
     );
 
     inline QList<vector<bool>> getRegionCode(){
         return this->regionCodeList;
     }
 
-    pair<float, float> clippingAbove(
+    Coordinate clippingAbove(
         Border border,
-        pair<float, float> outsidePoint,
+        Coordinate outsidePoint,
         float angularCoefficient
     );
 
-    pair<float, float> clippingBelow(
+    Coordinate clippingBelow(
         Border border,  
-        pair<float, float> outsidePoint,
+        Coordinate outsidePoint,
         float angularCoefficient
     );
 
-    pair<float, float> clippingRight(
+    Coordinate clippingRight(
         Border border, 
-        pair<float, float> outsidePoint,
+        Coordinate outsidePoint,
         float angularCoefficient
     );
 
-    pair<float, float> clippingLeft(
+    Coordinate clippingLeft(
         Border border, 
-        pair<float, float> outsidePoint,
+        Coordinate outsidePoint,
         float angularCoefficient
     );
 

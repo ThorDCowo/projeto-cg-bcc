@@ -4,7 +4,7 @@ void TransformFromWorldToViewportUseCase::execute(
     Object* object,
     int width,
     int height,
-    pair<float, float> center
+    Coordinate center
 )
 {
     Border border(width, height, center);

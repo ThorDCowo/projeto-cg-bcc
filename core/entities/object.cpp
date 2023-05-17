@@ -2,15 +2,16 @@
 #include <assert.h>
 
 #include "object.h"
+#include "coordinate.h"
 
 using namespace std;
 
 void drawNormalizedPoints(
-    QList<pair<float, float>> pointsList,
-    QList<pair<float, float>> normalizePointsList,
+    QList<Coordinate> pointsList,
+    QList<Coordinate> normalizePointsList,
     QPainter &painter);
 
-void drawWorldPoints(QList<pair<float, float>> pointsList, QPainter &painter);
+void drawWorldPoints(QList<Coordinate> pointsList, QPainter &painter);
 
 void Object::draw(QPainter &painter)
 {
@@ -19,101 +20,151 @@ void Object::draw(QPainter &painter)
 }
 
 void drawNormalizedPoints(
-    QList<pair<float, float>> pointsList,
-    QList<pair<float, float>> normalizePointsList,
+    QList<Coordinate> pointsList,
+    QList<Coordinate> normalizePointsList,
     QPainter &painter)
 {
     for (qsizetype i = 0; i < normalizePointsList.size(); i++)
     {
         if (i == pointsList.size() - 1)
         {
-            painter.drawLine(normalizePointsList[i].first, normalizePointsList[i].second,
-                             normalizePointsList[0].first, normalizePointsList[0].second);
+            painter.drawLine(normalizePointsList[i].x, normalizePointsList[i].y,
+                             normalizePointsList[0].x, normalizePointsList[0].y);
             continue;
         }
 
-        painter.drawLine(normalizePointsList[i].first, normalizePointsList[i].second,
-                         normalizePointsList[i + 1].first, normalizePointsList[i + 1].second);
+        painter.drawLine(normalizePointsList[i].x, normalizePointsList[i].y,
+                         normalizePointsList[i + 1].x, normalizePointsList[i + 1].y);
     }
 }
 
-void drawWorldPoints(QList<pair<float, float>> pointsList, QPainter &painter)
+void drawWorldPoints(QList<Coordinate> pointsList, QPainter &painter)
 {
     for (qsizetype i = 0; i < pointsList.size(); i++)
     {
         if (i == pointsList.size() - 1)
         {
-            painter.drawLine(pointsList[i].first, pointsList[i].second,
-                             pointsList[0].first, pointsList[0].second);
+            painter.drawLine(pointsList[i].x, pointsList[i].y,
+                             pointsList[0].x, pointsList[0].y);
             continue;
         }
 
-        painter.drawLine(pointsList[i].first, pointsList[i].second,
-                         pointsList[i + 1].first, pointsList[i + 1].second);
+        painter.drawLine(pointsList[i].x, pointsList[i].y,
+                         pointsList[i + 1].x, pointsList[i + 1].y);
     }
 }
 
-void Object::normalize(int windowWidth, int windowHeight, pair<float, float> center)
+void Object::normalize(int windowWidth, int windowHeight, Coordinate center, Coordinate axis)
 {
-    normalizePointsList.erase(normalizePointsList.begin(), normalizePointsList.end());
+    orthogonalProjection(axis);
     float newX = 0.0;
     float newY = 0.0;
     float viewportWidth = 854.0;
     float viewportHeight = 480.0;
-    float windowXBegin = center.first - (viewportWidth / 2);
-    float windowYBegin = center.second - (viewportHeight / 2);
+    float windowXBegin = center.x - (viewportWidth / 2);
+    float windowYBegin = center.y - (viewportHeight / 2);
 
     for (qsizetype i = 0; i < pointsList.size(); i++)
     {
-        // newX = linearInterpolation(pointsList[i].first, 0, windowWidth, -1, 1);
-        newX = (pointsList[i].first - windowXBegin) / (windowWidth)*viewportWidth;
-        newY = (pointsList[i].second - windowYBegin) / (windowHeight)*viewportHeight;
+        newX = (normalizePointsList[i].x - windowXBegin) / (windowWidth)*viewportWidth;
+        newY = (normalizePointsList[i].y - windowYBegin) / (windowHeight)*viewportHeight;
 
-        // cout << "(" << newX << ", " << newY << ")" << endl;
-        // newY = linearInterpolation(pointsList[i].second, 0, windowHeight, -1, 1);
-        normalizePointsList.append(pair<float, float>(newX, newY));
+        normalizePointsList.replace(i, Coordinate(newX, newY, 0));
     }
 }
 
-void Object::rotateWorld(float teta)
+void Object::orthogonalProjection(Coordinate axis){
+    normalizePointsList.erase(normalizePointsList.begin(), normalizePointsList.end());
+
+    if(axis.x) {
+        for (qsizetype i = 0; i < pointsList.size(); i++)
+            normalizePointsList.append(Coordinate(pointsList[i].y, pointsList[i].z, 0));
+        return;    
+
+    }
+
+    if(axis.y) {
+        for (qsizetype i = 0; i < pointsList.size(); i++)
+            normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].z, 0));
+        return; 
+    }
+
+    for (qsizetype i = 0; i < pointsList.size(); i++)
+        normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].y, 0));
+    return;   
+}
+
+void Object::rotateWorld(float teta, Coordinate axis)
 {
     float radians = qDegreesToRadians(teta);
 
-    for (qsizetype i = 0; i < pointsList.size(); i++)
-    {
-        pointsList[i] = pair<float, float>(pointsList[i].first * qCos(radians) - (pointsList[i].second * qSin(radians)),
-                                           pointsList[i].first * qSin(radians) + (pointsList[i].second * qCos(radians)));
+    if(axis.x) {
+        for(qsizetype i = 0; i < pointsList.size(); i++){
+            pointsList[i] = Coordinate(
+                pointsList[i].x,
+                pointsList[i].y * qCos(radians) - (pointsList[i].z * qSin(radians)),
+                pointsList[i].y * qSin(radians) + (pointsList[i].z * qCos(radians))
+            );
+        }
+        
+        return;
+    } if(axis.y) {
+        for(qsizetype i = 0; i < pointsList.size(); i++){
+            pointsList[i] = Coordinate(
+                pointsList[i].x * qCos(radians) + (pointsList[i].z * qSin(radians)),
+                pointsList[i].y,
+                pointsList[i].z * qCos(radians) - (pointsList[i].x * qSin(radians))
+            );
+        }
+        
+        return;
     }
+
+    for(qsizetype i = 0; i < pointsList.size(); i++){
+        pointsList[i] = Coordinate(
+            pointsList[i].x * qCos(radians) - (pointsList[i].y * qSin(radians)),
+            pointsList[i].x * qSin(radians) + (pointsList[i].y * qCos(radians)),
+            pointsList[i].z
+        );
+    }
+
+    // for (qsizetype i = 0; i < pointsList.size(); i++)
+    // {
+    //     pointsList[i] = Coordinate(pointsList[i].x * qCos(radians) - (pointsList[i].y * qSin(radians)),
+    //                                        pointsList[i].x * qSin(radians) + (pointsList[i].y * qCos(radians)));
+    // }
 }
 
-void Object::transformToViewport(pair<float, float> center)
+void Object::transformToViewport(Coordinate center)
 {
     int viewportWidth = 854;
     int viewportHeight = 480;
 
-    float windowXBegin = center.first - (viewportWidth / 2);
-    float windowXEnd = center.first + (viewportWidth / 2);
-    float windowYBegin = center.second - (viewportHeight / 2);
-    float windowYEnd = center.second + (viewportHeight / 2);
+    float windowXBegin = center.x - (viewportWidth / 2);
+    float windowXEnd = center.x + (viewportWidth / 2);
+    float windowYBegin = center.y - (viewportHeight / 2);
+    float windowYEnd = center.y + (viewportHeight / 2);
 
     for (qsizetype i = 0; i < normalizePointsList.size(); i++)
     {
-        normalizePointsList[i].first = windowXBegin + (normalizePointsList[i].first - windowXBegin) / (windowXEnd - windowXBegin) * viewportWidth;
-        normalizePointsList[i].second = windowYBegin + (1 - (normalizePointsList[i].second - windowYBegin) / (windowYEnd - windowYBegin)) * viewportHeight;
+        normalizePointsList[i].x = windowXBegin + (normalizePointsList[i].x - windowXBegin) / (windowXEnd - windowXBegin) * viewportWidth;
+        normalizePointsList[i].y = windowYBegin + (1 - (normalizePointsList[i].y - windowYBegin) / (windowYEnd - windowYBegin)) * viewportHeight;
     }
 }
 
-pair<float, float> Object::barycenter()
+Coordinate Object::barycenter()
 {
-    pair<float, float> center;
+    Coordinate center(0,0,0);
 
     for (qsizetype i = 0; i < pointsList.size(); i++)
     {
-        center.first += pointsList[i].first;
-        center.second += pointsList[i].second;
+        center.x += pointsList[i].x;
+        center.y += pointsList[i].y;
+        center.z += pointsList[i].z;
     }
-    center.first = (center.first / pointsList.size());
-    center.second = (center.second / pointsList.size());
+    center.x = (center.x / pointsList.size());
+    center.y = (center.y / pointsList.size());
+    center.z = (center.z / pointsList.size());
 
     return center;
 }

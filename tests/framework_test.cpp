@@ -40,18 +40,18 @@ bool FrameworkTest::expectToBeEqual(const char* testMessage, qsizetype value, qs
     return result;
 }
 
-bool FrameworkTest::expectToBeEqual(const char* testMessage, pair<float, float> value, pair<float, float> expectedValue)
+bool FrameworkTest::expectToBeEqual(const char* testMessage, Coordinate value, Coordinate expectedValue)
 {
     bool result = 
-        (value.first == expectedValue.first) &&
-        (value.second == expectedValue.second);
+        (value.x == expectedValue.x) &&
+        (value.y == expectedValue.y);
 
     cout << testMessage << ": ";
 
     if (!result) {
         cout << "Falhou!" << endl;
-        cout << "Valor Recebido: (" << value.first << ", " << value.second << ")" << endl;
-        cout << "Valor Esperado: (" << expectedValue.first << ", " << expectedValue.second << ")" << endl;
+        cout << "Valor Recebido: (" << value.x << ", " << value.y << ")" << endl;
+        cout << "Valor Esperado: (" << expectedValue.x << ", " << expectedValue.y << ")" << endl;
         return false;
     }
 

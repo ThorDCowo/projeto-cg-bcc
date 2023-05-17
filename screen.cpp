@@ -29,8 +29,8 @@ void Screen::setHeight(int height)
     this->height = height;
 }
 
-void Screen::setCenter(pair<float, float> center) 
+void Screen::setCenter(Coordinate center) 
 {
-    this->center.first = center.first; 
-    this->center.second = center.second;
+    this->center.x = center.x; 
+    this->center.y = center.y;
 }

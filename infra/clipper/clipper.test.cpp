@@ -45,21 +45,21 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
         qsizetype outsidePointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> insidePoint(5, 7);
-        pair<float, float> outsidePoint(-5, 2);
+        Coordinate insidePoint(5, 7);
+        Coordinate outsidePoint(-5, 2);
 
         pointsList.append(insidePoint);
         pointsList.append(outsidePoint);
         
-        pair<float, float> expectedValue(0, 4.5);
+        Coordinate expectedValue(0, 4.5);
 
         this->clipper->lineClipping(
             border,
@@ -80,22 +80,22 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype upperLeftPointIndex = 0;
         qsizetype lowerRightPointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> upperLeftPoint(-6, 14);
-        pair<float, float> lowerRightPoint(20, -5);
+        Coordinate upperLeftPoint(-6, 14);
+        Coordinate lowerRightPoint(20, -5);
 
         pointsList.append(upperLeftPoint);
         pointsList.append(lowerRightPoint);
         
-        pair<float, float> expectedValueForLowerRightPoint(1315, 0);
-        pair<float, float> expectedValueForUpperLeftPoint(0, 961);
+        Coordinate expectedValueForLowerRightPoint(1315, 0);
+        Coordinate expectedValueForUpperLeftPoint(0, 961);
 
         this->clipper->lineClipping(
             border,
@@ -104,11 +104,11 @@ public:
             &pointsList
         );
 
-        pointsList[lowerRightPointIndex].first = truncl(pointsList[lowerRightPointIndex].first * 100);
-        pointsList[lowerRightPointIndex].second = truncl(pointsList[lowerRightPointIndex].second * 100);
+        pointsList[lowerRightPointIndex].x = truncl(pointsList[lowerRightPointIndex].x * 100);
+        pointsList[lowerRightPointIndex].y = truncl(pointsList[lowerRightPointIndex].y * 100);
         
-        pointsList[upperLeftPointIndex].first = truncl(pointsList[upperLeftPointIndex].first * 100);
-        pointsList[upperLeftPointIndex].second = truncl(pointsList[upperLeftPointIndex].second * 100);
+        pointsList[upperLeftPointIndex].x = truncl(pointsList[upperLeftPointIndex].x * 100);
+        pointsList[upperLeftPointIndex].y = truncl(pointsList[upperLeftPointIndex].y * 100);
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clippling o clipping por baixo alterarndo o ponto (20, -5) para (13.15, 0)",
@@ -128,21 +128,21 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
         qsizetype outsidePointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> insidePoint(2, 2);
-        pair<float, float> outsidePoint(6, -2);
+        Coordinate insidePoint(2, 2);
+        Coordinate outsidePoint(6, -2);
 
         pointsList.append(insidePoint);
         pointsList.append(outsidePoint);
         
-        pair<float, float> expectedValue(4, 0);
+        Coordinate expectedValue(4, 0);
 
         this->clipper->lineClipping(
             border,
@@ -163,21 +163,21 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
         qsizetype outsidePointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> insidePoint(11, 4);
-        pair<float, float> outsidePoint(20, 13);
+        Coordinate insidePoint(11, 4);
+        Coordinate outsidePoint(20, 13);
 
         pointsList.append(insidePoint);
         pointsList.append(outsidePoint);
         
-        pair<float, float> expectedValue(15, 8);
+        Coordinate expectedValue(15, 8);
 
         this->clipper->lineClipping(
             border,
@@ -198,21 +198,21 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
         qsizetype outsidePointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> insidePoint(8, 7);
-        pair<float, float> outsidePoint(8, 12);
+        Coordinate insidePoint(8, 7);
+        Coordinate outsidePoint(8, 12);
 
         pointsList.append(insidePoint);
         pointsList.append(outsidePoint);
         
-        pair<float, float> expectedValue(8, 10);
+        Coordinate expectedValue(8, 10);
 
         this->clipper->lineClipping(
             border,
@@ -233,21 +233,21 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
         qsizetype outsidePointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> insidePoint(13, 3);
-        pair<float, float> outsidePoint(17, 3);
+        Coordinate insidePoint(13, 3);
+        Coordinate outsidePoint(17, 3);
 
         pointsList.append(insidePoint);
         pointsList.append(outsidePoint);
         
-        pair<float, float> expectedValue(15, 3);
+        Coordinate expectedValue(15, 3);
 
         this->clipper->lineClipping(
             border,
@@ -268,21 +268,21 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
         qsizetype outsidePointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> insidePoint(1, 1);
-        pair<float, float> outsidePoint(-4, -4);
+        Coordinate insidePoint(1, 1);
+        Coordinate outsidePoint(-4, -4);
 
         pointsList.append(insidePoint);
         pointsList.append(outsidePoint);
         
-        pair<float, float> expectedValue(0, 0);
+        Coordinate expectedValue(0, 0);
 
         this->clipper->lineClipping(
             border,
@@ -303,16 +303,16 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype upperPointIndex = 0;
         qsizetype upperRightPointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> upperPoint(3, 14);
-        pair<float, float> upperRightPoint(18, 15);
+        Coordinate upperPoint(3, 14);
+        Coordinate upperRightPoint(18, 15);
 
         pointsList.append(upperPoint);
         pointsList.append(upperRightPoint);
@@ -338,16 +338,16 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype leftPointIndex = 0;
         qsizetype upperPointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> left(5, 13);
-        pair<float, float> upperPoint(-5, 8);
+        Coordinate left(5, 13);
+        Coordinate upperPoint(-5, 8);
 
         pointsList.append(left);
         pointsList.append(upperPoint);
@@ -373,16 +373,16 @@ public:
     {
         int width = 15;
         int height = 10;
-        pair<float, float> center = {7.5, 5.0};
+        Coordinate center = {7.5, 5.0};
         Border border(width, height, center);
 
         qsizetype lowerPointIndex = 0;
         qsizetype rightPointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> rightPoint(17, 1);
-        pair<float, float> lowerPoint(14, -4);
+        Coordinate rightPoint(17, 1);
+        Coordinate lowerPoint(14, -4);
 
         pointsList.append(rightPoint);
         pointsList.append(lowerPoint);
@@ -409,16 +409,16 @@ public:
     {
         int width = 854;
         int height = 480;
-        pair<float, float> center = {427, 240};
+        Coordinate center = {427, 240};
         Border border(width, height, center);
 
         qsizetype rightPointIndex = 0;
         qsizetype lowerRightPointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> rightPoint(1000, 100);
-        pair<float, float> lowerRightPoint(900, -100);
+        Coordinate rightPoint(1000, 100);
+        Coordinate lowerRightPoint(900, -100);
 
         pointsList.append(rightPoint);
         pointsList.append(lowerRightPoint);
@@ -443,16 +443,16 @@ public:
     {
         int width = 854;
         int height = 480;
-        pair<float, float> center = {427, 240};
+        Coordinate center = {427, 240};
         Border border(width, height, center);
 
         qsizetype upperLeftPointIndex = 0;
         qsizetype lowerRightPointIndex = 1;
 
-        QList<pair<float,float>> pointsList;
+        QList<Coordinate> pointsList;
 
-        pair<float, float> upperLeftPoint(-1100, 666);
-        pair<float, float> lowerRightPoint(960, -700);
+        Coordinate upperLeftPoint(-1100, 666);
+        Coordinate lowerRightPoint(960, -700);
 
         pointsList.append(upperLeftPoint);
         pointsList.append(lowerRightPoint);

@@ -3,6 +3,7 @@
 
 #include "object.h"
 #include "border.h"
+#include "coordinate.h"
 
 #include <QLine>
 
@@ -11,7 +12,7 @@ class Line: public Object, public QLineF
 public:
     Line(
         const QString& name, 
-        const QList<pair<float,float>> &pointsList, 
+        const QList<Coordinate> &pointsList, 
         Qt::GlobalColor color=Qt::black
     ):
         Object(name, pointsList, color)
@@ -20,11 +21,11 @@ public:
     void draw(QPainter &painter);
     void translate(
         float dx, 
-        float dy
+        float dy,
+        float dz
     );
     void scale(float factor);
-    void rotate(float teta);
-    void clipping(Border border);
+    void rotate(float teta, Coordinate axis);
 };
 
 #endif // LINE_H
