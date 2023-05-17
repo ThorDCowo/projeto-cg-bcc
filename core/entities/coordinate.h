@@ -18,6 +18,14 @@ public:
     z(zCoord)
  {}
 
+  bool operator==(const Coordinate& other) const {
+      return (x == other.x && y == other.y && z == other.z);
+  }
+
+  bool operator!=(const Coordinate& other) const {
+    return (x != other.x || y != other.y || z != other.z);
+  }
+
 };
 
 #endif// COORDINATE_H

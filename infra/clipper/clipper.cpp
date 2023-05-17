@@ -1,5 +1,4 @@
 #include "clipper.h"
-#include "coordinate.h"
 
 void Clipper::pointClipping(
     Border border,
@@ -73,7 +72,7 @@ void Clipper::lineClipping(
 
     //Ou aceita (atualiza) ambos os pontos ou nao aceita nada remove ambos
     if(isLineFullyDiagonal(regionCodeList[regionCodeFirstIndex], regionCodeList[regionCodeSecondIndex])){
-        pair <float, float> control = (*pointsList)[pointOneIndex];
+        Coordinate control = (*pointsList)[pointOneIndex];
         cout << "Fully Diagonal" << endl;
         (*pointsList)[pointOneIndex] = diagonalClipping(
             border,
@@ -96,7 +95,7 @@ void Clipper::lineClipping(
     }
 
     if(hasTwoRegionCodeTruly(regionCodeList[regionCodeFirstIndex])){
-        pair <float, float> control = (*pointsList)[pointOneIndex];
+        Coordinate control = (*pointsList)[pointOneIndex];
         (*pointsList)[pointOneIndex] = diagonalClipping(
             border,
             (*pointsList)[pointTwoIndex],
@@ -111,7 +110,7 @@ void Clipper::lineClipping(
     }
 
     if(hasTwoRegionCodeTruly(regionCodeList[regionCodeSecondIndex])){
-        pair <float, float> control = (*pointsList)[pointTwoIndex];
+        Coordinate control = (*pointsList)[pointTwoIndex];
         (*pointsList)[pointTwoIndex] = diagonalClipping(
             border,
             (*pointsList)[pointOneIndex],
@@ -126,7 +125,7 @@ void Clipper::lineClipping(
     }
 
     if(hasSomeRegionCodeTruly(regionCodeList[regionCodeFirstIndex])){
-        pair <float, float> aux = (*pointsList)[pointOneIndex];
+        Coordinate aux = (*pointsList)[pointOneIndex];
         (*pointsList)[pointOneIndex] = parallelToAxisClipping(
             border,
             (*pointsList)[pointTwoIndex],
@@ -167,10 +166,10 @@ vector<bool> Clipper::generateRegionCode(
 {
     vector<bool> regionCode;
     regionCode.assign(4, 0);
-    cout << "point: " << point.x << " " << point.second << endl;
+    cout << "point: " << point.x << " " << point.y << endl;
 
-    regionCode.at(0) = point.second > border.getUpper();
-    regionCode.at(1) = point.second < border.getLower();
+    regionCode.at(0) = point.y > border.getUpper();
+    regionCode.at(1) = point.y < border.getLower();
     regionCode.at(2) = point.x > border.getRight();
     regionCode.at(3) = point.x < border.getLeft();
 
@@ -262,14 +261,14 @@ Coordinate Clipper::parallelToAxisClipping(
 {
     cout << "Vertical or Horizontal Clipping " << endl;
     float angularCoefficient = (
-        (insidePoint.second - outsidePoint.second) /
+        (insidePoint.y - outsidePoint.y) /
         (insidePoint.x - outsidePoint.x)
     );
 
-    if (outsidePoint.second > border.getUpper())
+    if (outsidePoint.y > border.getUpper())
         return clippingAbove(border,  outsidePoint, angularCoefficient);
 
-    if (outsidePoint.second < border.getLower())
+    if (outsidePoint.y < border.getLower())
         return clippingBelow(border, outsidePoint, angularCoefficient);
 
     if (outsidePoint.x > border.getRight())
@@ -286,20 +285,20 @@ Coordinate Clipper:: diagonalClipping(
 )
 {
     cout << "Diagonal Clipping " << endl;
-    pair <float, float> control = outsidePoint;
+    Coordinate control = outsidePoint;
 
     float angularCoefficient = (
-        (insidePoint.second - outsidePoint.second) /
+        (insidePoint.y - outsidePoint.y) /
         (insidePoint.x - outsidePoint.x)
     );
 
-    if (outsidePoint.second > border.getUpper()){
+    if (outsidePoint.y > border.getUpper()){
         outsidePoint = clippingAbove(border, outsidePoint, angularCoefficient);
         
         if(control != outsidePoint) return outsidePoint;
     }
 
-    if (outsidePoint.second < border.getLower()){
+    if (outsidePoint.y < border.getLower()){
         outsidePoint = clippingBelow(border, outsidePoint, angularCoefficient);
 
         if(control != outsidePoint) return outsidePoint;
@@ -322,13 +321,14 @@ Coordinate Clipper::clippingAbove(
 )
 {
     cout << "Above" << endl;
-    float newX = outsidePoint.x + (border.getUpper() - outsidePoint.second) / angularCoefficient;
-    pair<float,float> newPoint;
+    float newX = outsidePoint.x + (border.getUpper() - outsidePoint.y) / angularCoefficient;
+    Coordinate newPoint = outsidePoint;
 
     if (newX >= border.getLeft() && newX <= border.getRight()) {
         cout << "Accepted !" << endl;
         newPoint.x = newX;
-        newPoint.second = border.getUpper();
+        newPoint.y = border.getUpper();
+        newPoint.z = outsidePoint.z;
         return newPoint;
     }
 
@@ -343,13 +343,14 @@ Coordinate Clipper::clippingBelow(
 )
 {    
     cout << "Below" << endl;
-    float newX = outsidePoint.x + (1  / angularCoefficient) * (border.getLower() - outsidePoint.second);
-    pair<float,float> newPoint;
+    float newX = outsidePoint.x + (1  / angularCoefficient) * (border.getLower() - outsidePoint.y);
+    Coordinate newPoint = outsidePoint;
 
     if (newX >= border.getLeft() && newX <= border.getRight()) {
         cout << "Accepted !" << endl;
         newPoint.x = newX;
-        newPoint.second = border.getLower();
+        newPoint.y = border.getLower();
+        newPoint.z = outsidePoint.z;
         return newPoint;
     }
 
@@ -365,13 +366,14 @@ Coordinate Clipper::clippingRight(
 {   
     cout << "Right" << endl;
     float newY = angularCoefficient * (border.getRight() - outsidePoint.x) 
-        + outsidePoint.second;
-    pair<float,float> newPoint;
+        + outsidePoint.y;
+    Coordinate newPoint = outsidePoint;
 
     if (newY >= border.getLower() && newY <= border.getUpper()) {
         cout << "Accepted !" << endl;
         newPoint.x = border.getRight();
-        newPoint.second = newY;
+        newPoint.y = newY;
+        newPoint.z = outsidePoint.z;
         return newPoint;
     }
 
@@ -387,13 +389,14 @@ Coordinate Clipper::clippingLeft(
 {
     cout << "Left" << endl;
     float newY = angularCoefficient * (border.getLeft() - outsidePoint.x) 
-        + outsidePoint.second;
-    pair<float,float> newPoint;
+        + outsidePoint.y;
+    Coordinate newPoint = outsidePoint;
 
     if (newY >= border.getLower() && newY <= border.getUpper()) {
         cout << "Accepted !" << endl;
         newPoint.x = border.getLeft();
-        newPoint.second = newY;
+        newPoint.y = newY;
+        newPoint.z = outsidePoint.z;
         return newPoint;
     }
 

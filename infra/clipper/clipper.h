@@ -5,6 +5,8 @@
 #include <vector>
 #include <QList>
 #include "../../core/entities/object.h"
+#include "../../core/entities/coordinate.h"
+
 
 using namespace std;
 
