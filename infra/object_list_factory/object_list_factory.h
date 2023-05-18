@@ -1,5 +1,5 @@
 #include <QList>
-#include "../core/entities/object.h"
+#include "../../core/entities/object.h"
 
 #ifndef OBJECT_LIST_FACTORY_H
 #define OBJECT_LIST_FACTORY_H
