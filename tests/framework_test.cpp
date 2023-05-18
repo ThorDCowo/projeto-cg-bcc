@@ -40,50 +40,22 @@ bool FrameworkTest::expectToBeEqual(const char* testMessage, qsizetype value, qs
     return result;
 }
 
-bool FrameworkTest::expectToBeEqual(const char* testMessage, Coordinate value, Coordinate expectedValue)
+template<class T> 
+bool FrameworkTest:: expectToBeEqual(const char* testMessage, Comparable<T> value, Comparable<T> expectedValue)
 {
-    bool result = 
-        (value.x == expectedValue.x) &&
-        (value.y == expectedValue.y);
+    bool result = value == expectedValue;
 
     cout << testMessage << ": ";
 
     if (!result) {
         cout << "Falhou!" << endl;
-        cout << "Valor Recebido: (" << value.x << ", " << value.y << ")" << endl;
-        cout << "Valor Esperado: (" << expectedValue.x << ", " << expectedValue.y << ")" << endl;
+        cout << "Valor Recebido: " << value.toString() << endl;
+        cout << "Valor Esperado: " << expectedValue.toString() << endl;
         return false;
     }
 
     cout << "Sucesso!" << endl;
     return result;
-}
-
-bool FrameworkTest::expectToBeTruly(const char* testMessage, bool value) {
-    cout << testMessage << ": ";
-
-    if (value) {
-        cout << "Falhou!" << endl;
-        cout << "Valor Recebido: " << value << endl;
-        cout << "Valor Esperado: " << true << endl;
-        return false;
-    }
-
-    cout << "Sucesso!" << endl;
-    return true;
-}
-bool FrameworkTest::expectToBeFalsy(const char* testMessage, bool value) {
-    cout << testMessage << ": ";
-
-    if (!value) {
-        cout << "Falhou!" << endl;
-        cout << "Valor Recebido: " << value << endl;
-        cout << "Valor Esperado: " << false << endl;
-        return false;
-    }
-
-    cout << "Sucesso!" << endl;
-    return true;
 }
 
 void FrameworkTest::run()

@@ -1,7 +1,9 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
 
-class Coordinate
+#include "../interfaces/comparable.h"
+
+class Coordinate : public Comparable<Coordinate>
 {
 public: 
    float x;
@@ -26,6 +28,9 @@ public:
     return (x != other.x || y != other.y || z != other.z);
   }
 
+  string toString() const {
+    return "(" + to_string(x) + ", " + to_string(y) + ", " + to_string(z) + ")";
+  }
 };
 
 #endif// COORDINATE_H

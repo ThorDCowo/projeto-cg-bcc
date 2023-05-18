@@ -10,7 +10,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    core/entities/coordinate.cpp \
+    core\entities\coordinate.cpp \
     core\entities\border.cpp \
     core\entities\line.cpp \
     core\entities\object.cpp \
@@ -18,8 +18,8 @@ SOURCES += \
     core\entities\polygon.cpp \
     infra\clipper\clipper.cpp \
     infra\clipper\clipper.test.cpp \
-    infra\coordenate_parser\coordinate_parser.cpp \
-    infra\coordenate_parser\coordinate_parser.test.cpp \
+    infra\coordinate_parser\coordinate_parser.cpp \
+    infra\coordinate_parser\coordinate_parser.test.cpp \
     infra\file_reader\file_reader.cpp \
     infra\object_list_factory\object_list_factory.cpp \
     tests\framework_test.cpp \
@@ -39,9 +39,10 @@ HEADERS += \
     core\entities\object.h \
     core\entities\point.h \
     core\entities\polygon.h \
+    core\interfaces\comparable.h \
     infra\clipper\clipper.h \
     infra\clipper\clipper.h \
-    infra\coordenate_parser\coordinate_parser.h \
+    infra\coordinate_parser\coordinate_parser.h \
     infra\object_list_factory\object_list_factory.h \
     presentation\mainwindow.h \
     tests\framework_test.h \
