@@ -3,9 +3,9 @@
 #include "coordinate.h"
 using namespace std;
 
-void Point::translate(float dx, float dy, float dz)
+void Point::translate(Coordinate translation)
 {
-    pointsList[0] = Coordinate(pointsList[0].x + dx, pointsList[0].y + dy, pointsList[0].z + dz);
+    pointsList[0] += translation;
 }
 
 void Point::scale(){}

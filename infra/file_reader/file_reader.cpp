@@ -8,7 +8,7 @@
 #include "file_reader.h"
 using namespace std;
 
-bool FileReader::open()
+bool FileReader::open(string filename)
 {
     file.open(filename);
     return file.is_open();
@@ -24,22 +24,16 @@ void FileReader::close()
     file.close();
 }
 
-vector<string> FileReader::readLines()
-{
-    vector<string> lines;
-    string line;
-    while (getline(file, line))
-    {
-        lines.push_back(line);
-    }
-    return lines;
-}
-
-void FileReader::readLinesWithCallback(const function<void(const string &)> &callback)
+void FileReader::readLinesWithCallback(
+    const function<void(
+        const string &, 
+        const bool isEOF
+    )> &callback    
+)
 {
     string line;
     while (getline(file, line))
     {
-        callback(line);
+        callback(line, file.eof());
     }
 }

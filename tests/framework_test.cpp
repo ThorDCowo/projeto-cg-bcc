@@ -1,6 +1,8 @@
 #include <iostream>
+#include <string>
 #include <QList>
 #include "framework_test.h"
+#include "../core/interfaces/comparable.h"
 using namespace std;
 
 void FrameworkTest::registerTest(TestSuite* testSuite)
@@ -8,7 +10,7 @@ void FrameworkTest::registerTest(TestSuite* testSuite)
     this->testSuites.push_back(testSuite);
 }
 
-bool FrameworkTest::expectToBeEqual(const char* testMessage, float value, float expectedValue)
+bool FrameworkTest::expectToBeEqual(string testMessage, float value, float expectedValue)
 {
     bool result = value == expectedValue;
     cout << testMessage << ": ";
@@ -24,7 +26,7 @@ bool FrameworkTest::expectToBeEqual(const char* testMessage, float value, float 
     return result;
 }
 
-bool FrameworkTest::expectToBeEqual(const char* testMessage, qsizetype value, qsizetype expectedValue)
+bool FrameworkTest::expectToBeEqual(string testMessage, qsizetype value, qsizetype expectedValue)
 {
     bool result = value == expectedValue;
     cout << testMessage << ": ";
@@ -40,50 +42,25 @@ bool FrameworkTest::expectToBeEqual(const char* testMessage, qsizetype value, qs
     return result;
 }
 
-bool FrameworkTest::expectToBeEqual(const char* testMessage, Coordinate value, Coordinate expectedValue)
+bool FrameworkTest:: expectToBeEqual(
+        string testMessage,
+        Comparable& value,
+        Comparable& expectedValue
+)
 {
-    bool result = 
-        (value.x == expectedValue.x) &&
-        (value.y == expectedValue.y);
+    bool result = value == expectedValue;
 
     cout << testMessage << ": ";
 
     if (!result) {
         cout << "Falhou!" << endl;
-        cout << "Valor Recebido: (" << value.x << ", " << value.y << ")" << endl;
-        cout << "Valor Esperado: (" << expectedValue.x << ", " << expectedValue.y << ")" << endl;
+        cout << "Valor Recebido: " << value.toString() << endl;
+        cout << "Valor Esperado: " << expectedValue.toString() << endl;
         return false;
     }
 
     cout << "Sucesso!" << endl;
     return result;
-}
-
-bool FrameworkTest::expectToBeTruly(const char* testMessage, bool value) {
-    cout << testMessage << ": ";
-
-    if (value) {
-        cout << "Falhou!" << endl;
-        cout << "Valor Recebido: " << value << endl;
-        cout << "Valor Esperado: " << true << endl;
-        return false;
-    }
-
-    cout << "Sucesso!" << endl;
-    return true;
-}
-bool FrameworkTest::expectToBeFalsy(const char* testMessage, bool value) {
-    cout << testMessage << ": ";
-
-    if (!value) {
-        cout << "Falhou!" << endl;
-        cout << "Valor Recebido: " << value << endl;
-        cout << "Valor Esperado: " << false << endl;
-        return false;
-    }
-
-    cout << "Sucesso!" << endl;
-    return true;
 }
 
 void FrameworkTest::run()

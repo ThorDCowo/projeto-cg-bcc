@@ -4,7 +4,9 @@
 #include <list>
 #include <iostream>
 #include <QList>
+#include <string>
 #include "test_suite.h"
+#include "../core/interfaces/comparable.h"
 
 using namespace std;
 
@@ -12,11 +14,14 @@ class FrameworkTest
 {
 
 public:
-    bool static expectToBeEqual(const char* testMessage, float value, float expectedValue);
-    bool static expectToBeEqual(const char* testMessage, qsizetype value, qsizetype expectedValue);
-    bool static expectToBeEqual(const char* testMessage, Coordinate value, Coordinate expectedValue);
-    bool static expectToBeTruly(const char* testMessage, bool value);
-    bool static expectToBeFalsy(const char* testMessage, bool value);
+    bool static expectToBeEqual(string testMessage, float value, float expectedValue);
+    bool static expectToBeEqual(string testMessage, qsizetype value, qsizetype expectedValue);
+    bool static expectToBeEqual(
+        string testMessage,
+        Comparable& value,
+        Comparable& expectedValue
+    );
+
     void run();
     void registerTest(TestSuite* testSuite);
 

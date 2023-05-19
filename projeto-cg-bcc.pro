@@ -10,7 +10,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    core/entities/coordinate.cpp \
+    core\entities\coordinate.cpp \
     core\entities\border.cpp \
     core\entities\line.cpp \
     core\entities\object.cpp \
@@ -18,8 +18,8 @@ SOURCES += \
     core\entities\polygon.cpp \
     infra\clipper\clipper.cpp \
     infra\clipper\clipper.test.cpp \
-    infra\coordenate_parser\coordinate_parser.cpp \
-    infra\coordenate_parser\coordinate_parser.test.cpp \
+    infra\coordinate_parser\coordinate_parser.cpp \
+    infra\coordinate_parser\coordinate_parser.test.cpp \
     infra\file_reader\file_reader.cpp \
     infra\object_list_factory\object_list_factory.cpp \
     tests\framework_test.cpp \
@@ -27,27 +27,32 @@ SOURCES += \
     tests\tests_register.cpp \
     presentation\mainwindow.cpp \
     use_cases\clipp_object\clipp_object.use_case.cpp \
+    use_cases\read_coordinate_file\read_coordinate_file.use_case.cpp \
+    use_cases\read_coordinate_file\read_coordinate_file.use_case.test.cpp \
     use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.cpp \
     use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.test.cpp \
-    main.cpp \
-    screen.cpp
+    screen.cpp \
+    main.cpp
 
 HEADERS += \
-    core/entities/coordinate.h \
+    core\entities\coordinate.h \
     core\entities\border.h \
     core\entities\line.h \
     core\entities\object.h \
     core\entities\point.h \
     core\entities\polygon.h \
+    core\interfaces\comparable.h \
     infra\clipper\clipper.h \
     infra\clipper\clipper.h \
-    infra\coordenate_parser\coordinate_parser.h \
+    infra\coordinate_parser\coordinate_parser.h \
+    infra\file_reader\file_reader.h \
     infra\object_list_factory\object_list_factory.h \
     presentation\mainwindow.h \
     tests\framework_test.h \
     tests\object_test.h \
     tests\test_suite.h \
     use_cases\clipp_object\clipp_object.use_case.h \
+    use_cases\read_coordinate_file\read_coordinate_file.use_case.h \
     use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.h \
     screen.h
 
