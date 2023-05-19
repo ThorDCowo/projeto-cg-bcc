@@ -27,6 +27,8 @@ SOURCES += \
     tests\tests_register.cpp \
     presentation\mainwindow.cpp \
     use_cases\clipp_object\clipp_object.use_case.cpp \
+    use_cases\read_coordinate_file\read_coordinate_file.use_case.cpp \
+    use_cases\read_coordinate_file\read_coordinate_file.use_case.test.cpp \
     use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.cpp \
     use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.test.cpp \
     main.cpp \
@@ -49,6 +51,7 @@ HEADERS += \
     tests\object_test.h \
     tests\test_suite.h \
     use_cases\clipp_object\clipp_object.use_case.h \
+    use_cases\read_coordinate_file\read_coordinate_file.use_case.h \
     use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.h \
     screen.h
 

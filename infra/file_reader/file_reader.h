@@ -1,3 +1,6 @@
+#ifndef FILE_READER_H
+#define FILE_READER_H
+
 #include <iostream>
 #include <fstream>
 #include <functional>
@@ -8,8 +11,7 @@ using namespace std;
 
 class FileReader {
 public:
-    FileReader(const string& filename) : file(filename) {}
-    bool open();
+    bool open(string filename);
     bool isOpen() const;
     void close();
     vector<string> readLines();
@@ -17,5 +19,6 @@ public:
 
 private:
     ifstream file;
-    const string filename;
 };
+
+#endif // FILE_READER_H

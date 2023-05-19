@@ -8,7 +8,7 @@
 #include "file_reader.h"
 using namespace std;
 
-bool FileReader::open()
+bool FileReader::open(string filename)
 {
     file.open(filename);
     return file.is_open();
