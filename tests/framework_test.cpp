@@ -42,21 +42,20 @@ bool FrameworkTest::expectToBeEqual(string testMessage, qsizetype value, qsizety
     return result;
 }
 
-template<class T> 
 bool FrameworkTest:: expectToBeEqual(
-    string testMessage,
-    Comparable<T>& value,
-    Comparable<T>& expectedValue
+        string testMessage,
+        Comparable& value,
+        Comparable& expectedValue
 )
 {
-    bool result = (*value) == (*expectedValue);
+    bool result = value == expectedValue;
 
     cout << testMessage << ": ";
 
     if (!result) {
         cout << "Falhou!" << endl;
-        cout << "Valor Recebido: " << value->toString() << endl;
-        cout << "Valor Esperado: " << expectedValue->toString() << endl;
+        cout << "Valor Recebido: " << value.toString() << endl;
+        cout << "Valor Esperado: " << expectedValue.toString() << endl;
         return false;
     }
 

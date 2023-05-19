@@ -4,11 +4,10 @@
 #include <string>
 using namespace std;
 
-template<typename T>
 class Comparable {
 public:
-    virtual bool operator==(const T& other) const = 0;
-    virtual bool operator!=(const T& other) const = 0;
+    virtual bool operator==(const Comparable& other) const = 0;
+    virtual bool operator!=(const Comparable& other) const = 0;
     virtual string toString() const = 0;
 };
 

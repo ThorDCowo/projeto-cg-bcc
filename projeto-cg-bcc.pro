@@ -33,7 +33,7 @@ SOURCES += \
     screen.cpp
 
 HEADERS += \
-    core/entities/coordinate.h \
+    core\entities\coordinate.h \
     core\entities\border.h \
     core\entities\line.h \
     core\entities\object.h \

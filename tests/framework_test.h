@@ -16,12 +16,12 @@ class FrameworkTest
 public:
     bool static expectToBeEqual(string testMessage, float value, float expectedValue);
     bool static expectToBeEqual(string testMessage, qsizetype value, qsizetype expectedValue);
-    template<class T> 
     bool static expectToBeEqual(
         string testMessage,
-        Comparable<T>& value,
-        Comparable<T>& expectedValue
+        Comparable& value,
+        Comparable& expectedValue
     );
+
     void run();
     void registerTest(TestSuite* testSuite);
 
