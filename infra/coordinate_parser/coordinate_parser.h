@@ -4,10 +4,11 @@
 #include <string>
 #include "../../core/entities/coordinate.h"
 
+using namespace std;
 
 class CoordinateParser {
 public:
     Coordinate parse(string);
-}
+};
 
 #endif // COORDINATE_PARSER_H

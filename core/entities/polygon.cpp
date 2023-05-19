@@ -5,31 +5,32 @@
 
 using namespace std;
 
-void Polygon::translate(float dx, float dy, float dz)
+void Polygon::translate(Coordinate translation)
 {
-    for(qsizetype i = 0; i < pointsList.size(); i++){
-            pointsList[i] = Coordinate(pointsList[i].x + dx, pointsList[i].y + dy, pointsList[i].z + dz);
+    for(qsizetype i = 0; i < pointsList.size(); i++) {
+        pointsList[i] += translation;
     }
 }
 
 void Polygon::scale(float factor)
 { 
     Coordinate center = barycenter();
-    translate(-center.x, -center.y, -center.z);
+    translate(Coordinate::invertOrientation(center));
     factor = factor/100;
     factor = 1 + factor;
 
     for(qsizetype i = 0; i < pointsList.size(); i++){
-        pointsList[i] = Coordinate(pointsList[i].x * factor, pointsList[i].y * factor, pointsList[i].z * factor);
+        pointsList[i] *= factor;
     }
-    translate(center.x, center.y, center.z);
+
+    translate(center);
 }
 
 void Polygon::rotate(float teta, Coordinate axis)
 {
     float radians = qDegreesToRadians(teta);
     Coordinate center = barycenter();
-    translate(-center.x, -center.y, -center.z);
+    translate(Coordinate::invertOrientation(center));
 
     if(axis.x) {
         for(qsizetype i = 0; i < pointsList.size(); i++){
@@ -41,7 +42,9 @@ void Polygon::rotate(float teta, Coordinate axis)
         }
         
         return;
-    } if(axis.y) {
+    } 
+    
+    if(axis.y) {
         for(qsizetype i = 0; i < pointsList.size(); i++){
             pointsList[i] = Coordinate(
                 pointsList[i].x * qCos(radians) + (pointsList[i].z * qSin(radians)),
@@ -61,7 +64,7 @@ void Polygon::rotate(float teta, Coordinate axis)
         );
     }
 
-    translate(center.x, center.y, center.z);
+    translate(center);
 }
 
 /*

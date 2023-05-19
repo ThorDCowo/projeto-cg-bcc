@@ -10,7 +10,7 @@ class FileReader {
 public:
     FileReader(const string& filename) : file(filename) {}
     bool open();
-    bool isOpen();
+    bool isOpen() const;
     void close();
     vector<string> readLines();
     void readLinesWithCallback(const function<void(const string&)>& callback);

@@ -54,9 +54,9 @@ void drawWorldPoints(QList<Coordinate> pointsList, QPainter &painter)
     }
 }
 
-void Object::normalize(int windowWidth, int windowHeight, Coordinate center, Coordinate axis)
+void Object::normalize(int windowWidth, int windowHeight, Coordinate center, Coordinate axisToExclude)
 {
-    orthogonalProjection(axis);
+    orthogonalProjection(axisToExclude);
     float newX = 0.0;
     float newY = 0.0;
     float viewportWidth = 854.0;
@@ -73,25 +73,24 @@ void Object::normalize(int windowWidth, int windowHeight, Coordinate center, Coo
     }
 }
 
-void Object::orthogonalProjection(Coordinate axis){
+void Object::orthogonalProjection(Coordinate axisToExclude){
     normalizePointsList.erase(normalizePointsList.begin(), normalizePointsList.end());
 
-    if(axis.x) {
+    if(axisToExclude.x) {
         for (qsizetype i = 0; i < pointsList.size(); i++)
-            normalizePointsList.append(Coordinate(pointsList[i].y, pointsList[i].z, 0));
+            normalizePointsList.append(Coordinate(pointsList[i].y, pointsList[i].z));
         return;    
 
     }
 
-    if(axis.y) {
+    if(axisToExclude.y) {
         for (qsizetype i = 0; i < pointsList.size(); i++)
-            normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].z, 0));
+            normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].z));
         return; 
     }
 
     for (qsizetype i = 0; i < pointsList.size(); i++)
-        normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].y, 0));
-    return;   
+        normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].y));
 }
 
 void Object::rotateWorld(float teta, Coordinate axis)

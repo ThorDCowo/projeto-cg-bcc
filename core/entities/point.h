@@ -18,11 +18,7 @@ public:
     {}
 
     void draw(QPainter &painter);   
-    void translate(
-        float dx, 
-        float dy,
-        float dz
-    );
+    void translate(Coordinate translation);
     void scale();
     void rotate();
     bool isInsideWindow(vector<bool> pointRegionCode);

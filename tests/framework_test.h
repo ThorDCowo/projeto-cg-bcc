@@ -4,6 +4,7 @@
 #include <list>
 #include <iostream>
 #include <QList>
+#include <string>
 #include "test_suite.h"
 #include "../core/interfaces/comparable.h"
 
@@ -13,10 +14,14 @@ class FrameworkTest
 {
 
 public:
-    bool static expectToBeEqual(const char* testMessage, float value, float expectedValue);
-    bool static expectToBeEqual(const char* testMessage, qsizetype value, qsizetype expectedValue);
+    bool static expectToBeEqual(string testMessage, float value, float expectedValue);
+    bool static expectToBeEqual(string testMessage, qsizetype value, qsizetype expectedValue);
     template<class T> 
-    bool static expectToBeEqual(const char* testMessage, Comparable<T> value, Comparable<T> expectedValue);
+    bool static expectToBeEqual(
+        string testMessage,
+        Comparable<T>& value,
+        Comparable<T>& expectedValue
+    );
     void run();
     void registerTest(TestSuite* testSuite);
 

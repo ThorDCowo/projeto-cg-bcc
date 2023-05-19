@@ -21,7 +21,7 @@ using namespace std;
 float MOVE_SPEED = 20.0;
 int WIDTH = 854;  //inicialize with viewport size
 int HEIGHT = 480; //inicialize with viewport size
-pair <float,float> CENTER = {0,0};
+Coordinate CENTER{0,0};
 float TETA = 0.0;
 
 
@@ -65,7 +65,7 @@ void MainWindow::on_upButton_clicked()
     Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
-        object->translate(0, MOVE_SPEED);
+        object->translate(Coordinate::up() * MOVE_SPEED);
         this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
     });
     update();
@@ -78,7 +78,7 @@ void MainWindow::on_rightButton_clicked()
     Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
-        object->translate(MOVE_SPEED, 0);
+        object->translate(Coordinate::right() * MOVE_SPEED);
         this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
     });
     update();
@@ -91,7 +91,7 @@ void MainWindow::on_downButton_clicked()
     Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
-        object->translate(0, -MOVE_SPEED);
+        object->translate(Coordinate::down() * MOVE_SPEED);
         this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
     });
     update();
@@ -104,7 +104,7 @@ void MainWindow::on_leftButton_clicked()
     Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
-       object->translate(-MOVE_SPEED, 0);
+       object->translate(Coordinate::left() * MOVE_SPEED);
        this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
     });
     update();
@@ -136,7 +136,7 @@ void MainWindow::on_rotationDial_sliderMoved(int position)
     operateInCheckedObjects(
         ui,
         [this, position, width, height, center](Object* object) -> void {
-            object->rotate(position, axis);
+            object->rotate(position, Coordinate::forward());
             this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
         }
     );
@@ -151,12 +151,11 @@ void MainWindow::on_windowButton_clicked()
     ui->screen->setCenter(CENTER);
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
-    Coordinate axis(0,0,1);
 
     applyOperationInObjects(
         ui->screen->getObjectList(),
         [this, width, height](Object* object) -> void {
-            object->rotateWorld(TETA, axis);
+            object->rotateWorld(TETA, Coordinate::forward());
             this->transformFromWorldToViewportUseCase->execute(object, width, height, CENTER);
         }
     );  

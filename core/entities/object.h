@@ -32,19 +32,15 @@ public:
     void draw(QPainter &painter);
     void rotateWorld(float teta, Coordinate axis);
     void transformToViewport(Coordinate center);
-    void orthogonalProjection(Coordinate axis);
+    void orthogonalProjection(Coordinate axisToExclude);
     void normalize(
         int width, 
         int height, 
         Coordinate center,
-        Coordinate axis
+        Coordinate axisToExclude
     );
 
-    virtual void translate(
-        float dx, 
-        float dy,
-        float dz
-    )=0;
+    virtual void translate(Coordinate translation)=0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta, Coordinate axis)=0;
     

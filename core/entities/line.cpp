@@ -3,28 +3,28 @@
 #include "coordinate.h"
 using namespace std;
 
-void Line::translate(float dx, float dy, float dz)
-{   
-    pointsList[0] = Coordinate(pointsList[0].x + dx, pointsList[0].y + dy, pointsList[0].z + dz);
-    pointsList[1] = Coordinate(pointsList[1].x + dx, pointsList[1].y + dy, pointsList[0].z + dz);
+void Line::translate(Coordinate translation)
+{
+    pointsList[0] += translation;
+    pointsList[1] += translation;
 }
 
 void Line::scale(float factor)
 {
     Coordinate center = barycenter();
-    translate(-center.x, -center.y, -center.z);
+    translate(Coordinate::invertOrientation(center));
     factor = factor/100;
     factor = 1 + factor;
-    pointsList[0] = Coordinate(pointsList[0].x * factor, pointsList[0].y * factor, pointsList[0].z * factor);
-    pointsList[1] = Coordinate(pointsList[1].x * factor, pointsList[1].y * factor, pointsList[0].z * factor);
-    translate(center.x, center.y, center.z);
+    pointsList[0] *= factor;
+    pointsList[1] *= factor;
+    translate(center);
 }
 
 void Line::rotate(float teta, Coordinate axis)
 {   
     float radians = qDegreesToRadians(teta);
     Coordinate center = barycenter();
-    translate(-center.x, -center.y, -center.z);
+    translate(Coordinate::invertOrientation(center));
 
     if(axis.x){
         pointsList[0] = Coordinate(
@@ -69,7 +69,7 @@ void Line::rotate(float teta, Coordinate axis)
     }
 
 
-    translate(center.x, center.y, center.z);
+    translate(center);
 }
 
 /*

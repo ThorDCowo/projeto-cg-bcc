@@ -10,6 +10,8 @@
 #include "../../tests/object_test.h"
 #include "clipper.h"
 
+#include "../../core/interfaces/comparable.h"
+
 class ClipperTest : public TestSuite {
 private:
     Clipper* clipper;
@@ -45,7 +47,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
@@ -80,7 +82,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype upperLeftPointIndex = 0;
@@ -128,7 +130,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
@@ -163,7 +165,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
@@ -198,7 +200,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
@@ -233,7 +235,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
@@ -268,7 +270,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype insidePointIndex = 0;
@@ -303,7 +305,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype upperPointIndex = 0;
@@ -338,7 +340,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype leftPointIndex = 0;
@@ -373,7 +375,7 @@ public:
     {
         int width = 15;
         int height = 10;
-        Coordinate center = {7.5, 5.0};
+        Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
         qsizetype lowerPointIndex = 0;
@@ -409,7 +411,7 @@ public:
     {
         int width = 854;
         int height = 480;
-        Coordinate center = {427, 240};
+        Coordinate center(427, 240);
         Border border(width, height, center);
 
         qsizetype rightPointIndex = 0;
@@ -443,7 +445,7 @@ public:
     {
         int width = 854;
         int height = 480;
-        Coordinate center = {427, 240};
+        Coordinate center(427, 240);
         Border border(width, height, center);
 
         qsizetype upperLeftPointIndex = 0;
