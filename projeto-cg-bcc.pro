@@ -31,8 +31,8 @@ SOURCES += \
     use_cases\read_coordinate_file\read_coordinate_file.use_case.test.cpp \
     use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.cpp \
     use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.test.cpp \
-    main.cpp \
-    screen.cpp
+    screen.cpp \
+    main.cpp
 
 HEADERS += \
     core\entities\coordinate.h \
@@ -45,6 +45,7 @@ HEADERS += \
     infra\clipper\clipper.h \
     infra\clipper\clipper.h \
     infra\coordinate_parser\coordinate_parser.h \
+    infra\file_reader\file_reader.h \
     infra\object_list_factory\object_list_factory.h \
     presentation\mainwindow.h \
     tests\framework_test.h \

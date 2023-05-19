@@ -9,6 +9,7 @@ using namespace std;
 class CoordinateParser {
 public:
     Coordinate parse(string);
+    bool isParsable(string line);
 };
 
 #endif // COORDINATE_PARSER_H

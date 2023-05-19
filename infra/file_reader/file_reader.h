@@ -14,8 +14,12 @@ public:
     bool open(string filename);
     bool isOpen() const;
     void close();
-    vector<string> readLines();
-    void readLinesWithCallback(const function<void(const string&)>& callback);
+    void readLinesWithCallback(
+        const function<void(
+            const string &, 
+            const bool isEOF
+        )> &callback    
+    );
 
 private:
     ifstream file;

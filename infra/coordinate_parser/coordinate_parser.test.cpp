@@ -32,7 +32,7 @@ public:
     }
 
     void shouldReturnPointOnXAxis() {
-        string line = "100.0 0.0 0.0";
+        string line = "v 100.0 0.0 0.0";
         
         Coordinate expectedValue(100.0, 0.0, 0.0);
 
@@ -46,7 +46,7 @@ public:
     }
 
     void shouldReturnPointOnYAxis() {
-        string line = "0.0 200.0 0.0";
+        string line = "v 0.0 200.0 0.0";
         
         Coordinate expectedValue(0.0, 200.0, 0.0);
 
@@ -60,7 +60,7 @@ public:
     }
 
     void shouldReturnPointOnZAxis() {
-        string line = "0.0 0.0 300.0";
+        string line = "v 0.0 0.0 300.0";
         
         Coordinate expectedValue(0.0, 0.0, 300.0);
 
@@ -74,7 +74,7 @@ public:
     }
 
     void shouldReturnPointOnPlaneXY() {
-        string line = "400.0 500.0 0.0";
+        string line = "v 400.0 500.0 0.0";
         
         Coordinate expectedValue(400.0, 500.0, 0.0);
 
@@ -88,7 +88,7 @@ public:
     }
 
     void shouldReturnPointOnPlaneXZ() {
-        string line = "600.0 0.0 700.0";
+        string line = "v 600.0 0.0 700.0";
         
         Coordinate expectedValue(600.0, 0.0, 700.0);
 
@@ -102,7 +102,7 @@ public:
     }
 
     void shouldReturnPointOnPlaneYZ() {
-        string line = "0.0 800.0 900.0";
+        string line = "v 0.0 800.0 900.0";
         
         Coordinate expectedValue(0.0, 800.0, 900.0);
 
@@ -116,7 +116,7 @@ public:
     }
 
     void shouldReturnPointOn3DSpace() {
-        string line = "1000.0 2000.0 3000.0";
+        string line = "v 1000.0 2000.0 3000.0";
         
         Coordinate expectedValue(1000.0, 2000.0, 3000.0);
 
