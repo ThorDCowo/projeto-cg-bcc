@@ -3,7 +3,7 @@
 #include "coordinate_parser.h"
 
 Coordinate CoordinateParser::parse(string line) {
-    int x, y, z;
-    sscanf(line.c_str(), "%d %d %d", &x, &y, &z);
+    float x, y, z;
+    sscanf(line.c_str(), "%f %f %f", &x, &y, &z);
     return Coordinate(x, y, z);
 }
