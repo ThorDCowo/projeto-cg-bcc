@@ -4,7 +4,7 @@
 #include "../../core/entities/coordinate.h"
 #include "../../infra/coordinate_parser/coordinate_parser.h"
 #include "../../infra/file_reader/file_reader.h"
-#include "../../infra/file_writer/file_writer.h"
+//#include "../../infra/file_writer/file_writer.h"
 #include "../../core/entities/polygon.h"
 
 class ReadCoordinateFileUseCase {

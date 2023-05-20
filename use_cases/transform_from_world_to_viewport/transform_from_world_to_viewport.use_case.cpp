@@ -9,7 +9,7 @@ void TransformFromWorldToViewportUseCase::execute(
 {
     Border border(width, height, center);
     
-    object->normalize(width, height, center, Coordinate::axisX());
+    object->normalize(width, height, center, Coordinate::axisZ());
     this->clippObjectUseCase->execute(object, border);
     object->transformToViewport(center);
 }

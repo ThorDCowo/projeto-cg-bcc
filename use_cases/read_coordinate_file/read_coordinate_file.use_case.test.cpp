@@ -26,7 +26,7 @@ public:
 
         Coordinate expectedValue(1.0, 20.0, 300.0);
 
-        QList<Object*> result = this->useCase->execute(filename);
+//        QList<Object*> result = this->useCase->execute(filename);
 
         // FrameworkTest::expectToBeEqual(
         //     "A coordenada criada deve ser (1.0, 20.0, 300.0)",
