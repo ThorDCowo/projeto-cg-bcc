@@ -1,6 +1,9 @@
 #include <string>
 #include "../../core/entities/coordinate.h"
 #include "coordinate_parser.h"
+#include <iostream>
+
+using namespace std;
 
 Coordinate CoordinateParser::parse(string line) {
     float x, y, z;
@@ -9,5 +12,6 @@ Coordinate CoordinateParser::parse(string line) {
 }
 
 bool CoordinateParser::isParsable(string line) {
-    return sscanf(line.c_str(), "v %f %f %f") == 3;
+    float x, y, z;
+    return sscanf(line.c_str(), "v %f %f %f", &x, &y, &z) == 3;
 }

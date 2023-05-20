@@ -16,9 +16,9 @@ public:
 
     void run()
     {
-        cout << "-----------------------" << endl;
-        cout << "Teste de CoordinateParser" << endl;
-         cout << "-----------------------" << endl;  
+        //cout << "-----------------------" << endl;
+        //cout << "Teste de CoordinateParser" << endl;
+         //cout << "-----------------------" << endl;  
 
         this->shouldReturnPointOnXAxis();
         this->shouldReturnPointOnYAxis();

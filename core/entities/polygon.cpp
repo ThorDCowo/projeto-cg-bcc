@@ -66,21 +66,3 @@ void Polygon::rotate(float teta, Coordinate axis)
 
     translate(center);
 }
-
-/*
-void Polygon::transformWindow(float windowX,float windowY)
-{
-    double aux, x2, y2;
-
-    getCoords(&aux, &aux, &x2, &y2);
-    setCoords(x() - windowX, y() - windowY, x2 - windowX, y2 - windowY);
-}
-
-void Polygon::transformViewport(float viewHeight, float viewWidth)
-{
-    double aux, x2, y2;
-
-    getCoords(&aux, &aux, &x2, &y2);
-    setCoords(((x() + 1) / 2) * viewWidth, (1 - ((y() + 1) / 2)) * viewHeight, ((x2 + 1) / 2) * viewWidth, (1 - ((y2 + 1) / 2)) * viewHeight);
-}
-*/

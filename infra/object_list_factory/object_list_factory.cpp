@@ -153,11 +153,11 @@ QList<Object*> ObjectListFactory::createObjectList()
 //    list.append(new Line(QString("Linha Vertical"), QList(points), Qt::green));
 //    points.clear();
 
-//    points.append(Coordinate(400, 200, 0));
-//    points.append(Coordinate(500, 300, 0));
+   points.append(Coordinate(400.0, 200.0, 0.0));
+   points.append(Coordinate(500.0, 300.0, 0.0));
 
-//    list.append(new Line(QString("Linha Diagonal"), QList(points), Qt::magenta));
-//    points.clear();
+   list.append(new Line(QString("Linha Diagonal"), QList(points), Qt::magenta));
+   points.clear();
 
 //    points.append(Coordinate(-200, 200, 0));
 //    points.append(Coordinate(-350, 100, 0));
@@ -183,30 +183,6 @@ QList<Object*> ObjectListFactory::createObjectList()
     // list.append(new Line(QString("Linha Fora"), QList(points), Qt::blue));
     // points.clear();
 
-//     points.append(Coordinate(625, 250, 100));
-//     points.append(Coordinate(625, 150, 100));
-//     points.append(Coordinate(675, 150, 10));
-//     points.append(Coordinate(675, 250, 10));
-
-//     list.append(new Polygon(QString("Porta"), QList(points), Qt::magenta));
-//     points.clear();
-
-    // points.append(Coordinate(625, 115));
-    // points.append(Coordinate(625, 130));
-    // points.append(Coordinate(640, 130));
-    // points.append(Coordinate(640, 115));
-
-    // list.append(new Polygon(QString("Janela"), QList(points), Qt::magenta));
-    // points.clear();
-
-    // points.append(Coordinate(660, 115, 0));
-    // points.append(Coordinate(660, 130,0));
-    // points.append(Coordinate(675, 115, 0));
-    // points.append(Coordinate(675, 130,0));
-
-    // list.append(new Polygon(QString("Janela 2"), QList(points), Qt::magenta));
-    // points.clear();
-
     // points.append(Coordinate(1200, 200));
     // points.append(Coordinate(1300, 100));
     // points.append(Coordinate(1400, 200));
@@ -218,5 +194,50 @@ QList<Object*> ObjectListFactory::createObjectList()
     // list.append(new Polygon(QString("Casa Fora"), QList(points), Qt::blue));
     // points.clear();
 
+    // points.append(Coordinate(625.0, 250.0, 0.0));
+    // points.append(Coordinate(625.0, 150.0, 0.0));
+    // points.append(Coordinate(775.0, 150.0, 0.0));
+    // points.append(Coordinate(775.0, 250.0, 0.0));
+    // points.append(Coordinate(625.0, 250.0, 200.0));
+    // points.append(Coordinate(625.0, 150.0, 200.0));
+    // points.append(Coordinate(775.0, 150.0, 200.0));
+    // points.append(Coordinate(775.0, 250.0, 200.0));
+
+    // list.append(new Polygon(QString("Casa"), QList(points), Qt::white));
+    // points.clear();
+
+    // points.append(Coordinate(625.0, 250.0, 0.0));
+    // points.append(Coordinate(725.0, 250.0, 0.0));
+    // points.append(Coordinate(700.0, 300.0, 0.0));
+    // points.append(Coordinate(625.0, 250.0, 200.0));
+    // points.append(Coordinate(725.0, 250.0, 200.0));
+    // points.append(Coordinate(700.0, 300.0, 200.0));
+
+    // list.append(new Polygon(QString("Telhado"), QList(points), Qt::red));
+    // points.clear();
+
+    // points.append(Coordinate(6500.0, 150.0, 200.0));
+    // points.append(Coordinate(6500.0, 200.0, 200.0));
+    // points.append(Coordinate(6750.0, 200.0, 200.0));
+    // points.append(Coordinate(6750.0, 150.0, 200.0));
+
+    // list.append(new Polygon(QString("Porta"), QList(points), Qt::magenta));
+    // points.clear();
+
+    // points.append(Coordinate(725.0, 205.0, 150.0));
+    // points.append(Coordinate(725.0, 230.0, 175.0));
+    // points.append(Coordinate(725.0, 230.0, 175.0));
+    // points.append(Coordinate(725.0, 205.0, 150.0));
+
+    // list.append(new Polygon(QString("Janela"), QList(points), Qt::magenta));
+    // points.clear();
+
+    // points.append(Coordinate(725.0, 165.0, 150.0));
+    // points.append(Coordinate(725.0, 190.0, 175.0));
+    // points.append(Coordinate(725.0, 190.0, 175.0));
+    // points.append(Coordinate(725.0, 165.0, 150.0));
+
+    // list.append(new Polygon(QString("Janela 2"), QList(points), Qt::magenta));
+    // points.clear();
     return list;
 };

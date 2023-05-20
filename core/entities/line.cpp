@@ -71,16 +71,3 @@ void Line::rotate(float teta, Coordinate axis)
 
     translate(center);
 }
-
-/*
-void Line:: transformWindow(float windowX,float windowY)
-{
-    setLine(x1() - windowX,y1() - windowY, x2() - windowX, y2() - windowY);
-}
-
-void Line::transformViewport(float viewHeight, float viewWidth)
-{
-    setLine(((x1() + 1) / 2) * viewWidth, (1 - ((y1() + 1) / 2)) * viewHeight, ((x2() + 1) / 2) * viewWidth, (1 - ((y2() + 1) / 2)) * viewHeight);
-}
-*/
-

@@ -77,7 +77,7 @@ void Object::orthogonalProjection(Coordinate axisToExclude){
     normalizePointsList.erase(normalizePointsList.begin(), normalizePointsList.end());
 
     if(axisToExclude.x) {
-        cout << "Exclude X" << endl;
+        //cout << "Exclude X" << endl;
         for (qsizetype i = 0; i < pointsList.size(); i++)
             normalizePointsList.append(Coordinate(pointsList[i].y, pointsList[i].z));
         return;    
@@ -85,13 +85,13 @@ void Object::orthogonalProjection(Coordinate axisToExclude){
     }
 
     if(axisToExclude.y) {
-        cout << "Exclude Y" << endl;
+        //cout << "Exclude Y" << endl;
         for (qsizetype i = 0; i < pointsList.size(); i++)
             normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].z));
         return; 
     }
 
-    cout << "Exclude Z" << endl;
+    //cout << "Exclude Z" << endl;
     for (qsizetype i = 0; i < pointsList.size(); i++)
         normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].y));
 }
@@ -182,6 +182,6 @@ float Object::linearInterpolation(
                    ((secondIntervalRange) / (firstIntervalRange)) *
                        (valueInFirstIntervalToFindInSecondInterval - startFirstInterval);
 
-    // cout << result << endl;
+    // //cout << result << endl;
     return result;
 }

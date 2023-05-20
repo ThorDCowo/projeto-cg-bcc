@@ -23,9 +23,9 @@ public:
 
     void run()
     {
-        cout << "-----------------------" << endl;
-        cout << "Teste de lineClipping()" << endl;
-        cout << "-----------------------" << endl;
+        //cout << "-----------------------" << endl;
+        //cout << "Teste de lineClipping()" << endl;
+        //cout << "-----------------------" << endl;
 
         this->lineClippingTest2();
         this->lineClippingTest3();
@@ -398,7 +398,7 @@ public:
             &pointsList
         );
 
-        cout << "Reta com ponto no quadrante de baixo e quadrante da direita, sem passar por dentro" << endl;
+        //cout << "Reta com ponto no quadrante de baixo e quadrante da direita, sem passar por dentro" << endl;
         FrameworkTest::expectToBeEqual(
             "Deve rejeitar a linha dos pontos (14, -4) e (17, 1)",
             pointsList.size(),

@@ -7,9 +7,9 @@
 #include "object_test.h"
 
 void ObjectTest::run() {
-    // cout << "-----------------------" << endl;
-    // cout << "Teste de Interpolação" << endl;
-    // cout << "-----------------------" << endl;   
+    // //cout << "-----------------------" << endl;
+    // //cout << "Teste de Interpolação" << endl;
+    // //cout << "-----------------------" << endl;   
 
     // this->interpolateTest1();
     // this->interpolateTest2();

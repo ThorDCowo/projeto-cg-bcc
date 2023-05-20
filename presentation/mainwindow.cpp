@@ -9,12 +9,7 @@
 
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
-#include "../screen.h"
-#include "../core/entities/object.h"
-#include "../infra/object_list_factory/object_list_factory.h"
-#include "../use_cases/transform_from_world_to_viewport/transform_from_world_to_viewport.use_case.h"
-#include "../use_cases/clipp_object/clipp_object.use_case.h"
-#include "../infra/clipper/clipper.h"
+
 
 using namespace std;
 
@@ -31,11 +26,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui(new Ui::MainWindow),
     transformFromWorldToViewportUseCase(new TransformFromWorldToViewportUseCase(
         new ClippObjectUseCase(new Clipper())
+    )),
+    readCoordinateFileUseCase(new ReadCoordinateFileUseCase(
+        new FileReader(),
+        new CoordinateParser()
     ))
 {
     ui->setupUi(this);
 
     QList<Object*> list = ObjectListFactory::createObjectList();
+    QList<Object*> charziardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
+
+    list.append(charziardList);
+
     ui->screen->setObjectList(list);
 
     int width = ui->screen->getWidth();
