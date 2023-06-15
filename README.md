@@ -2,43 +2,22 @@
 
 ## Todo list
 
-Implementar o clipping 2D em seu sistema de visualização;
+Projeção em Perspectiva
 
-- Algoritmo de **Cohen-Sutherland**;
-  - **Region Code** [Veja o slide 14](https://moodle.utfpr.edu.br/pluginfile.php/2741976/mod_page/content/3/CG%20-%20Aula10%20-%20Clipping.pdf);
-    - ~~se o y de P1 é maior que y da borda superior: RC[1] = 1~~;
-    - ~~se o y de P1 é maior que y da borda inferior: RC[2] = 1~~;
-    - ~~se o x de P1 é maior que x da borda direita: RC[3] = 1~~;
-    - ~~se o x de P1 é menor que x da borda esquerda: RC[4] = 1~~;
-  - **Clipping** [Slides](https://moodle.utfpr.edu.br/pluginfile.php/2741976/mod_page/content/3/CG%20-%20Aula10%20-%20Clipping.pdf);
-    - ~~Vericifar qual dos 3 casos se trata AND lógico~~:
-      - ~~Totalmente fora -> Remover da Coordenada de Desenho~~;
-      - ~~Totalmente dentro -> Nada a fazer~~;
-      - ~~Parcialmente dentro -> Utilizar a equação da reta pra calcular o novo ponto~~;
-  - **Equação da Reta** para cada borda;
-    - ~~Esquerda: Y = m \* (Xe - X1) + Y1~~;
-    - ~~Direita: Y = m \* (Xd - X1) + Y1~~;
-    - ~~Topo: X = X1 + 1/m \* (Yt - Y1)~~;
-    - ~~Base: X = X1 + 1/m \* (Yf - Y1)~~;
-- ~~Na área de desenho, desenhe uma moldura interna para representar sua viewport~~;
-- ~~**Validação** de todo o processo de Clipping~~;
-  - Conclusões lógicas: -
-    - Um ponto, após o clipping, é rejeitado se ele estiver fora da janela.
-    - Dado que ao menos um dos pontos do segmento paralelo ao eixo é rejeitado, após o clipping, não existe a possibilidade do outro ponto ser aceito após o clipping.
-    - Dado que ao menos um dos pontos do segmento paralelo ao eixo é aceito, não existe a possibilidade do outro ponto estar fora da janela.
-    - [Conclusões sobre segmentos paralelos aos eixos](https://media.discordapp.net/attachments/816351059743080488/1106797022847184977/image.png?width=1039&height=554))
-- ~~Modifique a window usando as transformações geométricas para ver o efeito em sua área de desenho~~;
+- COP -> Center Of Projection.
+- VPN -> View Plane Normal.
+- SCN -> Sistema de Coordenadas Normalizadas.
 
-Implementar a terceira dimensão;
+## Algoritmo para a projeção perspectiva.
 
-- **Adicionar a Nova Coordenada**;
-  ~~- Definir uma classe para as coordenadas (Murilo);~~
-  ~~- Alterara a utilização do pair por uma classe (Murilo);~~
-  ~~- Alterar a factory com a nova dimensão (Ricky);~~
-- **Transformada de 3D -> 2D**;
-  ~~- Transformada por projeção ortogonal (Rafael); (supostamente)~~
-  ~~- Ajustar as transformações geométricas para o 3D (Rafael);~~
-- **Leitura de Arquivo OBJ**;
-  ~~- Higienização do arquivo OBJ (Guilherme);~~
-  ~~- Conversões necessárias, OBJ -> para o nosso sistema (Guilherme);~~
-  - Incluir ao menos 2 pokemons junto a um objeto proprio;
+- Definir COP.
+- Translade COP para a origem do mundo.
+  - Transalação de todos os objetos do mundo.
+- Determine VPN. (Vetor Normal ao Plano de Projeção)
+  - Decomponha o vetor e determine os ângulos de VPN em torno de X e em torno de Y.
+- Rotacione o mundo em torno de X e de Y alinhando VPN com Z.
+- Projete os pontos pontos Xp e Yp usando a [matriz de perspectiva.](https://moodle.utfpr.edu.br/pluginfile.php/2759771/mod_page/content/3/CG%20-%20Aula15%20-%20Proje%C3%A7%C3%B5es%203D%20em%202D.pdf)
+- ~~Normalize para gerar o SCN.~~
+- ~~Faça o clipping.~~
+- ~~Faça a transformada de viewport.~~
+- ~~Desenhe.~~
