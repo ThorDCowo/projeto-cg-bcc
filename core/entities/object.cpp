@@ -54,20 +54,30 @@ void drawWorldPoints(QList<Coordinate> pointsList, QPainter &painter)
     }
 }
 
-void Object::normalize(int windowWidth, int windowHeight, Coordinate center, Coordinate axisToExclude)
+void Object::parallelNormalize(int windowWidth, int windowHeight, Coordinate windowCenter, Coordinate axisToExclude)
 {
-    orthogonalProjection(axisToExclude);
+    orthogonalProjection(axisToExclude);    
+    normalizeCoordinates(windowWidth, windowHeight, windowCenter, normalizePointsList);
+}
+
+void Object::perspectiveNormalize(int windowWidth, int windowHeight, Coordinate windowCenter)
+{    
+    normalizeCoordinates(windowWidth, windowHeight, windowCenter, projectionPointsList)
+}
+
+void Object::normalizeCoordinates(int windowWidth, int windowHeight, Coordinate windowCenter, QList<Coordinate> list)
+{
     float newX = 0.0;
     float newY = 0.0;
     float viewportWidth = 854.0;
     float viewportHeight = 480.0;
-    float windowXBegin = center.x - (viewportWidth / 2);
-    float windowYBegin = center.y - (viewportHeight / 2);
+    float windowXBegin = windowCenter.x - (viewportWidth / 2);
+    float windowYBegin = windowCenter.y - (viewportHeight / 2);
 
-    for (qsizetype i = 0; i < pointsList.size(); i++)
+    for (qsizetype i = 0; i < list.size(); i++)
     {
-        newX = (normalizePointsList[i].x - windowXBegin) / (windowWidth)*viewportWidth;
-        newY = (normalizePointsList[i].y - windowYBegin) / (windowHeight)*viewportHeight;
+        newX = (list[i].x - windowXBegin) / (windowWidth)*viewportWidth;
+        newY = (list[i].y - windowYBegin) / (windowHeight)*viewportHeight;
 
         normalizePointsList.replace(i, Coordinate(newX, newY, 0));
     }
@@ -94,6 +104,41 @@ void Object::orthogonalProjection(Coordinate axisToExclude){
     //cout << "Exclude Z" << endl;
     for (qsizetype i = 0; i < pointsList.size(); i++)
         normalizePointsList.append(Coordinate(pointsList[i].x, pointsList[i].y));
+}
+
+
+void Object::planeProjection(float distanceBetweenCenterOfProjectionandPlane) {
+    float projectionAxisX = 0.0;
+    float projectionAxisY = 0.0;
+
+    for (qsizetype i = 0; i < pointsList.size(); i++) {
+        projectionAxisX = (pointsList[i].x)/(pointsList[i].z)/distanceBetweenCenterOfProjectionandPlane;
+        projectionAxisY = (pointsList[i].y)/(pointsList[i].z)/distanceBetweenCenterOfProjectionandPlane;
+
+        projectionPointsList.append(Coordinate(
+            projectionAxisX, 
+            projectionAxisY, 
+            distanceBetweenCenterOfProjectionandPlane
+        ));
+    }
+}
+
+void Object::perspectiveProjection(Coordinate centerOfProjection, Coordinate axisX, Coordinate axisY, float alpha, float beta) {
+    // transladar COP
+    translate(-centerOfProjection);
+    // rotacionar 
+    rotateWorld(alpha, axisX);
+    rotateWorld(beta, axisY);
+    // projetar
+    planeProjection();
+    // normalizar
+    perspectiveNormalize();
+    // clipar
+    clipping();
+    // transformada vp
+    transformToViewport();
+    // desenhar
+    draw();
 }
 
 void Object::rotateWorld(float teta, Coordinate axis)

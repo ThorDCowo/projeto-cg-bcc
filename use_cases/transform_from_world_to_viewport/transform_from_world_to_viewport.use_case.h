@@ -16,7 +16,8 @@ public:
         Object* object,
         int width,
         int height,
-        Coordinate center
+        Coordinate center,
+        float distanceFromProjection
     );
 
 };

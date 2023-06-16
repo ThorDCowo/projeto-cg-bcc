@@ -25,7 +25,7 @@ SOURCES += \
     tests\framework_test.cpp \
     tests\object_test.cpp \
     tests\tests_register.cpp \
-    presentation\mainwindow.cpp \
+    presentation\camera.cpp \
     use_cases\clipp_object\clipp_object.use_case.cpp \
     use_cases\read_coordinate_file\read_coordinate_file.use_case.cpp \
     use_cases\read_coordinate_file\read_coordinate_file.use_case.test.cpp \
@@ -47,7 +47,7 @@ HEADERS += \
     infra\coordinate_parser\coordinate_parser.h \
     infra\file_reader\file_reader.h \
     infra\object_list_factory\object_list_factory.h \
-    presentation\mainwindow.h \
+    presentation\camera.h \
     tests\framework_test.h \
     tests\object_test.h \
     tests\test_suite.h \
@@ -57,7 +57,7 @@ HEADERS += \
     screen.h
 
 FORMS += \
-    presentation\mainwindow.ui
+    presentation\camera.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

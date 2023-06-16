@@ -4,12 +4,21 @@ void TransformFromWorldToViewportUseCase::execute(
     Object* object,
     int width,
     int height,
-    Coordinate center
+    Coordinate center,
+    float distanceFromProjection
 )
 {
     Border border(width, height, center);
     
-    object->normalize(width, height, center, Coordinate::axisZ());
+    // object->parallelNormalize(width, height, center, Coordinate::axisZ());
+    object->planeProjection(distanceFromProjection);
+    object->perspectiveNormalize(width, height, center);
     this->clippObjectUseCase->execute(object, border);
     object->transformToViewport(center);
+
+    cout << "Points / Projection / Normalized" << endl;
+    cout << object->getPoints()[0].toString() << endl;
+    cout << object->getProjectionPoints()[0].toString() << endl;
+    cout << object->getNormalizedPoints()[0].toString() << endl;
+    cout << "-------------------" << endl;
 }

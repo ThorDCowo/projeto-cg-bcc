@@ -33,12 +33,16 @@ public:
     void rotateWorld(float teta, Coordinate axis);
     void transformToViewport(Coordinate center);
     void orthogonalProjection(Coordinate axisToExclude);
-    void normalize(
+    void planeProjection(float distanceBetweenCOPandPlane);
+    void perspectiveNormalize(
+        int windowWidth, 
+        int windowHeight, 
+        Coordinate windowCenter);
+    void parallelNormalize(
         int width, 
         int height, 
         Coordinate center,
-        Coordinate axisToExclude
-    );
+        Coordinate axisToExclude);
 
     virtual void translate(Coordinate translation)=0;
     virtual void scale(float factor)=0;
@@ -46,6 +50,7 @@ public:
     
     inline QString getName()const{ return name; }
     inline QList<Coordinate> getPoints()const { return this->pointsList; }
+    inline QList<Coordinate> getProjectionPoints()const { return this->projectionPointsList; } 
     inline QList<Coordinate> getNormalizedPoints()const { return this->normalizePointsList; } 
     inline Qt::GlobalColor getColor()const { return color; }
 
@@ -60,9 +65,11 @@ public:
 protected:
     QString name; //id do objeto instanciado
     QList<Coordinate> pointsList;
+    QList<Coordinate> projectionPointsList;
     QList<Coordinate> normalizePointsList;
     Qt::GlobalColor color;
 
+    void normalizeCoordinates(int windowWidth, int windowHeight, Coordinate windowCenter, QList<Coordinate> list)
 };
 
 #endif // OBJECT_H

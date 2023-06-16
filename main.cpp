@@ -1,6 +1,6 @@
 #include <QApplication>
 #include <QDir>
-#include "presentation/mainwindow.h"
+#include "presentation/camera.h"
 #include "tests/tests_register.cpp"
 
 int main(int argc, char *argv[])
@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     QDir::setCurrent(QCoreApplication::applicationDirPath());
-    MainWindow w;
+    Camera w;
     w.show();
     return a.exec();
 }

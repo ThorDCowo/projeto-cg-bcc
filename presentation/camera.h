@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CAMERA_H
+#define CAMERA_H
 
 #include <QMainWindow>
 #include <QList>
@@ -15,19 +15,20 @@
 #include "../infra/clipper/clipper.h"
 #include "../infra/file_reader/file_reader.h"
 #include "../infra/coordinate_parser/coordinate_parser.h"
+#include "../core/entities/coordinate.h"
 using namespace std;
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class Camera; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class Camera : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    Camera(QWidget* parent = nullptr);
+    ~Camera();
 
 private slots:
 
@@ -38,20 +39,20 @@ private slots:
     void on_scaleSlider_valueChanged(int value);
     void on_rotationDial_sliderMoved(int position);
     void on_windowButton_clicked();
-    void on_centerXLineEdit_textEdited(const QString &input);
-    void on_centerYLineEdit_textEdited(const QString &input);
-    void on_angleLineEdit_textChanged(const QString &input);
-    void on_zoomSlider_valueChanged(int value);
+    void on_change_zoom_input_textChanged(const QString &input);
 
 private:
-    Ui::MainWindow* ui;
+    Ui::Camera* ui;
     TransformFromWorldToViewportUseCase* transformFromWorldToViewportUseCase;
     ReadCoordinateFileUseCase* readCoordinateFileUseCase;
+
+    float distanceFromProjection;
+    Coordinate center = Coordinate::zero();          
 
     QList<QListWidgetItem*> getCheckedListWidgetItems(QListWidget* listWidget);
 
     void operateInCheckedObjects(
-        Ui::MainWindow* ui, 
+        Ui::Camera* ui, 
         function<void(Object*)> operation
     );
 
@@ -62,8 +63,8 @@ private:
         function<void(Object*)> operation
     );
     void operateInViewport(
-        Ui::MainWindow* ui, 
+        Ui::Camera* ui, 
         function<void(Screen*)> screen
     );
 };
-#endif // MAINWINDOW_H
+#endif // CAMERA_H

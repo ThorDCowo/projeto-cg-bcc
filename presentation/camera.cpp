@@ -6,24 +6,22 @@
 #include <QListWidgetItem>
 #include <QString>
 #include <QBrush>
-
-#include "ui_mainwindow.h"
-#include "mainwindow.h"
+#include "ui_camera.h"
+#include "camera.h"
 
 
 using namespace std;
 
-float MOVE_SPEED = 20.0;
-int WIDTH = 854;  //inicialize with viewport size
-int HEIGHT = 480; //inicialize with viewport size
-Coordinate CENTER{0,0};
+const float MOVE_SPEED = 20.0;
+const int WIDTH = 854;  //inicialize with viewport size
+const int HEIGHT = 480; //inicialize with viewport size
+
+Coordinate COP{10, 10, 30};
 float TETA = 0.0;
 
-
-
-MainWindow::MainWindow(QWidget *parent)
+Camera::Camera(QWidget *parent)
     : QMainWindow(parent),
-    ui(new Ui::MainWindow),
+    ui(new Ui::Camera),
     transformFromWorldToViewportUseCase(new TransformFromWorldToViewportUseCase(
         new ClippObjectUseCase(new Clipper())
     )),
@@ -33,6 +31,9 @@ MainWindow::MainWindow(QWidget *parent)
     ))
 {
     ui->setupUi(this);
+
+    this->distanceFromProjection = 88; 
+    this->center = Coordinate{WIDTH/2, HEIGHT/2, this->distanceFromProjection};
 
     QList<Object*> list = ObjectListFactory::createObjectList();
     QList<Object*> charziardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
@@ -47,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     for (int i = 0; i < list.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
-        this->transformFromWorldToViewportUseCase->execute(list[i], width, height, center);
+        this->transformFromWorldToViewportUseCase->execute(list[i], width, height, center, this->distanceFromProjection);
         item->setText(list[i]->getName());
         item->setCheckState(Qt::Unchecked);
         item->setForeground(Qt::white);
@@ -56,12 +57,12 @@ MainWindow::MainWindow(QWidget *parent)
     }
 }
 
-MainWindow::~MainWindow()
+Camera::~Camera()
 {
     delete ui;
 }
 
-void MainWindow::on_upButton_clicked()
+void Camera::on_upButton_clicked()
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
@@ -69,12 +70,12 @@ void MainWindow::on_upButton_clicked()
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(Coordinate::up() * MOVE_SPEED);
-        this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
+        this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
     });
     update();
 }
 
-void MainWindow::on_rightButton_clicked()
+void Camera::on_rightButton_clicked()
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
@@ -82,12 +83,12 @@ void MainWindow::on_rightButton_clicked()
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(Coordinate::right() * MOVE_SPEED);
-        this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
+        this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
     });
     update();
 }
 
-void MainWindow::on_downButton_clicked()
+void Camera::on_downButton_clicked()
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
@@ -95,12 +96,12 @@ void MainWindow::on_downButton_clicked()
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(Coordinate::down() * MOVE_SPEED);
-        this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
+        this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
     });
     update();
 }
 
-void MainWindow::on_leftButton_clicked()
+void Camera::on_leftButton_clicked()
 {    
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
@@ -108,12 +109,12 @@ void MainWindow::on_leftButton_clicked()
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
        object->translate(Coordinate::left() * MOVE_SPEED);
-       this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
+       this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
     });
     update();
 }
 
-void MainWindow::on_scaleSlider_valueChanged(int value)
+void Camera::on_scaleSlider_valueChanged(int value)
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
@@ -123,13 +124,13 @@ void MainWindow::on_scaleSlider_valueChanged(int value)
         ui, 
         [this, value, width, height, center](Object* object) -> void {
             object->scale(value);
-            this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
+            this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
         }
     );
     update();
 }
 
-void MainWindow::on_rotationDial_sliderMoved(int position)
+void Camera::on_rotationDial_sliderMoved(int position)
 {
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
@@ -140,18 +141,18 @@ void MainWindow::on_rotationDial_sliderMoved(int position)
         ui,
         [this, position, width, height, center](Object* object) -> void {
             object->rotate(position, Coordinate::forward());
-            this->transformFromWorldToViewportUseCase->execute(object, width, height, center);
+            this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
         }
     );
     update();
 }
 
-void MainWindow::on_windowButton_clicked()
+void Camera::on_windowButton_clicked()
 {
     // Aqui que definimos onde esta o centro do campo de visão e a inclinação
     // Tem que recalcular as cordenadas normalizadas
 
-    ui->screen->setCenter(CENTER);
+    ui->screen->setCenter(this->center);
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
 
@@ -159,44 +160,16 @@ void MainWindow::on_windowButton_clicked()
         ui->screen->getObjectList(),
         [this, width, height](Object* object) -> void {
             object->rotateWorld(TETA, Coordinate::forward());
-            this->transformFromWorldToViewportUseCase->execute(object, width, height, CENTER);
+            this->transformFromWorldToViewportUseCase->execute(object, width, height, this->center, this->distanceFromProjection);
         }
     );  
 
     update();
 }
 
-void MainWindow::on_centerXLineEdit_textEdited(const QString &input)
-{
-    bool ok;
-    CENTER.x = input.toFloat(&ok);
-}
 
-void MainWindow::on_centerYLineEdit_textEdited(const QString &input)
-{
-    bool ok;
-    CENTER.y = input.toFloat(&ok);
-}
-
-void MainWindow::on_angleLineEdit_textChanged(const QString &input)
-{
-    bool ok;
-    TETA = input.toFloat(&ok);
-}
-
-void MainWindow::on_zoomSlider_valueChanged(int value)
-{
-    applyOperationInObjects(
-        ui->screen->getObjectList(), 
-        [value](Object* object) -> void {
-            object->scale(value);
-        }
-    );
-    update();
-}
-
-void MainWindow::operateInCheckedObjects(
-    Ui::MainWindow* ui, 
+void Camera::operateInCheckedObjects(
+    Ui::Camera* ui, 
     function<void(Object*)>operation
 ) {
     QList<Object*> objectList = ui->screen->getObjectList();
@@ -211,7 +184,7 @@ void MainWindow::operateInCheckedObjects(
     ui->screen->setObjectList(objectList);
 }
 
-QList<QListWidgetItem*> MainWindow::getCheckedListWidgetItems(QListWidget* listWidget) {
+QList<QListWidgetItem*> Camera::getCheckedListWidgetItems(QListWidget* listWidget) {
     QList<QListWidgetItem*> checked;
     
     for(qsizetype i = 0; i < listWidget->count(); i++)
@@ -222,7 +195,7 @@ QList<QListWidgetItem*> MainWindow::getCheckedListWidgetItems(QListWidget* listW
     return checked;
 }
 
-void MainWindow::applyOperationInCheckedObjects(
+void Camera::applyOperationInCheckedObjects(
     QList<QListWidgetItem*> checked, 
     QList<Object*> list,
     function<void(Object*)>operation)
@@ -236,8 +209,15 @@ void MainWindow::applyOperationInCheckedObjects(
     }
 }
 
-void MainWindow::applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation) {
+void Camera::applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation) {
     for (qsizetype i = 0; i < list.length(); i++) {
         operation(list[i]);
     }
 }
+
+void Camera::on_change_zoom_input_textChanged(const QString &input)
+{
+    bool ok;
+    this->distanceFromProjection = input.toFloat(&ok);
+}
+

@@ -1,6 +1,6 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
-
+#include <cmath>
 #include "../interfaces/comparable.h"
 
 class Coordinate : public Comparable
@@ -27,10 +27,16 @@ public:
   {
   }
 
+  Coordinate operator/(const float scalar) const
+  {
+    return Coordinate(x / scalar, y / scalar, z / scalar);
+  }
+
   Coordinate operator*(const float scalar) const
   {
     return Coordinate(x * scalar, y * scalar, z * scalar);
   }
+  
 
   void operator*=(const float scalar)
   {
@@ -46,7 +52,7 @@ public:
     z += other.z;
   }
 
-  bool operator==(const Comparable &other) const override
+  bool operator==(const Comparable &other) const 
   {
     const Coordinate *otherCoordinate = dynamic_cast<const Coordinate *>(&other);
     if (otherCoordinate)
@@ -54,12 +60,13 @@ public:
       return (
           x == otherCoordinate->x &&
           y == otherCoordinate->y &&
-          z == otherCoordinate->z);
+          z == otherCoordinate->z
+        );
     }
     return false;
   }
 
-  bool operator!=(const Comparable &other) const override
+  bool operator!=(const Comparable &other) const 
   {
     return !(*this == other);
   }
@@ -67,6 +74,20 @@ public:
   string toString() const
   {
     return "(" + to_string(x) + ", " + to_string(y) + ", " + to_string(z) + ")";
+  }
+
+  Coordinate operator-(const Comparable &other) const
+  {
+    const Coordinate *otherCoordinate = dynamic_cast<const Coordinate *>(&other);
+
+      return Coordinate(
+        x - otherCoordinate->x,
+        y - otherCoordinate->y,
+        z - otherCoordinate->z
+      );
+
+
+  
   }
 
   static Coordinate invertOrientation(Coordinate coordinate)
@@ -138,6 +159,31 @@ public:
     str.erase(0, str.find(delimiter) + delimiter.length());
     string z = str.substr(0, str.find(delimiter));
     return Coordinate(stof(x), stof(y), stof(z));
+  }
+
+  static float magnitude(Coordinate vector)
+  {
+    return std::sqrt(
+      vector.x * vector.x + 
+      vector.y * vector.y + 
+      vector.z * vector.z
+    );
+  }
+
+  static Coordinate normalize(Coordinate vector) {
+    return vector / Coordinate::magnitude(vector);
+  }
+
+  static float dotProduct(Coordinate vector1, Coordinate vector2) {
+    return vector1.x * vector2.x + 
+      vector1.y * vector2.y + 
+      vector1.z * vector2.z;
+  }
+
+  static float angle(Coordinate vector1, Coordinate vector2) {
+    return std::acos(
+      Coordinate::dotProduct(vector1, vector2)
+    );
   }
 };
 
