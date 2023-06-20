@@ -1,6 +1,5 @@
 #include "framework_test.h"
-#include "object_test.h"
-#include "../core/entities/line.h"
+#include "../core/entities/object.test.cpp"
 #include "../infra/clipper/clipper.test.cpp"
 #include "../infra/coordinate_parser/coordinate_parser.h"
 #include "../infra/coordinate_parser/coordinate_parser.test.cpp"
@@ -10,9 +9,6 @@
 
 void runTests() {
     FrameworkTest frameworkTest;
-
-    Line line("line", QList<Coordinate>{Coordinate(0,0), Coordinate(1,1)});
-    ObjectTest objectTest(&line);
 
     Clipper clipper;
     ClipperTest clipperTest(&clipper);
@@ -24,10 +20,12 @@ void runTests() {
     ReadCoordinateFileUseCase readCoordinateFileUseCase(&fileReader, &coordinateParser);
     ReadCoordinateFileUseCaseTest readCoordinateFileUseCaseTest(&readCoordinateFileUseCase);
 
-    frameworkTest.registerTest(&objectTest);
+    ObjectTest objectTest;
+
     frameworkTest.registerTest(&clipperTest);
     frameworkTest.registerTest(&coordinateParserTest);
     frameworkTest.registerTest(&readCoordinateFileUseCaseTest);
+    frameworkTest.registerTest(&objectTest);
 
     frameworkTest.run();
 }

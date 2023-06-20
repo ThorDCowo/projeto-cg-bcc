@@ -93,12 +93,12 @@ gridline-color: rgb(190, 190, 190);</string>
      </property>
      <widget class="QWidget" name="tab_show">
       <attribute name="title">
-       <string>Exibição</string>
+       <string>Mundo</string>
       </attribute>
       <widget class="QLabel" name="windowLabel">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>20</x>
          <y>10</y>
          <width>80</width>
          <height>20</height>
@@ -115,16 +115,16 @@ gridline-color: rgb(190, 190, 190);</string>
         <string notr="true">color: rgb(190, 190, 190);</string>
        </property>
        <property name="text">
-        <string>Movement</string>
+        <string>Movimento</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QToolButton" name="upButton_COP">
+      <widget class="QToolButton" name="upButton_Move">
        <property name="geometry">
         <rect>
-         <x>40</x>
+         <x>50</x>
          <y>40</y>
          <width>25</width>
          <height>25</height>
@@ -141,10 +141,10 @@ gridline-color: rgb(190, 190, 190);</string>
          <normaloff>:/:/icons/up_arrow.png</normaloff>:/:/icons/up_arrow.png</iconset>
        </property>
       </widget>
-      <widget class="QToolButton" name="rightButton_COP">
+      <widget class="QToolButton" name="rightButton_Move">
        <property name="geometry">
         <rect>
-         <x>70</x>
+         <x>80</x>
          <y>70</y>
          <width>25</width>
          <height>25</height>
@@ -161,10 +161,10 @@ gridline-color: rgb(190, 190, 190);</string>
          <normaloff>:/:/icons/right_arrow.png</normaloff>:/:/icons/right_arrow.png</iconset>
        </property>
       </widget>
-      <widget class="QToolButton" name="leftButton_COP">
+      <widget class="QToolButton" name="leftButton_Move">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>20</x>
          <y>70</y>
          <width>25</width>
          <height>25</height>
@@ -181,10 +181,10 @@ gridline-color: rgb(190, 190, 190);</string>
          <normaloff>:/:/icons/left_arrow.png</normaloff>:/:/icons/left_arrow.png</iconset>
        </property>
       </widget>
-      <widget class="QToolButton" name="downButton_COP">
+      <widget class="QToolButton" name="downButton_Move">
        <property name="geometry">
         <rect>
-         <x>40</x>
+         <x>50</x>
          <y>70</y>
          <width>25</width>
          <height>25</height>
@@ -240,7 +240,7 @@ gridline-color: rgb(190, 190, 190);</string>
       <widget class="QPushButton" name="windowButton">
        <property name="geometry">
         <rect>
-         <x>150</x>
+         <x>160</x>
          <y>160</y>
          <width>55</width>
          <height>21</height>
@@ -262,7 +262,7 @@ gridline-color: rgb(190, 190, 190);</string>
       <widget class="QLabel" name="windowLabel_2">
        <property name="geometry">
         <rect>
-         <x>120</x>
+         <x>130</x>
          <y>10</y>
          <width>80</width>
          <height>20</height>
@@ -285,10 +285,10 @@ gridline-color: rgb(190, 190, 190);</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QToolButton" name="leftButton_window">
+      <widget class="QToolButton" name="leftButton_Cam">
        <property name="geometry">
         <rect>
-         <x>120</x>
+         <x>130</x>
          <y>70</y>
          <width>25</width>
          <height>25</height>
@@ -305,10 +305,10 @@ gridline-color: rgb(190, 190, 190);</string>
          <normaloff>:/:/icons/left_arrow.png</normaloff>:/:/icons/left_arrow.png</iconset>
        </property>
       </widget>
-      <widget class="QToolButton" name="rightButton_window">
+      <widget class="QToolButton" name="rightButton_Cam">
        <property name="geometry">
         <rect>
-         <x>180</x>
+         <x>190</x>
          <y>70</y>
          <width>25</width>
          <height>25</height>
@@ -325,10 +325,10 @@ gridline-color: rgb(190, 190, 190);</string>
          <normaloff>:/:/icons/right_arrow.png</normaloff>:/:/icons/right_arrow.png</iconset>
        </property>
       </widget>
-      <widget class="QToolButton" name="upButton_window">
+      <widget class="QToolButton" name="upButton_Cam">
        <property name="geometry">
         <rect>
-         <x>150</x>
+         <x>160</x>
          <y>40</y>
          <width>25</width>
          <height>25</height>
@@ -345,10 +345,10 @@ gridline-color: rgb(190, 190, 190);</string>
          <normaloff>:/:/icons/up_arrow.png</normaloff>:/:/icons/up_arrow.png</iconset>
        </property>
       </widget>
-      <widget class="QToolButton" name="downButton_window">
+      <widget class="QToolButton" name="downButton_Cam">
        <property name="geometry">
         <rect>
-         <x>150</x>
+         <x>160</x>
          <y>70</y>
          <width>25</width>
          <height>25</height>
@@ -365,6 +365,58 @@ gridline-color: rgb(190, 190, 190);</string>
          <normaloff>:/:/icons/down_arrow.png</normaloff>:/:/icons/down_arrow.png</iconset>
        </property>
       </widget>
+      <widget class="QComboBox" name="comboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>130</y>
+         <width>141</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Projeção Perspectiva</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Projeção XY</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Projeção XZ</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Projeção YZ</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="projection_button">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>130</y>
+         <width>55</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: white;</string>
+       </property>
+       <property name="text">
+        <string>Aplicar</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab_control">
       <property name="font">
@@ -375,7 +427,7 @@ gridline-color: rgb(190, 190, 190);</string>
        </font>
       </property>
       <attribute name="title">
-       <string>Controles</string>
+       <string>Objeto</string>
       </attribute>
       <widget class="QDial" name="rotationDial">
        <property name="geometry">
@@ -562,261 +614,6 @@ gridline-color: rgb(190, 190, 190);</string>
        </property>
        <property name="text">
         <string>Escalar</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="createTab">
-      <attribute name="title">
-       <string>Criar</string>
-      </attribute>
-      <widget class="QPushButton" name="createButton">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>100</y>
-         <width>50</width>
-         <height>50</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>12</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Criar</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="nameLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>85</x>
-         <y>20</y>
-         <width>100</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-      </widget>
-      <widget class="QLabel" name="nameLabel">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>20</y>
-         <width>40</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Nome:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="colorLabel">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>50</y>
-         <width>40</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Cor:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="ColorComboBox">
-       <property name="geometry">
-        <rect>
-         <x>85</x>
-         <y>50</y>
-         <width>100</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <item>
-        <property name="text">
-         <string>Qt::red</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Qt::green</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Qt::blue</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Qt::white</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Qt::grey</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Qt::black</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Qt::yellow</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Qt::cyan</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QPushButton" name="addPointButton">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>130</y>
-         <width>70</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Adicionar</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="pointXLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>110</y>
-         <width>23</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="pointYLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>110</y>
-         <width>23</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLabel" name="pointYLabel">
-       <property name="geometry">
-        <rect>
-         <x>68</x>
-         <y>110</y>
-         <width>10</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Y</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="dotsLabel">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>90</y>
-         <width>50</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Pontos</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="pointXLabel">
-       <property name="geometry">
-        <rect>
-         <x>28</x>
-         <y>110</y>
-         <width>10</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Times New Roman</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>X</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

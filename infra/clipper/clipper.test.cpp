@@ -7,7 +7,6 @@
 #include "../../core/entities/border.h"
 #include "../../tests/framework_test.h"
 #include "../../tests/test_suite.h"
-#include "../../tests/object_test.h"
 #include "clipper.h"
 
 #include "../../core/interfaces/comparable.h"

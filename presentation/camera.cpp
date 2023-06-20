@@ -10,19 +10,27 @@
 #include "camera.h"
 
 
+
 using namespace std;
 
 const float MOVE_SPEED = 20.0;
 const int WIDTH = 854;  //inicialize with viewport size
 const int HEIGHT = 480; //inicialize with viewport size
 
+
 Coordinate COP{10, 10, 30};
 float TETA = 0.0;
+
+float ALPHA = 0.0; //inicialize with viewport size
+float BETA = 0.0; //inicialize with viewport size
 
 Camera::Camera(QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::Camera),
-    transformFromWorldToViewportUseCase(new TransformFromWorldToViewportUseCase(
+    orthogonalProjectionUseCase(new OrthogonalProjectionUseCase(
+        new ClippObjectUseCase(new Clipper())
+    )),
+    perspectiveProjectionUseCase(new PerspectiveProjectionUseCase(
         new ClippObjectUseCase(new Clipper())
     )),
     readCoordinateFileUseCase(new ReadCoordinateFileUseCase(
@@ -33,23 +41,24 @@ Camera::Camera(QWidget *parent)
     ui->setupUi(this);
 
     this->distanceFromProjection = 88; 
-    this->center = Coordinate{WIDTH/2, HEIGHT/2, this->distanceFromProjection};
 
-    QList<Object*> list = ObjectListFactory::createObjectList();
+    QList<Object*> objectList = ObjectListFactory::createObjectList();
     QList<Object*> charziardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
 
-    list.append(charziardList);
+    objectList.append(charziardList);
 
-    ui->screen->setObjectList(list);
+    ui->screen->setObjectList(objectList);
 
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
     Coordinate center = ui->screen->getCenter();
 
-    for (int i = 0; i < list.size(); i++){
+    for (int i = 0; i < objectList.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
-        this->transformFromWorldToViewportUseCase->execute(list[i], width, height, center, this->distanceFromProjection);
-        item->setText(list[i]->getName());
+
+        chooseProjectionMode(objectList[i], ui->comboBox->currentIndex());
+        
+        item->setText(objectList[i]->getName());
         item->setCheckState(Qt::Unchecked);
         item->setForeground(Qt::white);
 
@@ -70,7 +79,7 @@ void Camera::on_upButton_clicked()
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(Coordinate::up() * MOVE_SPEED);
-        this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
+        chooseProjectionMode(object, ui->comboBox->currentIndex());
     });
     update();
 }
@@ -83,7 +92,7 @@ void Camera::on_rightButton_clicked()
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(Coordinate::right() * MOVE_SPEED);
-        this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
+        chooseProjectionMode(object, ui->comboBox->currentIndex());
     });
     update();
 }
@@ -96,7 +105,7 @@ void Camera::on_downButton_clicked()
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
         object->translate(Coordinate::down() * MOVE_SPEED);
-        this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
+        chooseProjectionMode(object, ui->comboBox->currentIndex());
     });
     update();
 }
@@ -109,7 +118,7 @@ void Camera::on_leftButton_clicked()
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
        object->translate(Coordinate::left() * MOVE_SPEED);
-       this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
+       chooseProjectionMode(object, ui->comboBox->currentIndex());
     });
     update();
 }
@@ -124,7 +133,7 @@ void Camera::on_scaleSlider_valueChanged(int value)
         ui, 
         [this, value, width, height, center](Object* object) -> void {
             object->scale(value);
-            this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
+            chooseProjectionMode(object, ui->comboBox->currentIndex());
         }
     );
     update();
@@ -141,7 +150,7 @@ void Camera::on_rotationDial_sliderMoved(int position)
         ui,
         [this, position, width, height, center](Object* object) -> void {
             object->rotate(position, Coordinate::forward());
-            this->transformFromWorldToViewportUseCase->execute(object, width, height, center, this->distanceFromProjection);
+            chooseProjectionMode(object, ui->comboBox->currentIndex());
         }
     );
     update();
@@ -160,7 +169,7 @@ void Camera::on_windowButton_clicked()
         ui->screen->getObjectList(),
         [this, width, height](Object* object) -> void {
             object->rotateWorld(TETA, Coordinate::forward());
-            this->transformFromWorldToViewportUseCase->execute(object, width, height, this->center, this->distanceFromProjection);
+            chooseProjectionMode(object, ui->comboBox->currentIndex());
         }
     );  
 
@@ -221,3 +230,106 @@ void Camera::on_change_zoom_input_textChanged(const QString &input)
     this->distanceFromProjection = input.toFloat(&ok);
 }
 
+void Camera::on_projection_button_clicked()
+{
+    applyOperationInObjects(
+        ui->screen->getObjectList(),
+        [this](Object* object) -> void {
+            chooseProjectionMode(object, ui->comboBox->currentIndex());
+        }
+    );  
+
+    update();
+
+}
+
+void Camera::chooseProjectionMode(Object* object, int projectionMode) {
+    
+    Coordinate windowCenter = ui->screen->getCenter();
+    int width = ui->screen->getWidth();
+    int height = ui->screen->getHeight();
+
+    if (projectionMode == PERSPECTIVE) {
+        this->perspectiveProjectionUseCase->execute(
+            object, 
+            COP,
+            windowCenter, 
+            width, 
+            height, 
+            this->distanceFromProjection,
+            ALPHA, 
+            BETA
+        );
+    }
+
+    if (projectionMode == ORTHOGONAL_IN_XY) {
+        this->orthogonalProjectionUseCase->execute(
+            object,
+            width,
+            height,
+            windowCenter,
+            Coordinate::axisZ()
+        );
+    }
+
+    if (projectionMode == ORTHOGONAL_IN_XZ) {
+        this->orthogonalProjectionUseCase->execute(
+            object,
+            width,
+            height,
+            windowCenter,
+            Coordinate::axisY()
+        );
+    }
+
+    if (projectionMode == ORTHOGONAL_IN_YZ) {
+        this->orthogonalProjectionUseCase->execute(
+            object,
+            width,
+            height,
+            windowCenter,
+            Coordinate::axisX()
+        );
+    }
+
+}
+
+void Camera::on_upButton_Move_clicked()
+{
+
+}
+
+void Camera::on_rightButton_Move_clicked()
+{
+
+}
+
+void Camera::on_downButton_Move_clicked()
+{
+
+}
+
+void Camera::on_leftButton_Move_clicked()
+{
+
+}
+
+void Camera::on_upButton_Cam_clicked()
+{
+
+}
+
+void Camera::on_rightButton_Cam_clicked()
+{
+
+}
+
+void Camera::on_downButton_Cam_clicked()
+{
+
+}
+
+void Camera::on_leftButton_Cam_clicked()
+{
+
+}

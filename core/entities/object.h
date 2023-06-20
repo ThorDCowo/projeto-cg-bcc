@@ -37,12 +37,16 @@ public:
     void perspectiveNormalize(
         int windowWidth, 
         int windowHeight, 
-        Coordinate windowCenter);
-    void parallelNormalize(
+        Coordinate windowCenter,
+        float distanceFromProjection
+    );
+    void orthogonalNormalize(
         int width, 
         int height, 
         Coordinate center,
         Coordinate axisToExclude);
+    void perspectiveProjection(Coordinate centerOfProjection, Coordinate axisX, Coordinate axisY, float alpha, float beta);
+
 
     virtual void translate(Coordinate translation)=0;
     virtual void scale(float factor)=0;
@@ -69,7 +73,7 @@ protected:
     QList<Coordinate> normalizePointsList;
     Qt::GlobalColor color;
 
-    void normalizeCoordinates(int windowWidth, int windowHeight, Coordinate windowCenter, QList<Coordinate> list)
+    void normalizeCoordinates(int windowWidth, int windowHeight, Coordinate windowCenter, QList<Coordinate> list);
 };
 
 #endif // OBJECT_H

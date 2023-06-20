@@ -14,6 +14,7 @@ SOURCES += \
     core\entities\border.cpp \
     core\entities\line.cpp \
     core\entities\object.cpp \
+    core\entities\object.test.cpp \
     core\entities\point.cpp \
     core\entities\polygon.cpp \
     infra\clipper\clipper.cpp \
@@ -23,14 +24,15 @@ SOURCES += \
     infra\file_reader\file_reader.cpp \
     infra\object_list_factory\object_list_factory.cpp \
     tests\framework_test.cpp \
-    tests\object_test.cpp \
     tests\tests_register.cpp \
     presentation\camera.cpp \
     use_cases\clipp_object\clipp_object.use_case.cpp \
     use_cases\read_coordinate_file\read_coordinate_file.use_case.cpp \
     use_cases\read_coordinate_file\read_coordinate_file.use_case.test.cpp \
-    use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.cpp \
-    use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.test.cpp \
+    use_cases\orthogonal_projection\orthogonal_projection.use_case.cpp \
+    use_cases\orthogonal_projection\orthogonal_projection.use_case.test.cpp \
+    use_cases\perspective_projection\perspective_projection.use_case.cpp \
+    use_cases\perspective_projection\perspective_projection.use_case.test.cpp \
     screen.cpp \
     main.cpp
 
@@ -49,11 +51,11 @@ HEADERS += \
     infra\object_list_factory\object_list_factory.h \
     presentation\camera.h \
     tests\framework_test.h \
-    tests\object_test.h \
     tests\test_suite.h \
     use_cases\clipp_object\clipp_object.use_case.h \
     use_cases\read_coordinate_file\read_coordinate_file.use_case.h \
-    use_cases\transform_from_world_to_viewport\transform_from_world_to_viewport.use_case.h \
+    use_cases\orthogonal_projection\orthogonal_projection.use_case.h \
+    use_cases\perspective_projection\perspective_projection.use_case.h \
     screen.h
 
 FORMS += \

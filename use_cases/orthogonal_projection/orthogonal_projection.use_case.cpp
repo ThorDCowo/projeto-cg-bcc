@@ -1,18 +1,16 @@
-#include "transform_from_world_to_viewport.use_case.h"
+#include "orthogonal_projection.use_case.h"
 
-void TransformFromWorldToViewportUseCase::execute(
+void OrthogonalProjectionUseCase::execute(
     Object* object,
     int width,
     int height,
     Coordinate center,
-    float distanceFromProjection
+    Coordinate axisToExclude
 )
 {
     Border border(width, height, center);
     
-    // object->parallelNormalize(width, height, center, Coordinate::axisZ());
-    object->planeProjection(distanceFromProjection);
-    object->perspectiveNormalize(width, height, center);
+    object->orthogonalNormalize(width, height, center, axisToExclude);
     this->clippObjectUseCase->execute(object, border);
     object->transformToViewport(center);
 
