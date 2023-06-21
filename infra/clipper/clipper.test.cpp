@@ -22,9 +22,9 @@ public:
 
     void run()
     {
-        //cout << "-----------------------" << endl;
-        //cout << "Teste de lineClipping()" << endl;
-        //cout << "-----------------------" << endl;
+        cout << "-----------------------" << endl;
+        cout << "Teste de lineClipping()" << endl;
+        cout << "-----------------------" << endl;
 
         this->lineClippingTest2();
         this->lineClippingTest3();

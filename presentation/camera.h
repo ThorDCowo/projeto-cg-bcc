@@ -45,7 +45,7 @@ private slots:
     void on_leftButton_clicked();
     void on_scaleSlider_valueChanged(int value);
     void on_rotationDial_sliderMoved(int position);
-    void on_windowButton_clicked();
+    void on_zoomButton_clicked();
     void on_change_zoom_input_textChanged(const QString &input);
     void on_projection_button_clicked();
     void on_upButton_Move_clicked();
@@ -74,6 +74,10 @@ private:
     );
 
     void chooseProjectionMode( Object* object, int projectionMode);
+    void makeMovement(int projectionMode, Coordinate direction);
+    void perspectiveMovement(Coordinate direction);
+    void orthogonalMovement(Coordinate direction);
+    float angleBetweenViewPlaneProjectionAndAxis(Coordinate axis);
 
     void applyOperationInObjects(QList<Object*> list, function<void(Object*)>operation);
     void applyOperationInCheckedObjects(

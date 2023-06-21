@@ -12,6 +12,14 @@ void Polygon::translate(Coordinate translation)
     }
 }
 
+void Polygon::translateProjection(Coordinate translation)
+{
+    for(qsizetype i = 0; i < pointsList.size(); i++) {
+        projectionPointsList[i] += translation;
+    }
+}
+
+
 void Polygon::scale(float factor)
 { 
     Coordinate center = barycenter();

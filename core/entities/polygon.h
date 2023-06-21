@@ -19,6 +19,7 @@ public:
 
     void draw(QPainter &painter);
     void translate(Coordinate translation);
+    void translateProjection(Coordinate translation);
     void scale(float factor);
     void rotate(float teta, Coordinate axis);
 };

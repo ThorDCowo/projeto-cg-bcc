@@ -9,20 +9,14 @@
 #include "ui_camera.h"
 #include "camera.h"
 
-
-
 using namespace std;
 
 const float MOVE_SPEED = 20.0;
-const int WIDTH = 854;  //inicialize with viewport size
-const int HEIGHT = 480; //inicialize with viewport size
 
+Coordinate COP{0, 0, 0};
 
-Coordinate COP{10, 10, 30};
-float TETA = 0.0;
-
-float ALPHA = 0.0; //inicialize with viewport size
-float BETA = 0.0; //inicialize with viewport size
+// float ALPHA = 0.0; //inicialize with viewport size
+// float BETA = 0.0; //inicialize with viewport size
 
 Camera::Camera(QWidget *parent)
     : QMainWindow(parent),
@@ -40,17 +34,15 @@ Camera::Camera(QWidget *parent)
 {
     ui->setupUi(this);
 
-    this->distanceFromProjection = 88; 
+    this->distanceFromProjection = 1; 
 
     QList<Object*> objectList = ObjectListFactory::createObjectList();
-    QList<Object*> charziardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
+    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
 
-    objectList.append(charziardList);
+    objectList.append(charizardList);
 
     ui->screen->setObjectList(objectList);
-
-    int width = ui->screen->getWidth();
-    int height = ui->screen->getHeight();
+    
     Coordinate center = ui->screen->getCenter();
 
     for (int i = 0; i < objectList.size(); i++){
@@ -71,6 +63,11 @@ Camera::~Camera()
     delete ui;
 }
 
+float Camera::angleBetweenViewPlaneProjectionAndAxis(Coordinate axis) {
+
+    return Coordinate::angle(axis, center);
+}
+
 void Camera::on_upButton_clicked()
 {
     int width = ui->screen->getWidth();
@@ -78,7 +75,7 @@ void Camera::on_upButton_clicked()
     Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
-        object->translate(Coordinate::up() * MOVE_SPEED);
+        object->translate(Coordinate::down() * MOVE_SPEED);
         chooseProjectionMode(object, ui->comboBox->currentIndex());
     });
     update();
@@ -104,7 +101,7 @@ void Camera::on_downButton_clicked()
     Coordinate center = ui->screen->getCenter();
 
     operateInCheckedObjects(ui, [this, width, height, center](Object* object) {
-        object->translate(Coordinate::down() * MOVE_SPEED);
+        object->translate(Coordinate::up() * MOVE_SPEED);
         chooseProjectionMode(object, ui->comboBox->currentIndex());
     });
     update();
@@ -136,6 +133,7 @@ void Camera::on_scaleSlider_valueChanged(int value)
             chooseProjectionMode(object, ui->comboBox->currentIndex());
         }
     );
+
     update();
 }
 
@@ -153,29 +151,21 @@ void Camera::on_rotationDial_sliderMoved(int position)
             chooseProjectionMode(object, ui->comboBox->currentIndex());
         }
     );
+    
     update();
 }
 
-void Camera::on_windowButton_clicked()
+void Camera::on_zoomButton_clicked()
 {
-    // Aqui que definimos onde esta o centro do campo de visão e a inclinação
-    // Tem que recalcular as cordenadas normalizadas
-
-    ui->screen->setCenter(this->center);
-    int width = ui->screen->getWidth();
-    int height = ui->screen->getHeight();
-
     applyOperationInObjects(
         ui->screen->getObjectList(),
-        [this, width, height](Object* object) -> void {
-            object->rotateWorld(TETA, Coordinate::forward());
+        [this](Object* object) -> void {
             chooseProjectionMode(object, ui->comboBox->currentIndex());
         }
-    );  
+    ); 
 
     update();
 }
-
 
 void Camera::operateInCheckedObjects(
     Ui::Camera* ui, 
@@ -205,7 +195,7 @@ QList<QListWidgetItem*> Camera::getCheckedListWidgetItems(QListWidget* listWidge
 }
 
 void Camera::applyOperationInCheckedObjects(
-    QList<QListWidgetItem*> checked, 
+    QList<QListWidgetItem*> checked,
     QList<Object*> list,
     function<void(Object*)>operation)
  {
@@ -227,7 +217,7 @@ void Camera::applyOperationInObjects(QList<Object*> list, function<void(Object*)
 void Camera::on_change_zoom_input_textChanged(const QString &input)
 {
     bool ok;
-    this->distanceFromProjection = input.toFloat(&ok);
+    this->distanceFromProjection = this->distanceFromProjection * (-input.toFloat(&ok) / 100);
 }
 
 void Camera::on_projection_button_clicked()
@@ -237,10 +227,9 @@ void Camera::on_projection_button_clicked()
         [this](Object* object) -> void {
             chooseProjectionMode(object, ui->comboBox->currentIndex());
         }
-    );  
+    );
 
     update();
-
 }
 
 void Camera::chooseProjectionMode(Object* object, int projectionMode) {
@@ -248,18 +237,25 @@ void Camera::chooseProjectionMode(Object* object, int projectionMode) {
     Coordinate windowCenter = ui->screen->getCenter();
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
+    float alpha = angleBetweenViewPlaneProjectionAndAxis(Coordinate::axisX());
+    float beta = angleBetweenViewPlaneProjectionAndAxis(Coordinate::axisY());
 
     if (projectionMode == PERSPECTIVE) {
         this->perspectiveProjectionUseCase->execute(
-            object, 
+            object,
             COP,
-            windowCenter, 
-            width, 
-            height, 
+            windowCenter,
+            width,
+            height,
             this->distanceFromProjection,
-            ALPHA, 
-            BETA
+            alpha,
+            beta
         );
+        
+        ui->upButton_Cam->setDisabled(false);
+        ui->rightButton_Cam->setDisabled(false);
+        ui->downButton_Cam->setDisabled(false);
+        ui->leftButton_Cam->setDisabled(false);
     }
 
     if (projectionMode == ORTHOGONAL_IN_XY) {
@@ -270,6 +266,11 @@ void Camera::chooseProjectionMode(Object* object, int projectionMode) {
             windowCenter,
             Coordinate::axisZ()
         );
+
+        ui->upButton_Cam->setDisabled(true);
+        ui->rightButton_Cam->setDisabled(true);
+        ui->downButton_Cam->setDisabled(true);
+        ui->leftButton_Cam->setDisabled(true);
     }
 
     if (projectionMode == ORTHOGONAL_IN_XZ) {
@@ -280,6 +281,11 @@ void Camera::chooseProjectionMode(Object* object, int projectionMode) {
             windowCenter,
             Coordinate::axisY()
         );
+
+        ui->upButton_Cam->setDisabled(true);
+        ui->rightButton_Cam->setDisabled(true);
+        ui->downButton_Cam->setDisabled(true);
+        ui->leftButton_Cam->setDisabled(true);
     }
 
     if (projectionMode == ORTHOGONAL_IN_YZ) {
@@ -290,46 +296,145 @@ void Camera::chooseProjectionMode(Object* object, int projectionMode) {
             windowCenter,
             Coordinate::axisX()
         );
+
+        ui->upButton_Cam->setDisabled(true);
+        ui->rightButton_Cam->setDisabled(true);
+        ui->downButton_Cam->setDisabled(true);
+        ui->leftButton_Cam->setDisabled(true);
     }
 
 }
 
+void Camera::makeMovement(int projectionMode, Coordinate direction) {
+    if (projectionMode == PERSPECTIVE) {
+        perspectiveMovement(direction);
+        return;
+    }
+    orthogonalMovement(direction);
+}
+
+void Camera::perspectiveMovement(Coordinate direction)
+{
+    if(direction == Coordinate::up()){
+        applyOperationInObjects(
+            ui->screen->getObjectList(),
+            [this](Object* object) -> void {
+                object->translate(Coordinate::up() * MOVE_SPEED);
+            }
+        );
+    }
+    if(direction == Coordinate::right()){
+        applyOperationInObjects(
+            ui->screen->getObjectList(),
+            [this](Object* object) -> void {
+                object->translate(Coordinate::right() * MOVE_SPEED);
+            }   
+        );
+    }
+    if(direction == Coordinate::down()){
+        applyOperationInObjects(
+            ui->screen->getObjectList(),
+            [this](Object* object) -> void {
+                object->translate(Coordinate::down() * MOVE_SPEED);
+            }
+        ); 
+    }
+    if(direction == Coordinate::left()){
+        applyOperationInObjects(
+            ui->screen->getObjectList(),
+            [this](Object* object) -> void {
+                object->translate(Coordinate::left() * MOVE_SPEED);
+            }
+        );
+    }
+
+    update();
+}
+
+void Camera::orthogonalMovement(Coordinate direction)
+{
+    if(direction == Coordinate::up()){
+        applyOperationInObjects(
+            ui->screen->getObjectList(),
+            [this](Object* object) -> void {
+                object->translateProjection(Coordinate::down() * MOVE_SPEED);
+            }
+        ); 
+    }
+
+    if(direction == Coordinate::right()){
+        applyOperationInObjects(
+            ui->screen->getObjectList(),
+            [this](Object* object) -> void {
+                object->translateProjection(Coordinate::right() * MOVE_SPEED);
+            }
+        ); 
+    }
+    
+    if(direction == Coordinate::down()){
+        applyOperationInObjects(
+            ui->screen->getObjectList(),
+            [this](Object* object) -> void {
+                object->translateProjection(Coordinate::up() * MOVE_SPEED);
+            }
+        ); 
+    }
+    
+    if(direction == Coordinate::left()){
+        applyOperationInObjects(
+            ui->screen->getObjectList(),
+            [this](Object* object) -> void {
+                object->translateProjection(Coordinate::left() * MOVE_SPEED);
+            }
+        ); 
+    }
+    update();
+}
+
 void Camera::on_upButton_Move_clicked()
 {
-
+    makeMovement(ui->comboBox->currentIndex(), Coordinate::up()); 
 }
 
 void Camera::on_rightButton_Move_clicked()
 {
-
+    makeMovement(ui->comboBox->currentIndex(), Coordinate::right());  
 }
 
 void Camera::on_downButton_Move_clicked()
 {
-
+    makeMovement(ui->comboBox->currentIndex(), Coordinate::down()); 
 }
 
 void Camera::on_leftButton_Move_clicked()
 {
-
+    makeMovement(ui->comboBox->currentIndex(), Coordinate::left()); 
 }
 
 void Camera::on_upButton_Cam_clicked()
 {
-
+    Coordinate newCenter = ui->screen->getCenter();
+    newCenter.x += MOVE_SPEED;
+    ui->screen->setCenter(newCenter);
 }
 
 void Camera::on_rightButton_Cam_clicked()
 {
-
+    Coordinate newCenter = ui->screen->getCenter();
+    newCenter.y -= MOVE_SPEED;
+    ui->screen->setCenter(newCenter);
 }
 
 void Camera::on_downButton_Cam_clicked()
 {
-
+    Coordinate newCenter = ui->screen->getCenter();
+    newCenter.x -= MOVE_SPEED;
+    ui->screen->setCenter(newCenter);
 }
 
 void Camera::on_leftButton_Cam_clicked()
 {
-
+    Coordinate newCenter = ui->screen->getCenter();
+    newCenter.y += MOVE_SPEED;
+    ui->screen->setCenter(newCenter);
 }

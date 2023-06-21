@@ -13,32 +13,32 @@ void FrameworkTest::registerTest(TestSuite* testSuite)
 bool FrameworkTest::expectToBeEqual(string testMessage, float value, float expectedValue)
 {
     bool result = value == expectedValue;
-    //cout << testMessage << ": ";
+    cout << testMessage << ": ";
 
     if (!result) {
-        //cout << "Falhou!" << endl;
-        //cout << "Valor Recebido: " << value << endl;
-        //cout << "Valor Esperado: " << expectedValue << endl;
+        cout << "Falhou!" << endl;
+        cout << "Valor Recebido: " << value << endl;
+        cout << "Valor Esperado: " << expectedValue << endl;
         return false;
     }
 
-    //cout << "Sucesso!" << endl;
+    cout << "Sucesso!" << endl;
     return result;
 }
 
 bool FrameworkTest::expectToBeEqual(string testMessage, qsizetype value, qsizetype expectedValue)
 {
     bool result = value == expectedValue;
-    //cout << testMessage << ": ";
+    cout << testMessage << ": ";
 
     if (!result) {
-        //cout << "Falhou!" << endl;
-        //cout << "Valor Recebido: " << value << endl;
-        //cout << "Valor Esperado: " << expectedValue << endl;
+        cout << "Falhou!" << endl;
+        cout << "Valor Recebido: " << value << endl;
+        cout << "Valor Esperado: " << expectedValue << endl;
         return false;
     }
 
-    //cout << "Sucesso!" << endl;
+    cout << "Sucesso!" << endl;
     return result;
 }
 
@@ -50,16 +50,16 @@ bool FrameworkTest:: expectToBeEqual(
 {
     bool result = value == expectedValue;
 
-    //cout << testMessage << ": ";
+    cout << testMessage << ": ";
 
     if (!result) {
-        //cout << "Falhou!" << endl;
-        //cout << "Valor Recebido: " << value.toString() << endl;
-        //cout << "Valor Esperado: " << expectedValue.toString() << endl;
+        cout << "Falhou!" << endl;
+        cout << "Valor Recebido: " << value.toString() << endl;
+        cout << "Valor Esperado: " << expectedValue.toString() << endl;
         return false;
     }
 
-    //cout << "Sucesso!" << endl;
+    cout << "Sucesso!" << endl;
     return result;
 }
 
@@ -69,7 +69,7 @@ void FrameworkTest::run()
         testSuite->run();
     }
 
-    //cout << "-----------------------" << endl;
-    //cout << "Fim dos testes" << endl;
-    //cout << "-----------------------" << endl;
+    cout << "-----------------------" << endl;
+    cout << "Fim dos testes" << endl;
+    cout << "-----------------------" << endl;
 }

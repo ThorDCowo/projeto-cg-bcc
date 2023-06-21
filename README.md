@@ -10,11 +10,11 @@ Projeção em Perspectiva
 
 ## Algoritmo para a projeção perspectiva.
 
-- Definir COP.
+- ~~Definir COP.~~
 - ~~Translade COP para a origem do mundo.~~
   - ~~Transalação de todos os objetos do mundo.~~
-- Determine VPN. (Vetor Normal ao Plano de Projeção)
-  - Decomponha o vetor e determine os ângulos de VPN em torno de X e em torno de Y.
+- ~~Determine VPN. (Vetor Normal ao Plano de Projeção)~~
+  - ~~Decomponha o vetor e determine os ângulos de VPN em torno de X e em torno de Y.~~
 - ~~Rotacione o mundo em torno de X e de Y alinhando VPN com Z.~~
 - ~~Projete os pontos pontos Xp e Yp usando a [matriz de perspectiva.](https://moodle.utfpr.edu.br/pluginfile.php/2759771/mod_page/content/3/CG%20-%20Aula15%20-%20Proje%C3%A7%C3%B5es%203D%20em%202D.pdf)~~
 - ~~Normalize para gerar o SCN.~~
@@ -22,16 +22,17 @@ Projeção em Perspectiva
 - ~~Faça a transformada de viewport.~~
 - ~~Desenhe.~~
 - Implemetar UI.
-  - Movimento.
-  - Camera.
-  - Zoom.
+  - ~~Movimento.~~
+  - ~~Camera.~~
+  - ~~Zoom.~~
+    - Implementado, mas não funcional
   - Escalar.
 - Testes.
   - Casos de uso.
     - Projeção Ortogonal.
     - Projeção Perspectiva.
   - Teste Unitário.
-    - Normalizaçao Ortogonal.
+    - Normalização Ortogonal.
     - Transformação da Viewport.
     - Translação.
     - Escala.

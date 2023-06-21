@@ -9,6 +9,12 @@ void Line::translate(Coordinate translation)
     pointsList[1] += translation;
 }
 
+void Line::translateProjection(Coordinate translation)
+{
+    projectionPointsList[0] += translation;
+    projectionPointsList[1] += translation;
+}
+
 void Line::scale(float factor)
 {
     Coordinate center = barycenter();

@@ -182,9 +182,10 @@ public:
 
   static float angle(Coordinate vector1, Coordinate vector2) {
     return std::acos(
-      Coordinate::dotProduct(vector1, vector2)
+      Coordinate::dotProduct(vector1, vector2)/(Coordinate::magnitude(vector1) * Coordinate::magnitude(vector1))
     );
   }
+  
 };
 
 #endif // COORDINATE_H

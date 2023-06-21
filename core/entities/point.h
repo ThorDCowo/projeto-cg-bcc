@@ -19,6 +19,7 @@ public:
 
     void draw(QPainter &painter);   
     void translate(Coordinate translation);
+    void translateProjection(Coordinate translation);
     void scale();
     void rotate();
     bool isInsideWindow(vector<bool> pointRegionCode);

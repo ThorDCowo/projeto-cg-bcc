@@ -49,6 +49,7 @@ public:
 
 
     virtual void translate(Coordinate translation)=0;
+    virtual void translateProjection(Coordinate translation) = 0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta, Coordinate axis)=0;
     
@@ -69,6 +70,7 @@ public:
 protected:
     QString name; //id do objeto instanciado
     QList<Coordinate> pointsList;
+    QList<pair<qsizetype, qsizetype>> edges;
     QList<Coordinate> projectionPointsList;
     QList<Coordinate> normalizePointsList;
     Qt::GlobalColor color;

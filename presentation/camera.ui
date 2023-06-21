@@ -236,8 +236,14 @@ gridline-color: rgb(190, 190, 190);</string>
        <property name="styleSheet">
         <string notr="true"/>
        </property>
+       <property name="inputMask">
+        <string>000</string>
+       </property>
+       <property name="maxLength">
+        <number>3</number>
+       </property>
       </widget>
-      <widget class="QPushButton" name="windowButton">
+      <widget class="QPushButton" name="zoomButton">
        <property name="geometry">
         <rect>
          <x>160</x>
@@ -326,6 +332,9 @@ gridline-color: rgb(190, 190, 190);</string>
        </property>
       </widget>
       <widget class="QToolButton" name="upButton_Cam">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>160</x>

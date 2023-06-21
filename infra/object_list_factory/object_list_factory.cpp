@@ -56,11 +56,35 @@ QList<Object*> ObjectListFactory::createObjectList()
     points.append(Coordinate(400.0, 200.0, 0.0));
     points.append(Coordinate(400.0, 350.0, 0.0));
     points.append(Coordinate(200.0, 350.0, 0.0));
-    points.append(Coordinate(300.0, 450.0, 250.0));
+    points.append(Coordinate(300.0, 275.0, 250.0));
 
     list.append(new Polygon(QString("Piramide verde"), QList(points), Qt::green));
     points.clear();    
-  
+
+    points.append(Coordinate(0.0, 0.0, 0.0));
+    points.append(Coordinate(427.0, 0.0, 0.0));
+    points.append(Coordinate(427.0, 240.0, 0.0));
+    points.append(Coordinate(0.0, 240.0, 0.0));
+
+    points.append(Coordinate(0.0, 0.0, 0.0));
+    points.append(Coordinate(0.0, 0.0, 240.0));
+    points.append(Coordinate(427.0, 0.0, 240.0));
+    points.append(Coordinate(427.0, 0.0, 0.0));
+
+    points.append(Coordinate(427.0, 240.0, 0.0));
+    points.append(Coordinate(427.0, 240.0, 240.0));
+    
+    points.append(Coordinate(427.0, 0.0, 240.0));
+    points.append(Coordinate(427.0, 240.0, 240.0));
+    
+    points.append(Coordinate(0.0, 240.0, 240.0));
+    points.append(Coordinate(0.0, 0.0, 240.0));
+    
+    points.append(Coordinate(0.0, 240.0, 240.0));
+    points.append(Coordinate(0.0, 240.0, 0.0));
+
+    list.append(new Polygon(QString("Cubo azul"), QList(points), Qt::blue));
+    points.clear();
 
 //Coordenadas de Mundo
 //    x = 100;
@@ -158,6 +182,13 @@ QList<Object*> ObjectListFactory::createObjectList()
 
    list.append(new Line(QString("Linha Diagonal"), QList(points), Qt::magenta));
    points.clear();
+
+//     points.append(Coordinate(450.0, 220.0, 0.0));
+//    points.append(Coordinate(550.0, 350.0, 0.0));
+
+//    list.append(new Line(QString("Linha Diagonal"), QList(points), Qt::blue));
+//    points.clear();
+
 
 //    points.append(Coordinate(-200, 200, 0));
 //    points.append(Coordinate(-350, 100, 0));
