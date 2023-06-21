@@ -12,9 +12,10 @@ public:
     Point(
         const QString& name, 
         const QList<Coordinate> &pointsList, 
+        const QList<pair<qsizetype, qsizetype>> &edges,
         Qt::GlobalColor color=Qt::black
     ):
-        Object(name, pointsList, color)
+        Object(name, pointsList, edges, color)
     {}
 
     void draw(QPainter &painter);   

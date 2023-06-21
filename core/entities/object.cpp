@@ -6,30 +6,26 @@
 
 using namespace std;
 
-void drawNormalizedPoints(
-    QList<Coordinate> pointsList,
-    QList<Coordinate> normalizePointsList,
-    QPainter &painter);
 
-void drawWorldPoints(QList<Coordinate> pointsList, QPainter &painter);
-
-void drawProjectedPoints(
-    QList<Coordinate> pointsList,
-    QList<Coordinate> projectionPointsList,
-    QPainter &painter
-);
 
 void Object::draw(QPainter &painter)
 {
-    // drawWorldPoints(pointsList, painter);
-    // drawNormalizedPoints(pointsList, normalizePointsList, painter);
-    drawProjectedPoints(pointsList, projectionPointsList, painter);
+    // drawWorldPoints(painter);
+    // drawNormalizedPoints(painter);
+    drawProjectedPoints(painter);
+
 }
 
-void drawNormalizedPoints(
-    QList<Coordinate> pointsList,
-    QList<Coordinate> normalizePointsList,
-    QPainter &painter)
+void Object::drawEdges(QPainter &painter)
+{
+    for (qsizetype i = 0; i < edges.size(); i++)
+    {
+        painter.drawLine(projectionPointsList[edges[i].first].x, projectionPointsList[edges[i].first].y,
+                        projectionPointsList[edges[i].second].x, projectionPointsList[edges[i].second].y);
+    }
+}
+
+void Object::drawNormalizedPoints(QPainter &painter)
 {
     for (qsizetype i = 0; i < normalizePointsList.size(); i++)
     {
@@ -45,11 +41,8 @@ void drawNormalizedPoints(
     }
 }
 
-void drawProjectedPoints(
-    QList<Coordinate> pointsList,
-    QList<Coordinate> projectionPointsList,
-    QPainter &painter
-) {
+void Object::drawProjectedPoints(QPainter &painter) 
+{
     for (qsizetype i = 0; i < projectionPointsList.size(); i++)
     {
         if (i == pointsList.size() - 1)
@@ -64,7 +57,7 @@ void drawProjectedPoints(
     }
 }
 
-void drawWorldPoints(QList<Coordinate> pointsList, QPainter &painter)
+void Object::drawWorldPoints(QPainter &painter)
 {
     for (qsizetype i = 0; i < pointsList.size(); i++)
     {
@@ -143,8 +136,8 @@ void Object::planeProjection(float distanceBetweenCenterOfProjectionandPlane) {
 
     for (qsizetype i = 0; i < pointsList.size(); i++) {
 
-        projectionAxisX = (pointsList[i].x)/(pointsList[i].z)/distanceBetweenCenterOfProjectionandPlane;
-        projectionAxisY = (pointsList[i].y)/(pointsList[i].z)/distanceBetweenCenterOfProjectionandPlane;
+        projectionAxisX = (pointsList[i].x * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
+        projectionAxisY = (pointsList[i].y * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
 
         projectionPointsList.append(Coordinate(
             projectionAxisX, 
@@ -156,23 +149,23 @@ void Object::planeProjection(float distanceBetweenCenterOfProjectionandPlane) {
 
 void Object::rotateWorld(float teta, Coordinate axis)
 {
-    float radians = qDegreesToRadians(teta);
+    // float radians = qDegreesToRadians(teta);
 
     if(axis.x) {
         for(qsizetype i = 0; i < pointsList.size(); i++){
             pointsList[i] = Coordinate(
                 pointsList[i].x,
-                pointsList[i].y * qCos(radians) - (pointsList[i].z * qSin(radians)),
-                pointsList[i].y * qSin(radians) + (pointsList[i].z * qCos(radians))
+                pointsList[i].y * qCos(teta) - (pointsList[i].z * qSin(teta)),
+                pointsList[i].y * qSin(teta) + (pointsList[i].z * qCos(teta))
             );
         }
         return;
     } if(axis.y) {
         for(qsizetype i = 0; i < pointsList.size(); i++){
             pointsList[i] = Coordinate(
-                pointsList[i].x * qCos(radians) + (pointsList[i].z * qSin(radians)),
+                pointsList[i].x * qCos(teta) + (pointsList[i].z * qSin(teta)),
                 pointsList[i].y,
-                pointsList[i].z * qCos(radians) - (pointsList[i].x * qSin(radians))
+                pointsList[i].z * qCos(teta) - (pointsList[i].x * qSin(teta))
             );
         }
         return;
@@ -180,8 +173,8 @@ void Object::rotateWorld(float teta, Coordinate axis)
 
     for(qsizetype i = 0; i < pointsList.size(); i++){
         pointsList[i] = Coordinate(
-            pointsList[i].x * qCos(radians) - (pointsList[i].y * qSin(radians)),
-            pointsList[i].x * qSin(radians) + (pointsList[i].y * qCos(radians)),
+            pointsList[i].x * qCos(teta) - (pointsList[i].y * qSin(teta)),
+            pointsList[i].x * qSin(teta) + (pointsList[i].y * qCos(teta)),
             pointsList[i].z
         );
     }

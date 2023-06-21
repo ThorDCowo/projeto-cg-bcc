@@ -15,7 +15,7 @@ void Screen::paintEvent(QPaintEvent *event)
     for (int i = 0; i < list.size(); i++)
     {
         painter.setPen(QPen(list[i]->getColor(), 2));
-        list[i]->draw(painter);
+        list[i]->drawEdges(painter);
     }
 }
 

@@ -4,6 +4,7 @@
 #include "../../core/entities/point.h"
 #include "../../core/entities/line.h"
 #include "../../core/entities/polygon.h"
+#include <string.h>
 
 using namespace std;
 
@@ -11,6 +12,7 @@ QList<Object*> ObjectListFactory::createObjectList()
 {
     QList<Object*> list;
     QList<Coordinate> points;
+    QList<pair<qsizetype, qsizetype>> edges;
 
     //  points.append(Coordinate(108.97, 83.46, 68.12));
     //  points.append(Coordinate(108.97, 83.46, 179.45));
@@ -52,40 +54,86 @@ QList<Object*> ObjectListFactory::createObjectList()
     // list.append(new Polygon(QString("Dodecaedro verde"), QList(points), Qt::green));
     // points.clear();    
 
-    points.append(Coordinate(200.0, 200.0, 0.0));
-    points.append(Coordinate(400.0, 200.0, 0.0));
-    points.append(Coordinate(400.0, 350.0, 0.0));
-    points.append(Coordinate(200.0, 350.0, 0.0));
-    points.append(Coordinate(300.0, 275.0, 250.0));
+    // points.append(Coordinate(200.0, 200.0, 0.0));
+    // points.append(Coordinate(400.0, 200.0, 0.0));
+    // points.append(Coordinate(400.0, 350.0, 0.0));
+    // points.append(Coordinate(200.0, 350.0, 0.0));
+    // points.append(Coordinate(300.0, 275.0, 250.0));
 
-    list.append(new Polygon(QString("Piramide verde"), QList(points), Qt::green));
-    points.clear();    
+    // list.append(new Polygon(QString("Piramide verde"), QList(points), Qt::green));
+    // points.clear();    
+
+    // points.append(Coordinate(200.0, 200.0, 0.0));
+    // points.append(Coordinate(400.0, 200.0, 0.0));
+    // points.append(Coordinate(400.0, 400.0, 0.0));
+    // points.append(Coordinate(200.0, 400.0, 0.0));
+    // points.append(Coordinate(200.0, 200.0, 0.0));
+    // points.append(Coordinate(300.0, 275.0, 250.0));
+    // points.append(Coordinate(400.0, 200.0, 0.0));
+    // points.append(Coordinate(400.0, 400.0, 0.0));
+    // points.append(Coordinate(300.0, 275.0, 250.0));
+    // points.append(Coordinate(200.0, 400.0, 0.0));
+
+    // list.append(new Polygon(QString("Piramide vermelha"), QList(points), Qt::red));
+    // points.clear();    
+
+    // points.append(Coordinate(0.0, 0.0, 0.0));
+    // points.append(Coordinate(427.0, 0.0, 0.0));
+    // points.append(Coordinate(427.0, 240.0, 0.0));
+    // points.append(Coordinate(0.0, 240.0, 0.0));
+
+    // points.append(Coordinate(0.0, 0.0, 0.0));
+    // points.append(Coordinate(0.0, 0.0, 240.0));
+    // points.append(Coordinate(427.0, 0.0, 240.0));
+    // points.append(Coordinate(427.0, 0.0, 0.0));
+
+    // points.append(Coordinate(427.0, 240.0, 0.0));
+    // points.append(Coordinate(427.0, 240.0, 240.0));
+    
+    // points.append(Coordinate(427.0, 0.0, 240.0));
+    // points.append(Coordinate(427.0, 240.0, 240.0));
+
+    // points.append(Coordinate(0.0, 240.0, 240.0));
+    // points.append(Coordinate(0.0, 0.0, 240.0));
+    
+    // points.append(Coordinate(0.0, 240.0, 240.0));
+    // points.append(Coordinate(0.0, 240.0, 0.0));
+
+    // list.append(new Polygon(QString("Cubo azul"), QList(points), Qt::blue));
+    // points.clear();
 
     points.append(Coordinate(0.0, 0.0, 0.0));
-    points.append(Coordinate(427.0, 0.0, 0.0));
-    points.append(Coordinate(427.0, 240.0, 0.0));
-    points.append(Coordinate(0.0, 240.0, 0.0));
+    points.append(Coordinate(0.0, 150.0, 0.0));
+    points.append(Coordinate(0.0, 0.0, 150.0));
+    points.append(Coordinate(0.0, 150.0, 150.0));
+    points.append(Coordinate(200.0, 0.0, 0.0));
+    points.append(Coordinate(200.0, 150.0, 0.0));
+    points.append(Coordinate(200.0, 0.0, 150.0));
+    points.append(Coordinate(200.0, 150.0, 150.0));
 
-    points.append(Coordinate(0.0, 0.0, 0.0));
-    points.append(Coordinate(0.0, 0.0, 240.0));
-    points.append(Coordinate(427.0, 0.0, 240.0));
-    points.append(Coordinate(427.0, 0.0, 0.0));
+    edges.append({0,1});
+    edges.append({1,2});
+    edges.append({2,3});
+    edges.append({3,0});
+    edges.append({4,5});
+    edges.append({5,6});
+    edges.append({6,7});
+    edges.append({7,4});
+    edges.append({0,4});
+    edges.append({1,5});
+    edges.append({2,6});
+    edges.append({3,7});
 
-    points.append(Coordinate(427.0, 240.0, 0.0));
-    points.append(Coordinate(427.0, 240.0, 240.0));
-    
-    points.append(Coordinate(427.0, 0.0, 240.0));
-    points.append(Coordinate(427.0, 240.0, 240.0));
-    
-    points.append(Coordinate(0.0, 240.0, 240.0));
-    points.append(Coordinate(0.0, 0.0, 240.0));
-    
-    points.append(Coordinate(0.0, 240.0, 240.0));
-    points.append(Coordinate(0.0, 240.0, 0.0));
+    list.append(new Polygon(QString("Cubo vermelho"), QList(points), QList(edges), Qt::red));
 
-    list.append(new Polygon(QString("Cubo azul"), QList(points), Qt::blue));
+    // cout << "Points / Edges" << endl;
+    // cout << points[1].toString() << endl;
+    // cout << edges[0].first << "," << edges[0].second << endl;
+    // cout << "-------------------" << endl;
+
     points.clear();
-
+    edges.clear();
+    
 //Coordenadas de Mundo
 //    x = 100;
 //    y = 200;
@@ -177,11 +225,11 @@ QList<Object*> ObjectListFactory::createObjectList()
 //    list.append(new Line(QString("Linha Vertical"), QList(points), Qt::green));
 //    points.clear();
 
-   points.append(Coordinate(400.0, 200.0, 0.0));
-   points.append(Coordinate(500.0, 300.0, 0.0));
+//    points.append(Coordinate(400.0, 200.0, 0.0));
+//    points.append(Coordinate(500.0, 300.0, 0.0));
 
-   list.append(new Line(QString("Linha Diagonal"), QList(points), Qt::magenta));
-   points.clear();
+//    list.append(new Line(QString("Linha Diagonal"), QList(points), Qt::magenta));
+//    points.clear();
 
 //     points.append(Coordinate(450.0, 220.0, 0.0));
 //    points.append(Coordinate(550.0, 350.0, 0.0));

@@ -61,7 +61,7 @@ private:
     Ui::Camera* ui;
     OrthogonalProjectionUseCase* orthogonalProjectionUseCase;
     PerspectiveProjectionUseCase* perspectiveProjectionUseCase;
-    ReadCoordinateFileUseCase* readCoordinateFileUseCase;
+    // ReadCoordinateFileUseCase* readCoordinateFileUseCase;
 
     float distanceFromProjection;
     Coordinate center = Coordinate::zero();          

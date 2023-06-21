@@ -8,6 +8,7 @@
 #include <QBrush>
 #include "ui_camera.h"
 #include "camera.h"
+#include "../teste2.cpp"
 
 using namespace std;
 
@@ -26,20 +27,21 @@ Camera::Camera(QWidget *parent)
     )),
     perspectiveProjectionUseCase(new PerspectiveProjectionUseCase(
         new ClippObjectUseCase(new Clipper())
-    )),
+    ))
     readCoordinateFileUseCase(new ReadCoordinateFileUseCase(
         new FileReader(),
         new CoordinateParser()
     ))
 {
     ui->setupUi(this);
+    // main2();
 
     this->distanceFromProjection = 1; 
 
     QList<Object*> objectList = ObjectListFactory::createObjectList();
-    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
+    // QList<Object*> charizardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
 
-    objectList.append(charizardList);
+    // objectList.append(charizardList);
 
     ui->screen->setObjectList(objectList);
     
@@ -64,6 +66,7 @@ Camera::~Camera()
 }
 
 float Camera::angleBetweenViewPlaneProjectionAndAxis(Coordinate axis) {
+    Coordinate center = ui->screen->getCenter();
 
     return Coordinate::angle(axis, center);
 }

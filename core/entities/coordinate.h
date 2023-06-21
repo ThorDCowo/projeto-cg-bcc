@@ -1,6 +1,8 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
 #include <cmath>
+#include <iostream>
+#include <string.h>
 #include "../interfaces/comparable.h"
 
 class Coordinate : public Comparable
@@ -175,14 +177,16 @@ public:
   }
 
   static float dotProduct(Coordinate vector1, Coordinate vector2) {
-    return vector1.x * vector2.x + 
+    return (
+      vector1.x * vector2.x + 
       vector1.y * vector2.y + 
-      vector1.z * vector2.z;
+      vector1.z * vector2.z
+    );
   }
 
   static float angle(Coordinate vector1, Coordinate vector2) {
     return std::acos(
-      Coordinate::dotProduct(vector1, vector2)/(Coordinate::magnitude(vector1) * Coordinate::magnitude(vector1))
+      Coordinate::dotProduct(vector1, vector2)/(Coordinate::magnitude(vector1) * Coordinate::magnitude(vector2))
     );
   }
   

@@ -10,10 +10,11 @@ class Polygon : public Object, public QRectF
 public:
     Polygon(
         const QString& name, 
-        const QList<Coordinate> &pointsList, 
+        const QList<Coordinate> &pointsList,
+        const QList<pair<qsizetype,qsizetype>> &edges,
         Qt::GlobalColor color=Qt::black
     ):
-        Object(name, pointsList, color)
+        Object(name, pointsList, edges, color)
     {}
 
 

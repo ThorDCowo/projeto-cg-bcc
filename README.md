@@ -66,3 +66,8 @@ J = (-4, 4, 0)
 I = (-4, 6, 0)
 H = (-3, 5, 2) -> Top
 //-----------------
+
+# Descobertas
+
+No arquivo .obj a linha f, referente as faces
+segue o formato index_do_vertice1/index_da_textura1 index_do_vertice2/index_da_textura2 index_do_vertice3/index_da_textura3 de forma a formar um triangulo. Sabendo disso, podemos montar as arestas pelos indexs que formam os triangulos das faces.

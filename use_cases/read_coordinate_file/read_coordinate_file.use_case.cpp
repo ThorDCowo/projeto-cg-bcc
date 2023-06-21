@@ -7,6 +7,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
 {
     QList<Object*> list;
     QList<Coordinate> points;
+    QList<pair<qsizetype, qsizetype>> edges;
     try {
         this->reader->open(filename);
 
@@ -33,6 +34,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                         new Polygon(
                             QString("Pokemon Part " + objectIndex - 1),
                             QList(points),
+                            QList(edges),
                             Qt::white
                         )
                     );
@@ -47,6 +49,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                         new Polygon(
                             QString("Pokemon Part " + objectIndex),
                             QList(points),
+                            QList(edges),
                             Qt::white
                         )
                     );

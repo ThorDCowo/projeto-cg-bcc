@@ -10,7 +10,6 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    core\entities\coordinate.cpp \
     core\entities\border.cpp \
     core\entities\line.cpp \
     core\entities\object.cpp \
@@ -34,6 +33,7 @@ SOURCES += \
     use_cases\perspective_projection\perspective_projection.use_case.cpp \
     use_cases\perspective_projection\perspective_projection.use_case.test.cpp \
     screen.cpp \
+    teste2.cpp \
     main.cpp
 
 HEADERS += \

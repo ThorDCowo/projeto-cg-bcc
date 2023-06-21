@@ -21,15 +21,16 @@ public:
     Object(
         const QString &name, 
         const QList<Coordinate> &pointsList, 
+        const QList<pair<qsizetype,qsizetype>> &edges,
         Qt::GlobalColor color
     ):
         name(name), 
         pointsList(pointsList), 
+        edges(edges),
         color(color)
     {}
 
     Coordinate barycenter();
-    void draw(QPainter &painter);
     void rotateWorld(float teta, Coordinate axis);
     void transformToViewport(Coordinate center);
     void orthogonalProjection(Coordinate axisToExclude);
@@ -38,14 +39,23 @@ public:
         int windowWidth, 
         int windowHeight, 
         Coordinate windowCenter,
-        float distanceFromProjection
-    );
+        float distanceFromProjection);
     void orthogonalNormalize(
         int width, 
         int height, 
         Coordinate center,
         Coordinate axisToExclude);
-    void perspectiveProjection(Coordinate centerOfProjection, Coordinate axisX, Coordinate axisY, float alpha, float beta);
+    void perspectiveProjection(
+        Coordinate centerOfProjection, 
+        Coordinate axisX, Coordinate axisY, 
+        float alpha, 
+        float beta);
+
+    void draw(QPainter &painter);
+    void drawNormalizedPoints(QPainter &painter);
+    void drawWorldPoints(QPainter &painter);
+    void drawProjectedPoints(QPainter &painter);
+    void drawEdges(QPainter &painter);
 
 
     virtual void translate(Coordinate translation)=0;
