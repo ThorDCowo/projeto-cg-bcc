@@ -1,6 +1,8 @@
 #include "read_coordinate_file.use_case.h"
 #include <QColor>
 
+using namespace std;
+
 QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
 {
     QList<Object*> list;
@@ -25,14 +27,13 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
             ]
             (string line, bool isEOF) 
             {
-                // QColor colorOrange(255, 150, 0);
                 if (sscanf(line.c_str(), "o Object.%d", &objectIndex) && objectIndex > 1)
                 {
                     cout << "Um novo objeto: " << objectIndex - 1 << "#" << endl;
-                    //cout << line << endl;
+                    cout << line << endl;
                     list.append(
                         new Polygon(
-                            QString("Pokemon Part " + objectIndex - 1),
+                            QString(" pokemon Parte "),
                             QList(points),
                             QList(edges),
                             Qt::red
@@ -47,35 +48,48 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                 {
                     // cout << "Ponto: " << line << endl;
                     points.append(this->coordinateParser->parse(line));
+                    return;
                 }
 
-                if(this->faceParser->isParsable(line))
+                if(this->faceParser->isParsableWithTexture(line))
                 {
                     // cout << "Face: " << line << endl;
-                    Face face = this->faceParser->parse(line);
+                    Face face = this->faceParser->parseWithTexture(line);
                     edges.append({face.v1, face.v2});
                     edges.append({face.v2, face.v3});
                     edges.append({face.v3, face.v1});
+                    
+                    return;
+                }
+
+                if(this->faceParser->isParsableWithoutTexture(line))
+                {
+                    // cout << "Face: " << line << endl;
+                    Face face = this->faceParser->parseWithoutTexture(line);
+                    edges.append({face.v1, face.v2});
+                    edges.append({face.v2, face.v3});
+                    edges.append({face.v3, face.v1});
+                    
+                    return;
                 }
 
                 if(isEOF)
                 {
                     cout << "Fim do arquivo" << endl;
+                    cout << "objeto: " << to_string(objectIndex - 1) << "#" << endl;
                     list.append(
                         new Polygon(
-                            QString("Pokemon Part " + objectIndex),
+                            QString(" pokemon Parte"),
                             QList(points),
                             QList(edges),
                             Qt::red
                         )
                     );
-                    // cout << "PointsSize: " << points.size() << endl;
-                    // cout << "EdgesSize: " << edges.size() << endl;
+                    cout << "PointsSize: " << points.size() << endl;
+                    cout << "EdgesSize: " << edges.size() << endl;
 
                     points.clear();
                     edges.clear();
-
-                    return;
                 }
                 
             }

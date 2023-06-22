@@ -33,7 +33,7 @@ public:
         int v2 = 181;
         int v3 = 178;
 
-        Face resultFace = this->parser->parse(line);
+        Face resultFace = this->parser->parseWithoutTexture(line);
         Face expectedFace = Face(v1, v2, v3);
 
         FrameworkTest::expectToBeEqual(
@@ -45,7 +45,7 @@ public:
 
     void shouldValidateLine() {
         string line = "f 180/151 181/148 178/150";
-        bool result = this->parser->isParsable(line);
+        bool result = this->parser->isParsableWithoutTexture(line);
 
         FrameworkTest::expectToBeTrue(
             "Deve validar linha no fomarto 'f v1/vt1 v2/vt2 v3/vt3'",
@@ -55,7 +55,7 @@ public:
 
     void shouldInvalidateLineMissingToken() {
         string line = "180/151 181/148 178/150";
-        bool result = this->parser->isParsable(line);
+        bool result = this->parser->isParsableWithoutTexture(line);
 
         FrameworkTest::expectToBeFalse(
             "Deve invalidar linha que não começa com 'f'",
@@ -65,7 +65,7 @@ public:
 
     void shouldInvalidateLineWithWrongToken() {
         string line = "vt 180/151 181/148 178/150";
-        bool result = this->parser->isParsable(line);
+        bool result = this->parser->isParsableWithoutTexture(line);
 
         FrameworkTest::expectToBeFalse(
             "Deve invalidar linha que não começa caracter diferente de 'f'",
@@ -75,7 +75,7 @@ public:
 
     void shouldInvalidateLineWithWrongFormatToken() {
         string line = "vt 180-151 181\148 178/150";
-        bool result = this->parser->isParsable(line);
+        bool result = this->parser->isParsableWithoutTexture(line);
 
         FrameworkTest::expectToBeFalse(
             "Deve invalidar linha fora do formato 'f v1/vt1 v2/vt2 v3/vt3'",

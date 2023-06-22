@@ -21,8 +21,11 @@ public:
 
 class FaceParser {
 public:
-    Face parse(string line);
-    bool isParsable(string line);
+    Face parseWithTexture(string line);
+    bool isParsableWithTexture(string line);
+
+    Face parseWithoutTexture(string line);
+    bool isParsableWithoutTexture(string line);
 };
 
 #endif // FACE_PARSER_H

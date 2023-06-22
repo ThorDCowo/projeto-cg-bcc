@@ -29,12 +29,26 @@ Camera::Camera(QWidget *parent)
     this->distanceFromProjection = 1; 
 
     QList<Object*> objectList = ObjectListFactory::createObjectList();
-    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
-    // QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\psyduck.obj");
+    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(
+        "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj"
+    );
+
+    QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(
+        "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj"
+    );
 
     objectList << charizardList;
-    // objectList << psyduckList;
+    objectList << psyduckList;
 
+    // cout << "Partes do psyduck: " << psyduckList.size() << endl;
+
+    // for (qsizetype i = 0; i < psyduckList.size(); i++) {
+    //     QList<Coordinate> pointsList = psyduckList[i]->getPoints();
+    //     cout << "Primeiro ponto da parte " << i + 1 << " do psyduck: ";
+    //     cout << pointsList[0].toString() << endl;
+    //     cout << "Ultimo ponto da parte " << i + 1 << " do psyduck: ";
+    //     cout << pointsList[pointsList.size() - 1].toString() << endl;
+    // }
     
     Coordinate center = ui->screen->getCenter();
 
