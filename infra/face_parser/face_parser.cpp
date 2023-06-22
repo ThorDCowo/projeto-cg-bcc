@@ -6,7 +6,7 @@ Face FaceParser::parse(string line) {
     int x, y, z;
 
     sscanf(line.c_str(), "f %d/%*s %d/%*s %d/%*s", &x, &y, &z);
-    return Face(x,y,z);
+    return Face(x - 1, y - 1, z - 1);
 }
 
 bool FaceParser::isParsable(string line) {

@@ -15,10 +15,10 @@ public:
     Line(
         const QString& name, 
         const QList<Coordinate> &pointsList, 
-        const QList<pair<int,int>> &edges,
+        const QList<pair<int,int>> &edgesList,
         Qt::GlobalColor color=Qt::black
     ):
-        Object(name, pointsList, edges, color)
+        Object(name, pointsList, edgesList, color)
     {}
 
     void draw(QPainter &painter);

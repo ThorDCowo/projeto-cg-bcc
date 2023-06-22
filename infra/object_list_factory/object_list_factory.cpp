@@ -118,7 +118,7 @@ QList<Object*> ObjectListFactory::createObjectList()
     edges.append({5,7});
     edges.append({6,7});
     
-    list.append(new Polygon(QString("Cubo vermelho"), QList(points), QList(edges), Qt::red));
+    list.append(new Polygon(QString("Cubo azul"), QList(points), QList(edges), Qt::blue));
 
     // cout << "Points / Edges" << endl;
     // cout << points[1].toString() << endl;

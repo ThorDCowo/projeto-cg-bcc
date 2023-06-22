@@ -30,11 +30,22 @@ void Object::draw(QPainter &painter)
 
 void Object::drawEdges(QPainter &painter)
 {
-    for (qsizetype i = 0; i < edges.size(); i++)
+    // cout << "Edges List: " << edgesList.size() << endl;
+    // cout << "Points List: " << pointsList.size() << endl;
+    // cout << "Projection List: " << projectionPointsList.size() << endl;
+    // cout << "Normalize List: " << normalizePointsList.size() << endl;
+
+    for (qsizetype i = 0; i < edgesList.size(); i++)
     {
-        painter.drawLine(projectionPointsList[edges[i].first].x, projectionPointsList[edges[i].first].y,
-                        projectionPointsList[edges[i].second].x, projectionPointsList[edges[i].second].y);
+        // cout << "Edge First: " << edgesList[i].first << " Edge Second: " << edgesList[i].second << endl;
+        painter.drawLine(projectionPointsList[edgesList[i].first].x, projectionPointsList[edgesList[i].first].y,
+                        projectionPointsList[edgesList[i].second].x, projectionPointsList[edgesList[i].second].y);
+
+
     }
+
+    // cout << "Primeiro Ponto:" << to_string(projectionPointsList[0].x) << "," << to_string(projectionPointsList[0].y) << endl;
+    // cout << "Ultimo Ponto:" << to_string(projectionPointsList[projectionPointsList.size() - 1].x) << "," << to_string(projectionPointsList[projectionPointsList.size() - 1].y) << endl;
 }
 
 void Object::drawNormalizedPoints(QPainter &painter)

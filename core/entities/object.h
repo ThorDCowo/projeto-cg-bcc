@@ -23,12 +23,12 @@ public:
     Object(
         const QString &name, 
         const QList<Coordinate> &pointsList, 
-        const QList<pair<int,int>> &edges,
+        const QList<pair<int,int>> &edgesList,
         Qt::GlobalColor color
     ):
         name(name), 
         pointsList(pointsList), 
-        edges(edges),
+        edgesList(edgesList),
         color(color)
     {}
 
@@ -68,6 +68,7 @@ public:
     
     inline QString getName()const{ return name; }
     inline QList<Coordinate> getPoints()const { return this->pointsList; }
+    inline QList<pair<int, int>> getEdges()const { return this->edgesList; } 
     inline QList<Coordinate> getProjectionPoints()const { return this->projectionPointsList; } 
     inline QList<Coordinate> getNormalizedPoints()const { return this->normalizePointsList; } 
     inline Qt::GlobalColor getColor()const { return color; }
@@ -83,7 +84,7 @@ public:
 protected:
     QString name; //id do objeto instanciado
     QList<Coordinate> pointsList;
-    QList<pair<int, int>> edges;
+    QList<pair<int, int>> edgesList;
     QList<Coordinate> projectionPointsList;
     QList<Coordinate> normalizePointsList;
     Qt::GlobalColor color;

@@ -1,4 +1,5 @@
 #include "read_coordinate_file.use_case.h"
+#include <QColor>
 
 QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
 {
@@ -24,6 +25,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
             ]
             (string line, bool isEOF) 
             {
+                // QColor colorOrange(255, 150, 0);
                 if (sscanf(line.c_str(), "o Object.%d", &objectIndex) && objectIndex > 1)
                 {
                     cout << "Um novo objeto: " << objectIndex - 1 << "#" << endl;
@@ -33,12 +35,27 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                             QString("Pokemon Part " + objectIndex - 1),
                             QList(points),
                             QList(edges),
-                            Qt::white
+                            Qt::red
                         )
                     );
                     points.clear();
                     edges.clear();
                     return;
+                }
+
+                if(this->coordinateParser->isParsable(line))
+                {
+                    // cout << "Ponto: " << line << endl;
+                    points.append(this->coordinateParser->parse(line));
+                }
+
+                if(this->faceParser->isParsable(line))
+                {
+                    // cout << "Face: " << line << endl;
+                    Face face = this->faceParser->parse(line);
+                    edges.append({face.v1, face.v2});
+                    edges.append({face.v2, face.v3});
+                    edges.append({face.v3, face.v1});
                 }
 
                 if(isEOF)
@@ -49,28 +66,18 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                             QString("Pokemon Part " + objectIndex),
                             QList(points),
                             QList(edges),
-                            Qt::white
+                            Qt::red
                         )
                     );
+                    // cout << "PointsSize: " << points.size() << endl;
+                    // cout << "EdgesSize: " << edges.size() << endl;
+
                     points.clear();
                     edges.clear();
+
                     return;
                 }
                 
-                if(this->coordinateParser->isParsable(line))
-                {
-                    cout << "Ponto: " << line << endl;
-                    points.append(this->coordinateParser->parse(line));
-                }
-
-                if(this->faceParser->isParsable(line))
-                {
-                    cout << "Face: " << line << endl;
-                    Face face = this->faceParser->parse(line);
-                    edges.append({face.v1, face.v2});
-                    edges.append({face.v2, face.v3});
-                    edges.append({face.v3, face.v1});
-                }
             }
         );
     } catch (const exception& e) {

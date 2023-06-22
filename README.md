@@ -31,7 +31,7 @@ Projeção em Perspectiva
   - Casos de uso.
     - Projeção Ortogonal (Não tenho certeza dos valores esperados)..
     - Projeção Prio.erspectiva (Não tenho certeza dos valores esperados).
-  - Teste Unitá
+  - Teste Unitários
     - Normalização Ortogonal (Reformulando contas).
     - Transformação da Viewport (Questionando necessidade).
     - Translação (Rafael).

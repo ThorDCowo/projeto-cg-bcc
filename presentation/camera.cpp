@@ -30,24 +30,28 @@ Camera::Camera(QWidget *parent)
 
     QList<Object*> objectList = ObjectListFactory::createObjectList();
     QList<Object*> charizardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
+    // QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\psyduck.obj");
 
-    objectList = objectList << charizardList;
-    
-    ui->screen->setObjectList(objectList);
+    objectList << charizardList;
+    // objectList << psyduckList;
+
     
     Coordinate center = ui->screen->getCenter();
 
-    for (int i = 0; i < objectList.size(); i++){
+    for (qsizetype i = 0; i < objectList.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
-
         chooseProjectionMode(objectList[i], ui->comboBox->currentIndex());
-        
         item->setText(objectList[i]->getName());
         item->setCheckState(Qt::Unchecked);
         item->setForeground(Qt::white);
 
+        cout << objectList[i]->getName().toStdString() << endl;
+
         ui->objectList->addItem(item);
     }
+
+    ui->screen->setObjectList(objectList);
+
 }
 
 Camera::~Camera()
