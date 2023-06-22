@@ -12,14 +12,19 @@ CONFIG += c++17
 SOURCES += \
     core\entities\border.cpp \
     core\entities\line.cpp \
+    core\entities\line.test.cpp \
     core\entities\object.cpp \
     core\entities\object.test.cpp \
     core\entities\point.cpp \
+    core\entities\point.test.cpp \
     core\entities\polygon.cpp \
+    core\entities\polygon.test.cpp \
     infra\clipper\clipper.cpp \
     infra\clipper\clipper.test.cpp \
     infra\coordinate_parser\coordinate_parser.cpp \
     infra\coordinate_parser\coordinate_parser.test.cpp \
+    infra\face_parser\face_parser.cpp \
+    infra\face_parser\face_parser.test.cpp \
     infra\file_reader\file_reader.cpp \
     infra\object_list_factory\object_list_factory.cpp \
     tests\framework_test.cpp \
@@ -33,7 +38,6 @@ SOURCES += \
     use_cases\perspective_projection\perspective_projection.use_case.cpp \
     use_cases\perspective_projection\perspective_projection.use_case.test.cpp \
     screen.cpp \
-    teste2.cpp \
     main.cpp
 
 HEADERS += \
@@ -47,6 +51,7 @@ HEADERS += \
     infra\clipper\clipper.h \
     infra\clipper\clipper.h \
     infra\coordinate_parser\coordinate_parser.h \
+    infra\face_parser\face_parser.cpp \
     infra\file_reader\file_reader.h \
     infra\object_list_factory\object_list_factory.h \
     presentation\camera.h \

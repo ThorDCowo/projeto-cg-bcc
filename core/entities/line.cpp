@@ -1,6 +1,5 @@
 #include "line.h"
-#include <iostream>
-#include "coordinate.h"
+
 using namespace std;
 
 void Line::translate(Coordinate translation)

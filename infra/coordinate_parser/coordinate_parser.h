@@ -2,7 +2,9 @@
 #define COORDINATE_PARSER_H
 
 #include <string>
+#include <iostream>
 #include "../../core/entities/coordinate.h"
+
 
 using namespace std;
 

@@ -57,8 +57,22 @@ public:
   bool operator==(const Comparable &other) const 
   {
     const Coordinate *otherCoordinate = dynamic_cast<const Coordinate *>(&other);
+
     if (otherCoordinate)
     {
+
+      // cout << "x: " << x << endl;
+      // cout << "x - other: " << otherCoordinate->x << endl;
+      // cout << (x == otherCoordinate->x) << endl; 
+
+      // cout << "y: " << y << endl;
+      // cout << "y - other: " << otherCoordinate->y << endl;
+      // cout << (y == otherCoordinate->y) << endl; 
+
+      // cout << "z: " << z << endl;
+      // cout << "z - other: " << otherCoordinate->z << endl;
+      // cout << (z == otherCoordinate->z) << endl; 
+
       return (
           x == otherCoordinate->x &&
           y == otherCoordinate->y &&
@@ -66,6 +80,7 @@ public:
         );
     }
     return false;
+    
   }
 
   bool operator!=(const Comparable &other) const 

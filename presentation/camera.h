@@ -15,7 +15,16 @@
 #include "../infra/clipper/clipper.h"
 #include "../infra/file_reader/file_reader.h"
 #include "../infra/coordinate_parser/coordinate_parser.h"
+#include "../infra/face_parser/face_parser.h"
 #include "../core/entities/coordinate.h"
+#include <iostream>
+#include <math.h>
+#include <cmath>
+#include <QString>
+#include <QBrush>
+#include "ui_camera.h"
+
+
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -61,7 +70,7 @@ private:
     Ui::Camera* ui;
     OrthogonalProjectionUseCase* orthogonalProjectionUseCase;
     PerspectiveProjectionUseCase* perspectiveProjectionUseCase;
-    // ReadCoordinateFileUseCase* readCoordinateFileUseCase;
+    ReadCoordinateFileUseCase* readCoordinateFileUseCase;
 
     float distanceFromProjection;
     Coordinate center = Coordinate::zero();          

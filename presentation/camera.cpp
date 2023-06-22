@@ -1,14 +1,4 @@
-#include <iostream>
-#include <math.h>
-#include <cmath>
-#include <QList>
-#include <QListWidget>
-#include <QListWidgetItem>
-#include <QString>
-#include <QBrush>
-#include "ui_camera.h"
 #include "camera.h"
-#include "../teste2.cpp"
 
 using namespace std;
 
@@ -27,22 +17,22 @@ Camera::Camera(QWidget *parent)
     )),
     perspectiveProjectionUseCase(new PerspectiveProjectionUseCase(
         new ClippObjectUseCase(new Clipper())
-    ))
+    )),
     readCoordinateFileUseCase(new ReadCoordinateFileUseCase(
         new FileReader(),
-        new CoordinateParser()
+        new CoordinateParser(),
+        new FaceParser()
     ))
 {
     ui->setupUi(this);
-    // main2();
 
     this->distanceFromProjection = 1; 
 
     QList<Object*> objectList = ObjectListFactory::createObjectList();
-    // QList<Object*> charizardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
+    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute("C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj");
 
-    // objectList.append(charizardList);
-
+    objectList = objectList << charizardList;
+    
     ui->screen->setObjectList(objectList);
     
     Coordinate center = ui->screen->getCenter();

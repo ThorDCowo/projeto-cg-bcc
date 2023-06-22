@@ -1,5 +1,5 @@
 #include "border.h"
-#include "coordinate.h"
+
 using namespace std;
 
 void Border::setBorder(float width, float height, Coordinate center)

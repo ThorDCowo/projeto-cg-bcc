@@ -1,8 +1,4 @@
-#include <iostream>
-#include <QPainter>
-#include <QDebug>
 #include "screen.h"
-#include "core/entities/object.h"
 using namespace std;
 
 void Screen::paintEvent(QPaintEvent *event)

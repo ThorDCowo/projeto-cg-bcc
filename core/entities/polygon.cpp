@@ -1,7 +1,4 @@
-#include "Polygon.h"
-#include <iostream>
-#include <QtMath>
-#include "coordinate.h"
+#include "polygon.h"
 
 using namespace std;
 

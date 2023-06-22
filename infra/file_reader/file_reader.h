@@ -1,7 +1,6 @@
 #ifndef FILE_READER_H
 #define FILE_READER_H
 
-#include <iostream>
 #include <fstream>
 #include <functional>
 #include <string>

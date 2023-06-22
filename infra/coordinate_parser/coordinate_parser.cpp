@@ -1,7 +1,4 @@
-#include <string>
-#include "../../core/entities/coordinate.h"
 #include "coordinate_parser.h"
-#include <iostream>
 
 using namespace std;
 

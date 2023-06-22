@@ -8,8 +8,10 @@
 #include <QString>
 #include <QPainter>
 #include <QList>
+#include <assert.h>
 #include "border.h"
 #include "coordinate.h"
+#include "../../helper/geometric.helper.h"
 
 using namespace std;
 
@@ -21,7 +23,7 @@ public:
     Object(
         const QString &name, 
         const QList<Coordinate> &pointsList, 
-        const QList<pair<qsizetype,qsizetype>> &edges,
+        const QList<pair<int,int>> &edges,
         Qt::GlobalColor color
     ):
         name(name), 
@@ -31,7 +33,7 @@ public:
     {}
 
     Coordinate barycenter();
-    void rotateWorld(float teta, Coordinate axis);
+    void rotateWorld(float radians, Coordinate axis);
     void transformToViewport(Coordinate center);
     void orthogonalProjection(Coordinate axisToExclude);
     void planeProjection(float distanceBetweenCOPandPlane);
@@ -47,7 +49,8 @@ public:
         Coordinate axisToExclude);
     void perspectiveProjection(
         Coordinate centerOfProjection, 
-        Coordinate axisX, Coordinate axisY, 
+        Coordinate axisX, 
+        Coordinate axisY, 
         float alpha, 
         float beta);
 
@@ -80,7 +83,7 @@ public:
 protected:
     QString name; //id do objeto instanciado
     QList<Coordinate> pointsList;
-    QList<pair<qsizetype, qsizetype>> edges;
+    QList<pair<int, int>> edges;
     QList<Coordinate> projectionPointsList;
     QList<Coordinate> normalizePointsList;
     Qt::GlobalColor color;

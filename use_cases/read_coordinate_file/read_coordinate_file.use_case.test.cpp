@@ -16,7 +16,7 @@ public:
     {
         //cout << "-----------------------" << endl;
         //cout << "Teste de ReadCoordinateFileUseCase" << endl;
-         //cout << "-----------------------" << endl;  
+        //cout << "-----------------------" << endl;  
 
         this->shouldReturnOneObjectWithOnePoint();
         this->shouldReturnOneObjectWithThreePoints();
@@ -60,7 +60,7 @@ public:
 
         qsizetype expectedValue = 2;
 
-       QList<Object*> result = this->useCase->execute(filename);
+        QList<Object*> result = this->useCase->execute(filename);
 
         FrameworkTest::expectToBeEqual(
             "Deve retornar 2 objetos com um ponto cada um",

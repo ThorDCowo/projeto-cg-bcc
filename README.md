@@ -29,15 +29,15 @@ Projeção em Perspectiva
   - Escalar.
 - Testes.
   - Casos de uso.
-    - Projeção Ortogonal.
-    - Projeção Perspectiva.
-  - Teste Unitário.
-    - Normalização Ortogonal.
-    - Transformação da Viewport.
-    - Translação.
-    - Escala.
-    - Rotação do Mundo.
-    - Rotação do Objeto.
+    - Projeção Ortogonal (Não tenho certeza dos valores esperados)..
+    - Projeção Prio.erspectiva (Não tenho certeza dos valores esperados).
+  - Teste Unitá
+    - Normalização Ortogonal (Reformulando contas).
+    - Transformação da Viewport (Questionando necessidade).
+    - Translação (Rafael).
+    - Escala (Murilo).
+    - Rotação do Mundo (Guilherme).
+    - Rotação do Objeto. (Ricky)
   - E2E
     - Movimento.
     - Camera.

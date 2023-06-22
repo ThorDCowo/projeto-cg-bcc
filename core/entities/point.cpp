@@ -1,6 +1,5 @@
 #include "point.h"
-#include <iostream>
-#include "coordinate.h"
+
 using namespace std;
 
 void Point::translate(Coordinate translation)
@@ -13,9 +12,9 @@ void Point::translateProjection(Coordinate translation)
     projectionPointsList[0] += translation;
 }
 
-void Point::scale(){}
+void Point::scale(float factor){}
 
-void Point::rotate(){}
+void Point::rotate(float teta, Coordinate axis){}
 
 bool Point::isInsideWindow(
     vector<bool> pointRegionCode

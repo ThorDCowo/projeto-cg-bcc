@@ -4,6 +4,8 @@
 #include "object.h"
 #include "border.h"
 #include "coordinate.h"
+#include <iostream>
+
 
 #include <QLine>
 
@@ -13,7 +15,7 @@ public:
     Line(
         const QString& name, 
         const QList<Coordinate> &pointsList, 
-        const QList<pair<qsizetype,qsizetype>> &edges,
+        const QList<pair<int,int>> &edges,
         Qt::GlobalColor color=Qt::black
     ):
         Object(name, pointsList, edges, color)

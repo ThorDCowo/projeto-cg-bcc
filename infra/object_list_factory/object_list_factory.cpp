@@ -1,10 +1,4 @@
-#include <QList>
 #include "object_list_factory.h"
-#include "../../core/entities/object.h"
-#include "../../core/entities/point.h"
-#include "../../core/entities/line.h"
-#include "../../core/entities/polygon.h"
-#include <string.h>
 
 using namespace std;
 
@@ -12,7 +6,7 @@ QList<Object*> ObjectListFactory::createObjectList()
 {
     QList<Object*> list;
     QList<Coordinate> points;
-    QList<pair<qsizetype, qsizetype>> edges;
+    QList<pair<int, int>> edges;
 
     //  points.append(Coordinate(108.97, 83.46, 68.12));
     //  points.append(Coordinate(108.97, 83.46, 179.45));
@@ -104,26 +98,26 @@ QList<Object*> ObjectListFactory::createObjectList()
 
     points.append(Coordinate(0.0, 0.0, 0.0));
     points.append(Coordinate(0.0, 150.0, 0.0));
-    points.append(Coordinate(0.0, 0.0, 150.0));
-    points.append(Coordinate(0.0, 150.0, 150.0));
     points.append(Coordinate(200.0, 0.0, 0.0));
     points.append(Coordinate(200.0, 150.0, 0.0));
+    points.append(Coordinate(0.0, 0.0, 150.0));
+    points.append(Coordinate(0.0, 150.0, 150.0));
     points.append(Coordinate(200.0, 0.0, 150.0));
     points.append(Coordinate(200.0, 150.0, 150.0));
 
     edges.append({0,1});
-    edges.append({1,2});
-    edges.append({2,3});
-    edges.append({3,0});
-    edges.append({4,5});
-    edges.append({5,6});
-    edges.append({6,7});
-    edges.append({7,4});
     edges.append({0,4});
+    edges.append({0,2});
+    edges.append({1,3});
     edges.append({1,5});
+    edges.append({2,3});
     edges.append({2,6});
     edges.append({3,7});
-
+    edges.append({4,5});
+    edges.append({4,6});
+    edges.append({5,7});
+    edges.append({6,7});
+    
     list.append(new Polygon(QString("Cubo vermelho"), QList(points), QList(edges), Qt::red));
 
     // cout << "Points / Edges" << endl;

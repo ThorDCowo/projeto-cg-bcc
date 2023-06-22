@@ -3,6 +3,7 @@
 
 #include "object.h"
 #include "coordinate.h"
+#include <iostream>
 
 #include <QPoint>
 
@@ -10,9 +11,9 @@ class Point : public Object, public QPointF
 {
 public:
     Point(
-        const QString& name, 
-        const QList<Coordinate> &pointsList, 
-        const QList<pair<qsizetype, qsizetype>> &edges,
+        const QString& name,
+        const QList<Coordinate> &pointsList,
+        const QList<pair<int,int>> &edges,
         Qt::GlobalColor color=Qt::black
     ):
         Object(name, pointsList, edges, color)
@@ -21,8 +22,8 @@ public:
     void draw(QPainter &painter);   
     void translate(Coordinate translation);
     void translateProjection(Coordinate translation);
-    void scale();
-    void rotate();
+    void scale(float factor);
+    void rotate(float teta, Coordinate axis);
     bool isInsideWindow(vector<bool> pointRegionCode);
     bool isOutsideWindow(vector<bool> pointRegionCode);
 

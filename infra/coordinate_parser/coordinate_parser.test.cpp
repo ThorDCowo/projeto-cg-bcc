@@ -9,15 +9,15 @@ private:
     CoordinateParser* parser;
 
 public:
-     CoordinateParserTest(CoordinateParser* parser) : TestSuite() {
+    CoordinateParserTest(CoordinateParser* parser) : TestSuite() {
         this->parser = parser;
     }
 
     void run()
     {
-        //cout << "-----------------------" << endl;
-        //cout << "Teste de CoordinateParser" << endl;
-         //cout << "-----------------------" << endl;  
+        cout << "-----------------------" << endl;
+        cout << "Teste de CoordinateParser" << endl;
+        cout << "-----------------------" << endl;  
 
         this->shouldReturnPointOnXAxis();
         this->shouldReturnPointOnYAxis();

@@ -1,12 +1,24 @@
-#include <iostream>
-#include <assert.h>
-
 #include "object.h"
-#include "coordinate.h"
 
 using namespace std;
 
+double cosHelper(double radians) {
+    double specialDegrees = 90.0;
+    if(radians == qDegreesToRadians(specialDegrees)) {
+        return 0.0;
+    }
 
+  return qCos(radians);
+}
+
+double sinHelper(double radians) {
+    double specialDegrees = 0.0;
+    if(radians == qDegreesToRadians(specialDegrees)) {
+        return 1.0;
+    }
+
+  return qSin(radians);
+}
 
 void Object::draw(QPainter &painter)
 {
@@ -96,12 +108,31 @@ void Object::normalizeCoordinates(int windowWidth, int windowHeight, Coordinate 
     float windowXBegin = windowCenter.x - (viewportWidth / 2);
     float windowYBegin = windowCenter.y - (viewportHeight / 2);
 
+    // cout << "Window Center: "<< windowCenter.toString() << endl;
+
     for (qsizetype i = 0; i < list.size(); i++)
     {
-        newX = ((list[i].x - windowXBegin) / windowWidth) * viewportWidth;
-        newY = (1 -  ((list[i].y - windowYBegin)  / windowHeight)) * viewportWidth;
+        newX = 1.0 * (windowXBegin + ((list[i].x - windowXBegin) / windowWidth) * viewportWidth);
+        newY = 1.0 * (windowYBegin + (1 -  ((list[i].y - windowYBegin)  / windowHeight)) * viewportHeight);
 
         normalizePointsList.append(Coordinate(newX, newY));
+    }
+}
+
+void Object::transformToViewport(Coordinate center)
+{
+    int viewportWidth = 854;
+    int viewportHeight = 480;
+
+    float viewportXBegin = center.x - (viewportWidth / 2);
+    float viewportXEnd = center.x + (viewportWidth / 2);
+    float viewportYBegin = center.y - (viewportHeight / 2);
+    float viewportYEnd = center.y + (viewportHeight / 2);
+
+    for (qsizetype i = 0; i < normalizePointsList.size(); i++)
+    {
+        projectionPointsList[i].x = viewportXBegin + (normalizePointsList[i].x - viewportXBegin) / (viewportXEnd - viewportXBegin) * viewportWidth;
+        projectionPointsList[i].y = viewportYBegin + (1 - (normalizePointsList[i].y - viewportYBegin) / (viewportYEnd - viewportYBegin)) * viewportHeight;
     }
 }
 
@@ -135,9 +166,18 @@ void Object::planeProjection(float distanceBetweenCenterOfProjectionandPlane) {
     float projectionAxisY = 0.0;
 
     for (qsizetype i = 0; i < pointsList.size(); i++) {
-
-        projectionAxisX = (pointsList[i].x * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
-        projectionAxisY = (pointsList[i].y * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
+        if(pointsList[i].z < 0){
+            projectionAxisX = -(pointsList[i].x * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
+            projectionAxisY = -(pointsList[i].y * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
+        }
+        if(pointsList[i].z == 0) {
+            projectionAxisX = pointsList[i].x;
+            projectionAxisY = pointsList[i].y;
+        }
+        else {
+            projectionAxisX = (pointsList[i].x * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
+            projectionAxisY = (pointsList[i].y * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
+        }        
 
         projectionPointsList.append(Coordinate(
             projectionAxisX, 
@@ -147,25 +187,23 @@ void Object::planeProjection(float distanceBetweenCenterOfProjectionandPlane) {
     }
 }
 
-void Object::rotateWorld(float teta, Coordinate axis)
-{
-    // float radians = qDegreesToRadians(teta);
-
+void Object::rotateWorld(float radians, Coordinate axis)
+{    
     if(axis.x) {
         for(qsizetype i = 0; i < pointsList.size(); i++){
             pointsList[i] = Coordinate(
                 pointsList[i].x,
-                pointsList[i].y * qCos(teta) - (pointsList[i].z * qSin(teta)),
-                pointsList[i].y * qSin(teta) + (pointsList[i].z * qCos(teta))
+                pointsList[i].y * cosHelper(radians) - (pointsList[i].z * sinHelper(radians)),
+                pointsList[i].y * sinHelper(radians) + (pointsList[i].z * cosHelper(radians))
             );
         }
         return;
     } if(axis.y) {
         for(qsizetype i = 0; i < pointsList.size(); i++){
             pointsList[i] = Coordinate(
-                pointsList[i].x * qCos(teta) + (pointsList[i].z * qSin(teta)),
+                pointsList[i].x * cosHelper(radians) + (pointsList[i].z * sinHelper(radians)),
                 pointsList[i].y,
-                pointsList[i].z * qCos(teta) - (pointsList[i].x * qSin(teta))
+                pointsList[i].z * cosHelper(radians) - (pointsList[i].x * sinHelper(radians))
             );
         }
         return;
@@ -173,29 +211,12 @@ void Object::rotateWorld(float teta, Coordinate axis)
 
     for(qsizetype i = 0; i < pointsList.size(); i++){
         pointsList[i] = Coordinate(
-            pointsList[i].x * qCos(teta) - (pointsList[i].y * qSin(teta)),
-            pointsList[i].x * qSin(teta) + (pointsList[i].y * qCos(teta)),
+            pointsList[i].x * cosHelper(radians) - (pointsList[i].y * sinHelper(radians)),
+            pointsList[i].x * sinHelper(radians) + (pointsList[i].y * cosHelper(radians)),
             pointsList[i].z
         );
     }
 
-}
-
-void Object::transformToViewport(Coordinate center)
-{
-    int viewportWidth = 854;
-    int viewportHeight = 480;
-
-    float windowXBegin = center.x - (viewportWidth / 2);
-    float windowXEnd = center.x + (viewportWidth / 2);
-    float windowYBegin = center.y - (viewportHeight / 2);
-    float windowYEnd = center.y + (viewportHeight / 2);
-
-    for (qsizetype i = 0; i < normalizePointsList.size(); i++)
-    {
-        projectionPointsList[i].x = windowXBegin + (normalizePointsList[i].x - windowXBegin) / (windowXEnd - windowXBegin) * viewportWidth;
-        projectionPointsList[i].y = windowYBegin + (1 - (normalizePointsList[i].y - windowYBegin) / (windowYEnd - windowYBegin)) * viewportHeight;
-    }
 }
 
 Coordinate Object::barycenter()

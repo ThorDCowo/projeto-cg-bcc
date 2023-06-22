@@ -1,10 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <functional>
-#include <string>
-#include <sstream>
-#include <vector>
-
 #include "file_reader.h"
 using namespace std;
 

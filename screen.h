@@ -7,6 +7,10 @@
 #include <QList>
 #include <QCheckBox>
 #include "core/entities/object.h"
+#include <iostream>
+#include <QPainter>
+#include <QDebug>
+
 
 class Screen : public QFrame
 {

@@ -2,11 +2,13 @@
 #include "../../core/entities/object.h"
 #include "../../tests/framework_test.h"
 #include "../../tests/test_suite.h"
+#include "perspective_projection.use_case.h"
 
 class ObjectTest : public TestSuite {
 private:
+    PerspectiveProjectionUseCase *perspectiveProjectionUseCase;
+    Object *object;
     
-
 public:
     ObjectTest() : TestSuite() {}
 
@@ -21,7 +23,7 @@ public:
 
     void testExecute() {
         QList<Coordinate> pointsList;
-        QList<pair<qsizetype, qsizetype>> edges;
+        QList<pair<int, int>> edges;
         
         pointsList.append(Coordinate(-2, 4, 0));
         pointsList.append(Coordinate(-4, 4, 0));
@@ -46,6 +48,8 @@ public:
         Coordinate centerOfProjection = Coordinate::zero();
         Coordinate windowCenter = Coordinate(width / 2, height / 2);
 
+        QList<Coordinate> expectedNormalizedPointsList;
+
         this->perspectiveProjectionUseCase->execute(
             object,
             centerOfProjection,
@@ -57,8 +61,16 @@ public:
             beta
         );
 
-        QList<Coordinate> expectedProjectionPointsList;       
-        QList<Coordinate> expectedNormalizedPointsList;       
 
+        QList<Coordinate> resultNormalizedPointsList = object->getNormalizedPoints();
+
+        for (qsizetype i = 0; i < expectedNormalizedPointsList.size(); i++) 
+        {
+             FrameworkTest::expectToBeEqual(
+                "Deve normalizar o ponto " + pointsList[i].toString() + " dentro do plano XZ, resultando no ponto " + expectedNormalizedPointsList[i].toString(),
+                resultNormalizedPointsList[i],
+                expectedNormalizedPointsList[i]
+            );
+        }
     }
 };
