@@ -27,7 +27,7 @@ public:
     }
 
     
-QList<Object*> execute(QString filename);
+QList<Object*> execute(string filename);
 
 };
 

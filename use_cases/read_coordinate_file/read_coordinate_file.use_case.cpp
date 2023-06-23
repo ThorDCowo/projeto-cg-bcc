@@ -3,7 +3,7 @@
 
 using namespace std;
 
-QList<Object*> ReadCoordinateFileUseCase::execute(QString filename)
+QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
 {
     QList<Object*> list;
     QList<Coordinate> points;
@@ -13,7 +13,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(QString filename)
 
         if (!this->reader->isOpen())
         {
-            throw runtime_error("Não foi possível abrir o arquivo " );
+            throw runtime_error("Não foi possível abrir o arquivo " + filename);
         }
 
         int objectIndex = -1;

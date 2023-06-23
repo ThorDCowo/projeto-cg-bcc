@@ -12,8 +12,8 @@
 void runTests() {
     FrameworkTest frameworkTest;
 
-    // Clipper clipper;
-    // ClipperTest clipperTest(&clipper);
+    Clipper clipper;
+    ClipperTest clipperTest(&clipper);
 
     CoordinateParser coordinateParser;
     CoordinateParserTest coordinateParserTest(&coordinateParser);
@@ -32,7 +32,7 @@ void runTests() {
     ObjectTest objectTest;
 
 
-    // frameworkTest.registerTest(&clipperTest);
+    frameworkTest.registerTest(&clipperTest);
     frameworkTest.registerTest(&coordinateParserTest);
     frameworkTest.registerTest(&readCoordinateFileUseCaseTest);
     frameworkTest.registerTest(&objectTest);

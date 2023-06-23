@@ -43,14 +43,14 @@ Camera::Camera(QWidget *parent)
 
     QList<Object*> objectList = ObjectListFactory::createObjectList();
 
-    QString charizardFilePath(":/:/data/charizard/charizard.obj");
-    QString psyduckFilePath = ":/:/data/charizard/reducted_psyduck.obj";
+    // QString charizardFilePath = (":/:/data/charizard/charizard.obj");
+    // QString psyduckFilePath = ":/:/data/charizard/reducted_psyduck.obj";
 
-    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(charizardFilePath);
-    QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(psyduckFilePath);
+    // QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(charizardFilePath);
+    // QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(psyduckFilePath);
 
-    objectList << charizardList;
-    objectList << psyduckList;
+    // objectList << charizardList;
+    // objectList << psyduckList;
 
     // QFile file(charizardFilePath);
     // if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -66,14 +66,16 @@ Camera::Camera(QWidget *parent)
     // QString psyduckFilePath = QDir::currentPath() + "\\data\\psyduck\\reducted_psyduck.obj";
     // QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(psyduckFilePath.toStdString());
 
+    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(
+        "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj"
+    );
 
-    // QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(
-    //     "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj"
-    // );
+    QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(
+        "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj"
+    );
 
-    // QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(
-    //     "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj"
-    // );
+    objectList << charizardList;
+    objectList << psyduckList;
 
     // cout << "Partes do psyduck: " << psyduckList.size() << endl;
 

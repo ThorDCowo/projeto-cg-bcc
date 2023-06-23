@@ -18,7 +18,7 @@ void OrthogonalProjectionUseCase::execute(
         windowCenter,
         axisToExclude
     );
-    // this->clippObjectUseCase->execute(object, border);
+    this->clippObjectUseCase->execute(object, border);
     object->transformToViewport(
         windowCenter,
         viewportWidth,

@@ -1,23 +1,20 @@
 #include "file_reader.h"
 using namespace std;
 
-bool FileReader::open(QString filename)
+bool FileReader::open(string filename)
 {
-    QFile file(filename);
-    this->file = &file;
-    this->isOpened = file.open(QIODevice::ReadOnly | QIODevice::Text);
-    return this->isOpened;
+    file.open(filename);
+    return file.is_open();
 }
 
 bool FileReader::isOpen() const
 {
-    return this->isOpened;
+    return file.is_open();
 }
 
 void FileReader::close()
 {
-    file->close();
-    this->isOpened = false;
+    file.close();
 }
 
 void FileReader::readLinesWithCallback(
@@ -27,12 +24,9 @@ void FileReader::readLinesWithCallback(
     )> &callback    
 )
 {
-    QTextStream in(this->file);
-    QString line;
-    bool isEOF = in.atEnd();    
-    do {
-        line = in.readLine();
-        callback(line.toStdString(), isEOF);
-        in.atEnd();
-    } while (!isEOF);
+    string line;
+    while (getline(file, line))
+    {
+        callback(line, file.eof());
+    }
 }

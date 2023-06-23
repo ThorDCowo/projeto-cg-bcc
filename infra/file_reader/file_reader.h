@@ -1,7 +1,7 @@
 #ifndef FILE_READER_H
 #define FILE_READER_H
 
-#include <QFile>
+#include <iostream>
 #include <QString>
 #include <QTextStream>
 #include <fstream>
@@ -13,7 +13,7 @@ using namespace std;
 
 class FileReader {
 public:
-    bool open(QString filename);
+    bool open(string filename);
     bool isOpen() const;
     void close();
     void readLinesWithCallback(
@@ -24,8 +24,7 @@ public:
     );
 
 private:
-    QFile* file;
-    bool isOpened = false;
+    ifstream file;
 };
 
 #endif // FILE_READER_H

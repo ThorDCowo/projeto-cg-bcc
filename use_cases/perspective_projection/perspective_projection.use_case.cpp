@@ -21,7 +21,7 @@ void PerspectiveProjectionUseCase::execute(
     object->rotateWorld(beta, Coordinate::axisY());
     //projection
     object->perspectiveNormalize(windowWidth, windowHeight, windowCenter, distanceFromProjection);
-    // this->clippObjectUseCase->execute(object, border);
+    this->clippObjectUseCase->execute(object, border);
     object->transformToViewport(
         windowCenter,
         viewportWidth,

@@ -7,14 +7,14 @@ void Object::drawEdges(QPainter &painter)
     // cout << "Projection List: " << projectionPointsList.size() << endl;
     // cout << "Normalize List: " << normalizedPointsList.size() << endl;
 
-    for (qsizetype i = 0; i < edgesList.size(); i++)
+    for (qsizetype i = 0; i < edgesListToDraw.size(); i++)
     {
         // cout << "Edge First: " << edgesList[i].first << " Edge Second: " << edgesList[i].second << endl;
         painter.drawLine(
-            normalizedPointsList[edgesList[i].first].x,
-            normalizedPointsList[edgesList[i].first].y,
-            normalizedPointsList[edgesList[i].second].x, 
-            normalizedPointsList[edgesList[i].second].y
+            viewportPointsList[edgesListToDraw[i].first].x,
+            viewportPointsList[edgesListToDraw[i].first].y,
+            viewportPointsList[edgesListToDraw[i].second].x, 
+            viewportPointsList[edgesListToDraw[i].second].y
         );
     }
 
@@ -116,10 +116,10 @@ void Object::transformToViewport(Coordinate center, int viewportWidth, int viewp
     float newX = 0.0;
     float newY = 0.0;
 
-    for (qsizetype i = 0; i < normalizedPointsList.size(); i++)
+    for (qsizetype i = 0; i < pointsListToDraw.size(); i++)
     {
-        newX = halfViewportWidth + (normalizedPointsList[i].x * viewportWidth);
-        newY = halfViewportHeight + (normalizedPointsList[i].y * viewportWidth);
+        newX = halfViewportWidth + (pointsListToDraw[i].x * viewportWidth);
+        newY = halfViewportHeight + (pointsListToDraw[i].y * viewportWidth);
 
         viewportPointsList.append(Coordinate(newX, newY));
     }

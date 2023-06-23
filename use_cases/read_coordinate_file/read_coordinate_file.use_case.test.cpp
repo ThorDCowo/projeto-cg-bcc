@@ -2,7 +2,7 @@
 #include "../../tests/test_suite.h"
 #include "read_coordinate_file.use_case.h"
 #include <QList>
-#include <QString>
+#include <string>
 
 
 class ReadCoordinateFileUseCaseTest : public TestSuite {
@@ -30,8 +30,8 @@ public:
     }
 
     void shouldReturnOneObjectWithOnePoint() {
-        QString filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_single_point.txt";
-        QString objectName = "example_single_point";
+        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_single_point.txt";
+        string objectName = "example_single_point";
 
         qsizetype expectedValue = 1;
 
@@ -45,8 +45,8 @@ public:
     }
 
     void shouldReturnOneObjectWithThreePoints() {
-        QString filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_three_points.txt";
-        QString objectName = "example_three_points";
+        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_three_points.txt";
+        string objectName = "example_three_points";
 
         qsizetype expectedValue = 1;
 
@@ -60,8 +60,8 @@ public:
     }
 
     void shouldReturnTwoObjectsWithOnePoint() {
-        QString filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\two_objects_single_point.txt";
-        QString objectName = "two_objects_single_point";
+        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\two_objects_single_point.txt";
+        string objectName = "two_objects_single_point";
 
         qsizetype expectedValue = 2;
 
@@ -75,8 +75,8 @@ public:
     }
 
     void shouldReturnTwoObjectsWithTwoPoints() {
-        QString filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_two_objects_two_points.txt";
-        QString objectName = "example_two_objects_two_points";
+        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_two_objects_two_points.txt";
+        string objectName = "example_two_objects_two_points";
 
         qsizetype expectedValue = 2;
 
@@ -90,8 +90,8 @@ public:
     }
 
     void shouldReturnReductedPsyduck() {
-        QString filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj";
-        QString objectName = "psyduck";
+        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj";
+        string objectName = "psyduck";
 
         qsizetype expectedValue = 1;
 
@@ -105,8 +105,8 @@ public:
     }
     
     void shouldReturnObjectListFromFile() {
-        QString filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\psyduck.obj";
-        QString objectName = "psyduck";
+        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\psyduck.obj";
+        string objectName = "psyduck";
 
         qsizetype expectedValue = 10;
 
@@ -120,8 +120,8 @@ public:
     }
 
     void shouldReturnOneObjectWithManyPoints() {
-        QString filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj";
-        QString objectName = "charizard";
+        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj";
+        string objectName = "charizard";
 
         qsizetype expectedValue = 1;
 
