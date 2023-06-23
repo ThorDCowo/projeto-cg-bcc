@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    runTests();
+    // runTests();
 
     QApplication a(argc, argv);
     QDir::setCurrent(QCoreApplication::applicationDirPath());

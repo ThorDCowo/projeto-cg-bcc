@@ -2,14 +2,16 @@
 
 void Object::drawEdges(QPainter &painter)
 {
-    // cout << "Edges List: " << edgesList.size() << endl;
-    // cout << "Points List: " << pointsList.size() << endl;
-    // cout << "Projection List: " << projectionPointsList.size() << endl;
-    // cout << "Normalize List: " << normalizedPointsList.size() << endl;
+    cout << "Edges List: " << edgesList.size() << endl;
+    cout << "Points List: " << pointsList.size() << endl;
+    cout << "Projection List: " << projectionPointsList.size() << endl;
+    cout << "Normalize List: " << normalizedPointsList.size() << endl;
+    cout << "Pre Viewport (to Draw) List: " << pointsListToDraw.size() << endl;
+    cout << "Viewport List: " << viewportPointsList.size() << endl;
 
     for (qsizetype i = 0; i < edgesListToDraw.size(); i++)
     {
-        // cout << "Edge First: " << edgesList[i].first << " Edge Second: " << edgesList[i].second << endl;
+        cout << "Edge First: " << edgesList[i].first << " Edge Second: " << edgesList[i].second << endl;
         painter.drawLine(
             viewportPointsList[edgesListToDraw[i].first].x,
             viewportPointsList[edgesListToDraw[i].first].y,
@@ -60,7 +62,7 @@ void Object::perspectiveNormalize(int windowWidth, int windowHeight, Coordinate 
 void Object::planeProjection(float distanceBetweenCenterOfProjectionandPlane) {
     projectionPointsList.erase(projectionPointsList.begin(), projectionPointsList.end());
 
-    float projectionAxisX = 0.0;
+    float projectionAxisX = 0.0;    
     float projectionAxisY = 0.0;
 
     for (qsizetype i = 0; i < pointsList.size(); i++) {
@@ -68,10 +70,10 @@ void Object::planeProjection(float distanceBetweenCenterOfProjectionandPlane) {
             projectionAxisX = -(pointsList[i].x * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
             projectionAxisY = -(pointsList[i].y * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
         }
-        if(pointsList[i].z == 0) {
-            projectionAxisX = pointsList[i].x;
-            projectionAxisY = pointsList[i].y;
-        }
+        else if(pointsList[i].z == 0) {
+            projectionAxisX = INFINITY;
+            projectionAxisY = INFINITY;
+        }        
         else {
             projectionAxisX = (pointsList[i].x * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
             projectionAxisY = (pointsList[i].y * distanceBetweenCenterOfProjectionandPlane)/pointsList[i].z;
@@ -103,7 +105,8 @@ void Object::normalizeCoordinates(
     for (qsizetype i = 0; i < projectionPointsList.size(); i++)
     {
         newX = (projectionPointsList[i].x - windowXBegin) / (windowWidth);
-        newX = (projectionPointsList[i].y - windowYBegin) / (windowHeight);
+        newY = (projectionPointsList[i].y - windowYBegin) / (windowHeight);
+
         normalizedPointsList.append(Coordinate(newX, newY));
     }
 }
@@ -116,6 +119,8 @@ void Object::transformToViewport(Coordinate center, int viewportWidth, int viewp
     float newX = 0.0;
     float newY = 0.0;
 
+    cout << "TransformToViewport: Pre Viewport (to Draw) List: " << pointsListToDraw.size() << endl;
+
     for (qsizetype i = 0; i < pointsListToDraw.size(); i++)
     {
         newX = halfViewportWidth + (pointsListToDraw[i].x * viewportWidth);
@@ -123,6 +128,8 @@ void Object::transformToViewport(Coordinate center, int viewportWidth, int viewp
 
         viewportPointsList.append(Coordinate(newX, newY));
     }
+
+    cout << "TransformToViewport: Viewport List: " << viewportPointsList.size() << endl;
 }
 
 void Object::rotateWorld(float radians, Coordinate axis)

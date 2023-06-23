@@ -28,11 +28,10 @@ void PerspectiveProjectionUseCase::execute(
         viewportHeight
     );
 
-    cout << "-------------------" << endl;
+    cout << "Perspective Projection" << endl;
     cout << "Points / Projection / Normalized / Viewport" << endl;
     cout << object->getPoints()[0].toString() << endl;
     cout << object->getProjectionPoints()[0].toString() << endl;
     cout << object->getNormalizedPoints()[0].toString() << endl;
-    cout << object->getviewportPoints()[0].toString() << endl;
-    cout << "-------------------" << endl;
+    cout << object->getViewportPoints()[0].toString() << endl;
 }

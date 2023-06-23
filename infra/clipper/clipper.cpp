@@ -250,6 +250,9 @@ void Clipper::appendToNewLists(
     edgeToDraw.second = pointsListToDraw->size() - 1;
 
     edgesListToDraw->append(edgeToDraw);
+
+    // cout << "PointsListToDraw: " << pointsListToDraw->size() << endl;
+    // cout << "edgesListToDraw: " << edgesListToDraw->size() << endl;
 }
 
 QList<vector<bool>> Clipper::generateRegionCodeList(

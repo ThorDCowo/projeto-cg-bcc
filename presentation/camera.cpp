@@ -67,11 +67,11 @@ Camera::Camera(QWidget *parent)
     // QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(psyduckFilePath.toStdString());
 
     QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(
-        "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj"
+        "D:\\Comp Grafica\\projeto-cg-bcc\\data\\charizard\\charizard.obj"
     );
 
     QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(
-        "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj"
+        "D:\\Comp Grafica\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj"
     );
 
     objectList << charizardList;
@@ -100,6 +100,8 @@ Camera::Camera(QWidget *parent)
     }
 
     ui->screen->setObjectList(objectList);
+
+    update();
 }
 
 Camera::~Camera()

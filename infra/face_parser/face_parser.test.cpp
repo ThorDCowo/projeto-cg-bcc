@@ -35,9 +35,9 @@ public:
     void shouldReturnValidFaceWithTexture() {
         string line = "f 180/151 181/148 178/150";
         
-        int v1 = 180;
-        int v2 = 181;
-        int v3 = 178;
+        int v1 = 179;
+        int v2 = 180;
+        int v3 = 177;
 
         Face resultFace = this->parser->parseWithTexture(line);
         Face expectedFace = Face(v1, v2, v3);
@@ -92,9 +92,9 @@ public:
     void shouldReturnValidFaceWithoutTexture() {
         string line = "f 180 181 178";
         
-        int v1 = 180;
-        int v2 = 181;
-        int v3 = 178;
+        int v1 = 179;
+        int v2 = 180;
+        int v3 = 177;
 
         Face resultFace = this->parser->parseWithoutTexture(line);
         Face expectedFace = Face(v1, v2, v3);

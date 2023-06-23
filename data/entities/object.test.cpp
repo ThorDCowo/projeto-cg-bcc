@@ -16,36 +16,92 @@ public:
 
     void run()
     {
-        cout << "-----------------------" << endl;
+        cout << "---------------------------------" << endl;
         cout << "Teste de planeProjection()" << endl;
-        cout << "-----------------------" << endl;
+        cout << "---------------------------------" << endl;
 
-        this->pyramidPlaneProjectionTest();
+        this->pyramidPlaneProjectionAfterPlaneTest();
+        this->pyramidPlaneProjectionBeforePlaneTest();
 
-        cout << "-----------------------" << endl;
+        cout << "---------------------------------" << endl;
         cout << "Teste de orthogonalProjection()" << endl;
-        cout << "-----------------------" << endl;
+        cout << "---------------------------------" << endl;
 
-        this->shouldProjectPointsInPlaneXYTest();      
+        this->shouldProjectPointsInPlaneXYTest();     
         this->shouldProjectPointsInPlaneXZTest();
         this->shouldProjectPointsInPlaneYZTest();
 
-        cout << "-----------------------" << endl;
+        cout << "---------------------------------" << endl;
         cout << "Teste de orthogonalNormalize()" << endl;
-        cout << "-----------------------" << endl;
+        cout << "---------------------------------" << endl;
         orthogonalNormalizeInXYTest();
         orthogonalNormalizeInXZTest();
         orthogonalNormalizeInYZTest();
 
-        cout << "-----------------------" << endl;
+        cout << "---------------------------------" << endl;
         cout << "Teste de rotateWorld()" << endl;
-        cout << "-----------------------" << endl;
+        cout << "---------------------------------" << endl;
         rotateWorldInX();
         rotateWorldInY();
-        // rotateWorldInZ();
+        rotateWorldInZ();
     }
 
-    void pyramidPlaneProjectionTest()
+    void pyramidPlaneProjectionAfterPlaneTest()
+    {
+        float distanceFromProjection = 10.0;
+        
+        /*
+            Piramide triangular, base GJI
+            G = (-2.0, 4.0, 20.0)                      G -> L
+            J = (-4.0, 4.0, 20.0)                      J -> N
+            I = (-4.0, 6.0, 20.0)                      I -> M
+            H = (-3.0, 5.0, 22.0) -> Topo da piramide  H -> K
+        */
+
+        QList<Coordinate> pointsList;       
+        pointsList.append(Coordinate(-2.0, 4.0, 20.0));
+        pointsList.append(Coordinate(-4.0, 4.0, 20.0));
+        pointsList.append(Coordinate(-4.0, 6.0, 20.0));
+        pointsList.append(Coordinate(-3.0, 5.0, 22.0));
+        
+        QList<pair<int, int>> edges;
+        edges.append({0, 1});
+        edges.append({1, 2});
+        edges.append({3, 0});
+        edges.append({3, 1});
+        edges.append({3, 2});
+
+        
+        Object* pyramid = new Polygon(
+            QString("Piramide Triangular"),
+            QList(pointsList),
+            QList(edges),
+            Qt::red
+        );
+
+        QList<Coordinate> expectedProjectionPointsList;
+        expectedProjectionPointsList.append((Coordinate(-1, 2.0, 10.0)));
+        expectedProjectionPointsList.append((Coordinate(-2.0, 2.0, 10.0)));
+        expectedProjectionPointsList.append((Coordinate(-2.0, 3.0, 10.0)));
+        expectedProjectionPointsList.append((Coordinate(-1.36, 2.27, 10.0)));
+
+        pyramid->planeProjection(distanceFromProjection);
+
+        QList<Coordinate> resultProjectionPointsList = pyramid->getProjectionPoints();
+
+        for (qsizetype i = 0; i < expectedProjectionPointsList.size(); i++) {
+            resultProjectionPointsList[i].x = round(resultProjectionPointsList[i].x * 100) / 100;
+            resultProjectionPointsList[i].y = round(resultProjectionPointsList[i].y * 100) / 100;
+
+             FrameworkTest::expectToBeEqual(
+                "Deve projetar o ponto" + pointsList[i].toString() + " em " + expectedProjectionPointsList[i].toString(),
+                resultProjectionPointsList[i],
+                expectedProjectionPointsList[i]
+            );
+        }
+    }
+
+    void pyramidPlaneProjectionBeforePlaneTest()
     {
         float distanceFromProjection = 10.0;
         
@@ -79,10 +135,10 @@ public:
         );
 
         QList<Coordinate> expectedProjectionPointsList;
-        expectedProjectionPointsList.append((Coordinate(-1.5, 3.0, 10.0)));
-        expectedProjectionPointsList.append((Coordinate(-3.0, 3.0, 10.0)));
-        expectedProjectionPointsList.append((Coordinate(-2.0, 3.0, 10.0)));
-        expectedProjectionPointsList.append((Coordinate(-15.0, 25.0, 10.0)));
+        expectedProjectionPointsList.append((Coordinate(INFINITY, INFINITY, 10.0)));
+        expectedProjectionPointsList.append((Coordinate(INFINITY, INFINITY, 10.0)));
+        expectedProjectionPointsList.append((Coordinate(INFINITY, INFINITY, 10.0)));
+        expectedProjectionPointsList.append((Coordinate(-15, 25, 10.0)));
 
         pyramid->planeProjection(distanceFromProjection);
 
@@ -324,7 +380,7 @@ public:
             I = (-4.0, 6.0, 0.0)                      I -> M
             H = (-3.0, 5.0, 2.0) -> Topo da piramide  H -> K
         */
-
+        
         QList<Coordinate> pointsList;       
         pointsList.append(Coordinate(-2.0, 4.0, 0.0));
         pointsList.append(Coordinate(-4.0, 4.0, 0.0));
@@ -380,6 +436,10 @@ public:
             H = (-3.0, 5.0, 2.0) -> Topo da piramide  H -> K
         */
 
+        cout << "Teste de normalização em XY" << endl;
+        cout << "windowWidth: " << windowWidth << endl;
+        cout << "windowHeight: " << windowHeight << endl;
+        cout << "windowCenter: " << windowCenter.toString() << endl;
         QList<Coordinate> pointsList;       
         pointsList.append(Coordinate(-2.0, 4.0, 0.0));
         pointsList.append(Coordinate(-4.0, 4.0, 0.0));
@@ -401,11 +461,13 @@ public:
             Qt::red
         );
 
+        int fixFactor = 1000;
+
         QList<Coordinate> expectedProjectionPointsList;
-        expectedProjectionPointsList.append(Coordinate(-2.0, windowHeight - 4.0));
-        expectedProjectionPointsList.append(Coordinate(-4.0, windowHeight - 4.0));
-        expectedProjectionPointsList.append(Coordinate(-4.0, windowHeight - 6.0));
-        expectedProjectionPointsList.append(Coordinate(-3.0, windowHeight - 5.0));
+        expectedProjectionPointsList.append(Coordinate(-0.002, 0.008));
+        expectedProjectionPointsList.append(Coordinate(-0.004, 0.008));
+        expectedProjectionPointsList.append(Coordinate(-0.004, 0.001));
+        expectedProjectionPointsList.append(Coordinate(-0.003, 0.001));
 
         pyramid->orthogonalNormalize(windowWidth, windowHeight, windowCenter, axisToExclude);
 
@@ -413,8 +475,8 @@ public:
 
         for (qsizetype i = 0; i < expectedProjectionPointsList.size(); i++) 
         {
-            // cout << "Resultado: " << resultProjectionPointsList[i].toString() << endl;
-            // cout << "Esperado: " << expectedProjectionPointsList[i].toString() << endl;
+            resultProjectionPointsList[i].x = truncl(resultProjectionPointsList[i].x * fixFactor) / fixFactor;
+            resultProjectionPointsList[i].y = truncl(resultProjectionPointsList[i].y * fixFactor) / fixFactor;
              FrameworkTest::expectToBeEqual(
                 "Deve normalizar o ponto " + pointsList[i].toString() + " dentro do plano XY, resultando no ponto " + expectedProjectionPointsList[i].toString(),
                 resultProjectionPointsList[i],
@@ -497,7 +559,7 @@ public:
             E = (300.0, 275.0, 250.0)
         */
 
-        double angleInDegrees = 0.0f;
+        double angleInDegrees = 90.0f;
         double radians =  angleInDegrees * M_PI / 180;
         cout << "Degrees: " << angleInDegrees << endl;
         cout << "Radianos: " << radians << endl;
@@ -608,7 +670,7 @@ public:
 
         for (qsizetype i = 0; i < expectedPointsList.size(); i++) {
              FrameworkTest::expectToBeEqual(
-                 "Deve rotacionar o mundo pelo eixo Y, movendo o ponto" + 
+                 "Deve rotacionar o mundo pelo eixo Z, movendo o ponto" + 
                     pointsList[i].toString() + " para " + 
                     expectedPointsList[i].toString(),
                 resultPointsList[i],

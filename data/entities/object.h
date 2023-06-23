@@ -63,7 +63,7 @@ public:
     void drawEdges(QPainter &painter);
 
     virtual void translate(Coordinate translation)=0;
-    virtual void translateProjection(Coordinate translation) = 0;
+    virtual void translateProjection(Coordinate translation)=0;
     virtual void scale(float factor)=0;
     virtual void rotate(float teta, Coordinate axis)=0;
     
@@ -71,13 +71,18 @@ public:
     inline QList<Coordinate> getPoints()const { return this->pointsList; }
     inline QList<pair<int, int>> getEdges()const { return this->edgesList; } 
     inline QList<pair<int, int>> getEdgesListToDraw()const { return this->edgesListToDraw; } 
-    inline QList<Coordinate> getPointsListToDraw()const { return this->pointsListToDraw; } 
-    inline QList<Coordinate> getProjectionPoints()const { return this->projectionPointsList; } 
-    inline QList<Coordinate> getNormalizedPoints()const { return this->normalizedPointsList; } 
-    inline QList<Coordinate> getviewportPoints()const { return this->viewportPointsList; } 
+    inline QList<Coordinate> getPointsListToDraw() { return this->pointsListToDraw; } 
+    inline QList<Coordinate> getProjectionPoints() { return this->projectionPointsList; } 
+    inline QList<Coordinate> getNormalizedPoints() { return this->normalizedPointsList; } 
+    inline QList<Coordinate> getViewportPoints() { return this->viewportPointsList; } 
+
+    // inline QList<Coordinate> &getRefPointsListToDraw() { return pointsListToDraw; } 
+    // inline QList<Coordinate> &getRefProjectionPoints() { return projectionPointsList; } 
+    // inline QList<Coordinate> &getRefNormalizedPoints() { return normalizedPointsList; } 
+    // inline QList<Coordinate> &getRefViewportPoints() { return viewportPointsList; } 
     inline Qt::GlobalColor getColor()const { return color; }
     
-protected:
+protected:  
     QString name; //id do objeto instanciado
     QList<Coordinate> pointsList;
     QList<pair<int, int>> edgesList;

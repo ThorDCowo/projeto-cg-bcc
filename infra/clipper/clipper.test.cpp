@@ -37,7 +37,9 @@ public:
         this->lineClippingTest11();
         this->lineClippingTestCritical1();
         this->lineClippingTestCritical2();
-        
+        this->lineClippingDiagonalOutsideWindow();	
+        this->lineClippingLowerAndRight();	
+        this->lineClippingTestDiagonaAndParallel();
     }
 
     // F - E Line
@@ -72,7 +74,7 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping pela esquerda alterarndo o ponto de fora para (0, 4.5)",
-            pointsList[edge.second],
+            pointsListToDraw[edgesListToDraw[0].second],
             expectedValue
         );
     }
@@ -97,6 +99,7 @@ public:
         pointsList.append(upperLeftPoint);
         pointsList.append(lowerRightPoint);
         
+         // Correção devido a precisão do float
         Coordinate expectedValueForLowerRightPoint(1315, 0);
         Coordinate expectedValueForUpperLeftPoint(0, 961);
 
@@ -108,21 +111,22 @@ public:
             &pointsListToDraw
         );
 
-        pointsList[edge.second].x = truncl(pointsList[edge.second].x * 100);
-        pointsList[edge.second].y = truncl(pointsList[edge.second].y * 100);
+        // Correção devido a precisão do float
+        pointsListToDraw[edgesListToDraw[0].second].x = truncl(pointsListToDraw[edgesListToDraw[0].second].x * 100);
+        pointsListToDraw[edgesListToDraw[0].second].y = truncl(pointsListToDraw[edgesListToDraw[0].second].y * 100);
         
-        pointsList[edge.first].x = truncl(pointsList[edge.first].x * 100);
-        pointsList[edge.first].y = truncl(pointsList[edge.first].y * 100);
+        pointsListToDraw[edgesListToDraw[0].first].x = truncl(pointsListToDraw[edgesListToDraw[0].first].x * 100);
+        pointsListToDraw[edgesListToDraw[0].first].y = truncl(pointsListToDraw[edgesListToDraw[0].first].y * 100);
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clippling o clipping por baixo alterarndo o ponto (20, -5) para (13.15, 0)",
-            pointsList[edge.second],
+            pointsListToDraw[edgesListToDraw[0].second],
             expectedValueForLowerRightPoint
         );
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clippling o clipping por esquerda alterarndo o ponto (-6, 14) para (0, 9.61)",
-            pointsList[edge.first],
+            pointsListToDraw[edgesListToDraw[0].first],
             expectedValueForUpperLeftPoint
         );
     }
@@ -159,7 +163,7 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping por baixo alterarndo o ponto de fora para (4, 0)",
-            pointsList[edge.second],
+            pointsListToDraw[edgesListToDraw[0].second],
             expectedValue
         );
     }
@@ -196,7 +200,7 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping pela diagonal pela direita alterarndo o ponto de fora para (15, 8)",
-            pointsList[edge.second],
+            pointsListToDraw[edgesListToDraw[0].second],
             expectedValue
         );
     }
@@ -233,7 +237,7 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping por cima alterarndo o ponto de fora para (8, 10)",
-            pointsList[edge.second],
+            pointsListToDraw[edgesListToDraw[0].second],
             expectedValue
         );
     }
@@ -270,7 +274,7 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping pela direita alterarndo o ponto de fora para (15, 3)",
-            pointsList[edge.second],
+            pointsListToDraw[edgesListToDraw[0].second],
             expectedValue
         );
     }
@@ -307,7 +311,7 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping diagonalmente passando pela quina alterarndo o ponto de fora para (0, 0)",
-            pointsList[edge.second],
+            pointsListToDraw[edgesListToDraw[0].second],
             expectedValue
         );
     }
@@ -344,7 +348,7 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve rejeitar a linha dos pontos (18, 15) e (3, 14)",
-            pointsList.size(),
+            pointsListToDraw.size(),
             expectedValue
         );
     }
@@ -382,7 +386,7 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve rejeitar a linha dos pontos (-5, 8) e (5, 13)",
-            pointsList.size(),
+            pointsListToDraw.size(),
             expectedValue
         );
 
@@ -420,7 +424,7 @@ public:
         //cout << "Reta com ponto no quadrante de baixo e quadrante da direita, sem passar por dentro" << endl;
         FrameworkTest::expectToBeEqual(
             "Deve rejeitar a linha dos pontos (14, -4) e (17, 1)",
-            pointsList.size(),
+            pointsListToDraw.size(),
             expectedValue
         );
 
@@ -457,12 +461,12 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve rejeitar a linha dos pontos (900, -100) e (1000, 100)",
-            pointsList.size(),
+            pointsListToDraw.size(),
             expectedValue
         );
     }
 
-     void lineClippingTestCritical2()
+    void lineClippingTestCritical2()
     {
         QList<pair<int,int>> edgesListToDraw;
         QList<Coordinate> pointsListToDraw;
@@ -493,8 +497,141 @@ public:
 
         FrameworkTest::expectToBeEqual(
             "Deve rejeitar a linha dos pontos (-1100, 666) e (960, -700), que cruza pelas quinas superior esquerda e inferior direita, mas não passa por dentro",
-            pointsList.size(),
+            pointsListToDraw.size(),
             expectedValue
+        );
+    }
+
+    // C1 - D1 line
+    void lineClippingDiagonalOutsideWindow()
+    {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
+        int width = 854;
+        int height = 480;
+        Coordinate center(427, 240);
+        Border border(width, height, center);
+
+        pair<int,int> edge = {0,1};
+
+        QList<Coordinate> pointsList;
+
+        Coordinate upperLeftPoint(-20, 15);
+        Coordinate lowerRightPoint(20, -16);
+
+        pointsList.append(upperLeftPoint);
+        pointsList.append(lowerRightPoint);
+
+        qsizetype expectedValue = 0;
+
+        this->clipper->lineClipping(
+            border,
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
+        );
+
+        FrameworkTest::expectToBeEqual(
+            "Deve rejeitar a linha dos pontos (-20, 15) e (20, -16), que passa pelas pelas quinas superior esquerda e inferior direita, mas não passa por dentro",
+            pointsListToDraw.size(),
+            expectedValue
+        );
+    }
+
+     //E1 - F1 Line
+    void lineClippingLowerAndRight()
+    {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
+        int width = 15;
+        int height = 10;
+        Coordinate center(7.5, 5.0);
+        Border border(width, height, center);
+
+        pair<int,int> edge = {0,1};
+
+        QList<Coordinate> pointsList;
+
+        Coordinate lowerPoint(8, -2);
+        Coordinate rightPoint(16, 6);
+
+        pointsList.append(lowerPoint);
+        pointsList.append(rightPoint);
+        
+        Coordinate expectedValueForLowerPoint(10, 0);
+        Coordinate expectedValueForRightPoint(15, 5);
+
+        this->clipper->lineClipping(
+            border,
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
+        );
+
+        FrameworkTest::expectToBeEqual(
+            "Deve realizar o clipping por baixo alterarndo o ponto de fora para (10, 0)",
+            pointsListToDraw[edgesListToDraw[0].first],
+            expectedValueForLowerPoint
+        );
+
+        FrameworkTest::expectToBeEqual(
+            "Deve realizar o clipping pela direita alterarndo o ponto de fora para (15, 5)",
+            pointsListToDraw[edgesListToDraw[0].second],
+            expectedValueForRightPoint
+        );
+    }
+
+    // W - Z line
+    void lineClippingTestDiagonaAndParallel() {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
+        int width = 15;
+        int height = 10;
+        Coordinate center(7.5, 5.0);
+        Border border(width, height, center);
+
+        pair<int,int> edge = {0,1};
+
+        QList<Coordinate> pointsList;
+
+        Coordinate upperLeftPoint(-11, 11);
+        Coordinate rightPoint(17, 1);
+
+        pointsList.append(upperLeftPoint);
+        pointsList.append(rightPoint);
+        
+        // Correção devido a precisão do float
+        Coordinate expectedValueForUpperLeftPoint(0, 707);
+        Coordinate expectedValueForRightPoint(1500, 171);
+
+
+        this->clipper->lineClipping(
+            border,
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
+        );
+
+        // Correção devido a precisão do float
+        pointsListToDraw[edgesListToDraw[0].second].x = truncl(pointsListToDraw[edgesListToDraw[0].second].x * 100);
+        pointsListToDraw[edgesListToDraw[0].second].y = truncl(pointsListToDraw[edgesListToDraw[0].second].y * 100);
+        
+        pointsListToDraw[edgesListToDraw[0].first].x = truncl(pointsListToDraw[edgesListToDraw[0].first].x * 100);
+        pointsListToDraw[edgesListToDraw[0].first].y = truncl(pointsListToDraw[edgesListToDraw[0].first].y * 100);
+
+        FrameworkTest::expectToBeEqual(
+            "Deve realizar o clipping diagonalmente pela esquerna alterarndo o ponto de fora para (10, 0)",
+            pointsListToDraw[edgesListToDraw[0].first],
+            expectedValueForUpperLeftPoint
+        );
+
+        FrameworkTest::expectToBeEqual(
+            "Deve realizar o clipping pela direita alterarndo o ponto de fora para (15, 5)",
+            pointsListToDraw[edgesListToDraw[0].second],
+            expectedValueForRightPoint
         );
     }
 };

@@ -30,7 +30,7 @@ public:
     }
 
     void shouldReturnOneObjectWithOnePoint() {
-        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_single_point.txt";
+        string filename = "D:\\Comp Grafica\\projeto-cg-bcc\\data\\example\\example_single_point.txt";
         string objectName = "example_single_point";
 
         qsizetype expectedValue = 1;
@@ -45,7 +45,7 @@ public:
     }
 
     void shouldReturnOneObjectWithThreePoints() {
-        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_three_points.txt";
+        string filename = "D:\\Comp Grafica\\projeto-cg-bcc\\data\\example\\example_three_points.txt";
         string objectName = "example_three_points";
 
         qsizetype expectedValue = 1;
@@ -60,7 +60,7 @@ public:
     }
 
     void shouldReturnTwoObjectsWithOnePoint() {
-        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\two_objects_single_point.txt";
+        string filename = "D:\\Comp Grafica\\projeto-cg-bcc\\data\\example\\two_objects_single_point.txt";
         string objectName = "two_objects_single_point";
 
         qsizetype expectedValue = 2;
@@ -75,7 +75,7 @@ public:
     }
 
     void shouldReturnTwoObjectsWithTwoPoints() {
-        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\example\\example_two_objects_two_points.txt";
+        string filename = "D:\\Comp Grafica\\projeto-cg-bcc\\data\\example\\example_two_objects_two_points.txt";
         string objectName = "example_two_objects_two_points";
 
         qsizetype expectedValue = 2;
@@ -90,7 +90,7 @@ public:
     }
 
     void shouldReturnReductedPsyduck() {
-        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj";
+        string filename = "D:\\Comp Grafica\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj";
         string objectName = "psyduck";
 
         qsizetype expectedValue = 1;
@@ -105,7 +105,7 @@ public:
     }
     
     void shouldReturnObjectListFromFile() {
-        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\psyduck.obj";
+        string filename = "D:\\Comp Grafica\\projeto-cg-bcc\\data\\psyduck\\psyduck.obj";
         string objectName = "psyduck";
 
         qsizetype expectedValue = 10;
@@ -120,7 +120,7 @@ public:
     }
 
     void shouldReturnOneObjectWithManyPoints() {
-        string filename = "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj";
+        string filename = "D:\\Comp Grafica\\projeto-cg-bcc\\data\\charizard\\charizard.obj";
         string objectName = "charizard";
 
         qsizetype expectedValue = 1;
