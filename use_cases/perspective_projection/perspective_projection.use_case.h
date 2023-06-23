@@ -13,14 +13,16 @@ public:
 
     ~PerspectiveProjectionUseCase();
     void execute(
-      Object* object,
-      Coordinate centerOfProjection,
-      Coordinate windowCenter,
-      int width,
-      int height,
-      float distanceFromProjection,
-      float alpha,
-      float beta
+        Object* object,
+        Coordinate centerOfProjection,
+        Coordinate windowCenter,
+        int windowWidth,
+        int windowHeight,
+        int viewportWidth,
+        int viewportHeight,
+        float distanceFromProjection,
+        float alpha,
+        float beta
     );
 };
 

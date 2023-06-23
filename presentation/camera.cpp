@@ -24,21 +24,56 @@ Camera::Camera(QWidget *parent)
         new FaceParser()
     ))
 {
+
     ui->setupUi(this);
+
+    QSize viewportSize = ui->screen->size();
+    int viewportWidth = viewportSize.width();
+    int viewportHeight = viewportSize.height();
+
+    cout << "Width: " << viewportSize.width() << endl;
+    cout << "Height: " << viewportSize.height() << endl;
+
+    Coordinate center(viewportWidth / 2, viewportHeight / 2);
+    ui->screen->setWidth(viewportWidth);
+    ui->screen->setHeight(viewportHeight);
+    ui->screen->setCenter(center);
 
     this->distanceFromProjection = 1; 
 
     QList<Object*> objectList = ObjectListFactory::createObjectList();
-    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(
-        "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj"
-    );
 
-    QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(
-        "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj"
-    );
+    QString charizardFilePath(":/:/data/charizard/charizard.obj");
+    QString psyduckFilePath = ":/:/data/charizard/reducted_psyduck.obj";
+
+    QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(charizardFilePath);
+    QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(psyduckFilePath);
 
     objectList << charizardList;
     objectList << psyduckList;
+
+    // QFile file(charizardFilePath);
+    // if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    //     cout << "Erro ao abrir arquivo com QFILE" << endl;	
+    // }
+
+    // QTextStream in(&file);
+    // while (!in.atEnd()) {
+    //     QString line = in.readLine();
+    //     cout << line.toStdString() << endl;
+    // }
+    
+    // QString psyduckFilePath = QDir::currentPath() + "\\data\\psyduck\\reducted_psyduck.obj";
+    // QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(psyduckFilePath.toStdString());
+
+
+    // QList<Object*> charizardList = this->readCoordinateFileUseCase->execute(
+    //     "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\charizard\\charizard.obj"
+    // );
+
+    // QList<Object*> psyduckList = this->readCoordinateFileUseCase->execute(
+    //     "C:\\Users\\rht11\\OneDrive\\Documentos\\Workspace\\projeto-cg-bcc\\data\\psyduck\\reducted_psyduck.obj"
+    // );
 
     // cout << "Partes do psyduck: " << psyduckList.size() << endl;
 
@@ -49,8 +84,6 @@ Camera::Camera(QWidget *parent)
     //     cout << "Ultimo ponto da parte " << i + 1 << " do psyduck: ";
     //     cout << pointsList[pointsList.size() - 1].toString() << endl;
     // }
-    
-    Coordinate center = ui->screen->getCenter();
 
     for (qsizetype i = 0; i < objectList.size(); i++){
         QListWidgetItem *item = new QListWidgetItem;
@@ -65,7 +98,6 @@ Camera::Camera(QWidget *parent)
     }
 
     ui->screen->setObjectList(objectList);
-
 }
 
 Camera::~Camera()
@@ -131,8 +163,15 @@ void Camera::on_leftButton_clicked()
     update();
 }
 
-void Camera::on_scaleSlider_valueChanged(int value)
+void Camera::on_apply_scaleButton_clicked()
 {
+    cout << ui->scaleSlider->minimum() << endl;
+
+
+    int value = ui->scaleSlider->value();
+    int maxValue = ui->scaleSlider->minimum();
+    int minValue = ui->scaleSlider->maximum();
+    int defaultSliderValue = (maxValue + minValue) / 2 ;
     int width = ui->screen->getWidth();
     int height = ui->screen->getHeight();
     Coordinate center = ui->screen->getCenter();
@@ -146,6 +185,8 @@ void Camera::on_scaleSlider_valueChanged(int value)
     );
 
     update();
+
+    ui->scaleSlider->setValue(defaultSliderValue);
 }
 
 void Camera::on_rotationDial_sliderMoved(int position)
@@ -246,8 +287,11 @@ void Camera::on_projection_button_clicked()
 void Camera::chooseProjectionMode(Object* object, int projectionMode) {
     
     Coordinate windowCenter = ui->screen->getCenter();
-    int width = ui->screen->getWidth();
-    int height = ui->screen->getHeight();
+    int windowWidth = ui->screen->getWidth();
+    int windowHeight = ui->screen->getHeight();
+
+    int viewportWidth = ui->screen->getWidth();
+    int viewportHeight = ui->screen->getHeight();
     float alpha = angleBetweenViewPlaneProjectionAndAxis(Coordinate::axisX());
     float beta = angleBetweenViewPlaneProjectionAndAxis(Coordinate::axisY());
 
@@ -256,8 +300,10 @@ void Camera::chooseProjectionMode(Object* object, int projectionMode) {
             object,
             COP,
             windowCenter,
-            width,
-            height,
+            windowWidth,
+            windowHeight,
+            viewportWidth,
+            viewportHeight,
             this->distanceFromProjection,
             alpha,
             beta
@@ -272,8 +318,10 @@ void Camera::chooseProjectionMode(Object* object, int projectionMode) {
     if (projectionMode == ORTHOGONAL_IN_XY) {
         this->orthogonalProjectionUseCase->execute(
             object,
-            width,
-            height,
+            windowWidth,
+            windowHeight,
+            viewportWidth,
+            viewportHeight,
             windowCenter,
             Coordinate::axisZ()
         );
@@ -287,8 +335,10 @@ void Camera::chooseProjectionMode(Object* object, int projectionMode) {
     if (projectionMode == ORTHOGONAL_IN_XZ) {
         this->orthogonalProjectionUseCase->execute(
             object,
-            width,
-            height,
+            windowWidth,
+            windowHeight,
+            viewportWidth,
+            viewportHeight,
             windowCenter,
             Coordinate::axisY()
         );
@@ -302,8 +352,10 @@ void Camera::chooseProjectionMode(Object* object, int projectionMode) {
     if (projectionMode == ORTHOGONAL_IN_YZ) {
         this->orthogonalProjectionUseCase->execute(
             object,
-            width,
-            height,
+            windowWidth,
+            windowHeight,
+            viewportWidth,
+            viewportHeight,
             windowCenter,
             Coordinate::axisX()
         );
@@ -449,3 +501,4 @@ void Camera::on_leftButton_Cam_clicked()
     newCenter.y += MOVE_SPEED;
     ui->screen->setCenter(newCenter);
 }
+

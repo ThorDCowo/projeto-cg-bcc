@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/:">
+        <file>data/charizard/charizard.obj</file>
+        <file>data/psyduck/psyduck.obj</file>
+        <file>data/psyduck/reducted_psyduck.obj</file>
+    </qresource>
+</RCC>

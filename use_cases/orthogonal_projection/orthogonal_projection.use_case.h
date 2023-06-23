@@ -14,8 +14,10 @@ public:
     ~OrthogonalProjectionUseCase();
     void execute(
         Object* object,
-        int width,
-        int height,
+        int windowWidth,
+        int windowHeight,
+        int viewportWidth,
+        int viewportHeight,
         Coordinate center,
         Coordinate axisToExclude
     );

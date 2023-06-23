@@ -3,7 +3,7 @@
 
 #include <string.h>
 #include <iostream>
-#include "../../core/interfaces/comparable.h"
+#include "../../data/interfaces/comparable.h"
 
 using namespace std;
 

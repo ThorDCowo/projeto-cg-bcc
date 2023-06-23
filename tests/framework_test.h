@@ -6,7 +6,7 @@
 #include <QList>
 #include <string>
 #include "test_suite.h"
-#include "../core/interfaces/comparable.h"
+#include "../data/interfaces/comparable.h"
 
 
 using namespace std;

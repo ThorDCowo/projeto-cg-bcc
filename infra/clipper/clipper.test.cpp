@@ -2,14 +2,13 @@
 #include <vector>
 #include <cmath>
 
-
-#include "../../core/entities/object.h"
-#include "../../core/entities/border.h"
+#include "../../data/entities/object.h"
+#include "../../data/entities/border.h"
 #include "../../tests/framework_test.h"
 #include "../../tests/test_suite.h"
 #include "clipper.h"
 
-#include "../../core/interfaces/comparable.h"
+#include "../../data/interfaces/comparable.h"
 
 class ClipperTest : public TestSuite {
 private:
@@ -44,13 +43,14 @@ public:
     // F - E Line
     void lineClippingTest2()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype insidePointIndex = 0;
-        qsizetype outsidePointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -64,14 +64,15 @@ public:
 
         this->clipper->lineClipping(
             border,
-            insidePointIndex,
-            outsidePointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping pela esquerda alterarndo o ponto de fora para (0, 4.5)",
-            pointsList[outsidePointIndex],
+            pointsList[edge.second],
             expectedValue
         );
     }
@@ -79,13 +80,14 @@ public:
     // K - L Line
     void lineClippingTest3()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype upperLeftPointIndex = 0;
-        qsizetype lowerRightPointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -100,26 +102,27 @@ public:
 
         this->clipper->lineClipping(
             border,
-            upperLeftPointIndex,
-            lowerRightPointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
-        pointsList[lowerRightPointIndex].x = truncl(pointsList[lowerRightPointIndex].x * 100);
-        pointsList[lowerRightPointIndex].y = truncl(pointsList[lowerRightPointIndex].y * 100);
+        pointsList[edge.second].x = truncl(pointsList[edge.second].x * 100);
+        pointsList[edge.second].y = truncl(pointsList[edge.second].y * 100);
         
-        pointsList[upperLeftPointIndex].x = truncl(pointsList[upperLeftPointIndex].x * 100);
-        pointsList[upperLeftPointIndex].y = truncl(pointsList[upperLeftPointIndex].y * 100);
+        pointsList[edge.first].x = truncl(pointsList[edge.first].x * 100);
+        pointsList[edge.first].y = truncl(pointsList[edge.first].y * 100);
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clippling o clipping por baixo alterarndo o ponto (20, -5) para (13.15, 0)",
-            pointsList[lowerRightPointIndex],
+            pointsList[edge.second],
             expectedValueForLowerRightPoint
         );
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clippling o clipping por esquerda alterarndo o ponto (-6, 14) para (0, 9.61)",
-            pointsList[upperLeftPointIndex],
+            pointsList[edge.first],
             expectedValueForUpperLeftPoint
         );
     }
@@ -127,13 +130,14 @@ public:
     // R - Q Line
     void lineClippingTest4()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype insidePointIndex = 0;
-        qsizetype outsidePointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -147,14 +151,15 @@ public:
 
         this->clipper->lineClipping(
             border,
-            insidePointIndex,
-            outsidePointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping por baixo alterarndo o ponto de fora para (4, 0)",
-            pointsList[outsidePointIndex],
+            pointsList[edge.second],
             expectedValue
         );
     }
@@ -162,13 +167,14 @@ public:
     //J - I Line
     void lineClippingTest5()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype insidePointIndex = 0;
-        qsizetype outsidePointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -182,14 +188,15 @@ public:
 
         this->clipper->lineClipping(
             border,
-            insidePointIndex,
-            outsidePointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping pela diagonal pela direita alterarndo o ponto de fora para (15, 8)",
-            pointsList[outsidePointIndex],
+            pointsList[edge.second],
             expectedValue
         );
     }
@@ -197,13 +204,14 @@ public:
     //O - P Line
     void lineClippingTest6()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype insidePointIndex = 0;
-        qsizetype outsidePointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -217,14 +225,15 @@ public:
 
         this->clipper->lineClipping(
             border,
-            insidePointIndex,
-            outsidePointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping por cima alterarndo o ponto de fora para (8, 10)",
-            pointsList[outsidePointIndex],
+            pointsList[edge.second],
             expectedValue
         );
     }
@@ -232,13 +241,14 @@ public:
     // S - T Line
     void lineClippingTest7()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype insidePointIndex = 0;
-        qsizetype outsidePointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -252,14 +262,15 @@ public:
 
         this->clipper->lineClipping(
             border,
-            insidePointIndex,
-            outsidePointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping pela direita alterarndo o ponto de fora para (15, 3)",
-            pointsList[outsidePointIndex],
+            pointsList[edge.second],
             expectedValue
         );
     }
@@ -267,13 +278,14 @@ public:
     //U - V Line
     void lineClippingTest8()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype insidePointIndex = 0;
-        qsizetype outsidePointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -287,14 +299,15 @@ public:
 
         this->clipper->lineClipping(
             border,
-            insidePointIndex,
-            outsidePointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(
             "Deve realizar o clipping diagonalmente passando pela quina alterarndo o ponto de fora para (0, 0)",
-            pointsList[outsidePointIndex],
+            pointsList[edge.second],
             expectedValue
         );
     }
@@ -302,13 +315,14 @@ public:
     // M - N Line
     void lineClippingTest9()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype upperPointIndex = 0;
-        qsizetype upperRightPointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -322,9 +336,10 @@ public:
 
         this->clipper->lineClipping(
             border,
-            upperPointIndex,
-            upperRightPointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(
@@ -337,13 +352,15 @@ public:
     // G - H Line
     void lineClippingTest10()
     {
+       
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype leftPointIndex = 0;
-        qsizetype upperPointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -357,9 +374,10 @@ public:
 
         this->clipper->lineClipping(
             border,
-            leftPointIndex,
-            upperPointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(
@@ -372,13 +390,14 @@ public:
 
     void lineClippingTest11()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 15;
         int height = 10;
         Coordinate center(7.5, 5.0);
         Border border(width, height, center);
 
-        qsizetype lowerPointIndex = 0;
-        qsizetype rightPointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -392,9 +411,10 @@ public:
 
         this->clipper->lineClipping(
             border,
-            lowerPointIndex,
-            rightPointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         //cout << "Reta com ponto no quadrante de baixo e quadrante da direita, sem passar por dentro" << endl;
@@ -408,13 +428,14 @@ public:
     
     void lineClippingTestCritical1()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 854;
         int height = 480;
         Coordinate center(427, 240);
         Border border(width, height, center);
 
-        qsizetype rightPointIndex = 0;
-        qsizetype lowerRightPointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -428,9 +449,10 @@ public:
 
         this->clipper->lineClipping(
             border,
-            rightPointIndex,
-            lowerRightPointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );        
 
         FrameworkTest::expectToBeEqual(
@@ -442,13 +464,14 @@ public:
 
      void lineClippingTestCritical2()
     {
+        QList<pair<int,int>> edgesListToDraw;
+        QList<Coordinate> pointsListToDraw;
         int width = 854;
         int height = 480;
         Coordinate center(427, 240);
         Border border(width, height, center);
 
-        qsizetype upperLeftPointIndex = 0;
-        qsizetype lowerRightPointIndex = 1;
+        pair<int,int> edge = {0,1};
 
         QList<Coordinate> pointsList;
 
@@ -462,9 +485,10 @@ public:
 
         this->clipper->lineClipping(
             border,
-            upperLeftPointIndex,
-            lowerRightPointIndex,
-            &pointsList
+            edge,
+            &pointsList,
+            &edgesListToDraw,
+            &pointsListToDraw
         );
 
         FrameworkTest::expectToBeEqual(

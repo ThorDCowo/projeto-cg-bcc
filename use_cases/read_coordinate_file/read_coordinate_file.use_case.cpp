@@ -3,7 +3,7 @@
 
 using namespace std;
 
-QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
+QList<Object*> ReadCoordinateFileUseCase::execute(QString filename)
 {
     QList<Object*> list;
     QList<Coordinate> points;
@@ -13,7 +13,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
 
         if (!this->reader->isOpen())
         {
-            throw runtime_error("Não foi possível abrir o arquivo " + filename);
+            throw runtime_error("Não foi possível abrir o arquivo " );
         }
 
         int objectIndex = -1;
@@ -48,7 +48,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                 {
                     // cout << "Ponto: " << line << endl;
                     points.append(this->coordinateParser->parse(line));
-                    return;
+                    // return;
                 }
 
                 if(this->faceParser->isParsableWithTexture(line))
@@ -59,7 +59,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                     edges.append({face.v2, face.v3});
                     edges.append({face.v3, face.v1});
                     
-                    return;
+                    // return;
                 }
 
                 if(this->faceParser->isParsableWithoutTexture(line))
@@ -70,7 +70,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                     edges.append({face.v2, face.v3});
                     edges.append({face.v3, face.v1});
                     
-                    return;
+                    // return;
                 }
 
                 if(isEOF)
@@ -79,7 +79,7 @@ QList<Object*> ReadCoordinateFileUseCase::execute(string filename)
                     cout << "objeto: " << to_string(objectIndex - 1) << "#" << endl;
                     list.append(
                         new Polygon(
-                            QString(" pokemon Parte"),
+                            QString("Pokemon Part"),
                             QList(points),
                             QList(edges),
                             Qt::red

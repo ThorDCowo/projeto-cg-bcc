@@ -10,15 +10,16 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    core\entities\border.cpp \
-    core\entities\line.cpp \
-    core\entities\line.test.cpp \
-    core\entities\object.cpp \
-    core\entities\object.test.cpp \
-    core\entities\point.cpp \
-    core\entities\point.test.cpp \
-    core\entities\polygon.cpp \
-    core\entities\polygon.test.cpp \
+    data\entities\border.cpp \
+    data\entities\line.cpp \
+    data\entities\line.test.cpp \
+    data\entities\object.cpp \
+    data\entities\object.test.cpp \
+    data\entities\point.cpp \
+    data\entities\point.test.cpp \
+    data\entities\polygon.cpp \
+    data\entities\polygon.test.cpp \
+    helper\geometric.helper.cpp \
     infra\clipper\clipper.cpp \
     infra\clipper\clipper.test.cpp \
     infra\coordinate_parser\coordinate_parser.cpp \
@@ -41,13 +42,14 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
-    core\entities\coordinate.h \
-    core\entities\border.h \
-    core\entities\line.h \
-    core\entities\object.h \
-    core\entities\point.h \
-    core\entities\polygon.h \
-    core\interfaces\comparable.h \
+    data\entities\coordinate.h \
+    data\entities\border.h \
+    data\entities\line.h \
+    data\entities\object.h \
+    data\entities\point.h \
+    data\entities\polygon.h \
+    data\interfaces\comparable.h \
+    helper\geometric.helper.h \
     infra\clipper\clipper.h \
     infra\clipper\clipper.h \
     infra\coordinate_parser\coordinate_parser.h \
@@ -72,4 +74,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    icons.qrc
+    icons.qrc \
+    objects.qrc
+
+DISTFILES += \
+    data/charizard/charizard.obj
+
+

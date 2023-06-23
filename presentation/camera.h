@@ -5,8 +5,9 @@
 #include <QList>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QDir>
 #include "../screen.h"
-#include "../core/entities/object.h"
+#include "../data/entities/object.h"
 #include "../infra/object_list_factory/object_list_factory.h"
 #include "../use_cases/orthogonal_projection/orthogonal_projection.use_case.h"
 #include "../use_cases/perspective_projection/perspective_projection.use_case.h"
@@ -16,9 +17,10 @@
 #include "../infra/file_reader/file_reader.h"
 #include "../infra/coordinate_parser/coordinate_parser.h"
 #include "../infra/face_parser/face_parser.h"
-#include "../core/entities/coordinate.h"
+#include "../data/entities/coordinate.h"
 #include <iostream>
 #include <math.h>
+#include <string>
 #include <cmath>
 #include <QString>
 #include <QBrush>
@@ -32,10 +34,10 @@ namespace Ui { class Camera; }
 QT_END_NAMESPACE
 
 enum ProjectionMode {
-    PERSPECTIVE,
     ORTHOGONAL_IN_XY,
     ORTHOGONAL_IN_XZ,
     ORTHOGONAL_IN_YZ,
+    PERSPECTIVE,
 };
 
 class Camera : public QMainWindow
@@ -52,7 +54,6 @@ private slots:
     void on_rightButton_clicked();
     void on_downButton_clicked();
     void on_leftButton_clicked();
-    void on_scaleSlider_valueChanged(int value);
     void on_rotationDial_sliderMoved(int position);
     void on_zoomButton_clicked();
     void on_change_zoom_input_textChanged(const QString &input);
@@ -65,6 +66,8 @@ private slots:
     void on_rightButton_Cam_clicked();
     void on_downButton_Cam_clicked();
     void on_leftButton_Cam_clicked();
+
+    void on_apply_scaleButton_clicked();
 
 private:
     Ui::Camera* ui;

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream>
-#include "../../core/entities/coordinate.h"
+#include "../../data/entities/coordinate.h"
 
 
 using namespace std;

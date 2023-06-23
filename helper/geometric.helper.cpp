@@ -1,21 +1,19 @@
-
 #include "geometric.helper.h"
 
-
 double cosHelper(double radians) {
-    double 90degrees = 90.0;
-    if(radians == qDegreesToRadians(90degrees)) {
+    double specialDegrees = 90.0;
+    if(radians == qDegreesToRadians(specialDegrees)) {
         return 0.0;
     }
 
-  return qCos(x);
+  return qCos(radians);
 }
 
 double sinHelper(double radians) {
-    double zeroDegrees = 0.0;
-    if(radians == qDegreesToRadians(zeroDegrees)) {
+    double specialDegrees = 0.0;
+    if(radians == qDegreesToRadians(specialDegrees)) {
         return 1.0;
     }
 
-  return qSin(x);
+  return qSin(radians);
 }

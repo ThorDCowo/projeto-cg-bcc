@@ -102,9 +102,6 @@ public:
         y - otherCoordinate->y,
         z - otherCoordinate->z
       );
-
-
-  
   }
 
   static Coordinate invertOrientation(Coordinate coordinate)

@@ -1,5 +1,5 @@
-#include "../../core/entities/polygon.h"
-#include "../../core/entities/object.h"
+#include "../../data/entities/polygon.h"
+#include "../../data/entities/object.h"
 #include "../../tests/framework_test.h"
 #include "../../tests/test_suite.h"
 #include "perspective_projection.use_case.h"
@@ -39,14 +39,16 @@ public:
 
         Object* pyramid = new Polygon(QString("Piramide Triangular"), QList(pointsList), QList(edges), Qt::red);
 
-        int width = 854;
-        int height = 480;
+        int windowWidth = 854;
+        int windowHeight = 480;
+        int viewportWidth = 854;
+        int viewportHeight = 480;
         float distanceFromProjection = 10.0;
         float alpha = 90.0;
         float beta = 90.0;
 
         Coordinate centerOfProjection = Coordinate::zero();
-        Coordinate windowCenter = Coordinate(width / 2, height / 2);
+        Coordinate windowCenter = Coordinate(windowWidth / 2, windowHeight / 2);
 
         QList<Coordinate> expectedNormalizedPointsList;
 
@@ -54,8 +56,10 @@ public:
             object,
             centerOfProjection,
             windowCenter,
-            width,
-            height,
+            windowWidth,
+            windowHeight,
+            viewportWidth,
+            viewportHeight,
             distanceFromProjection,
             alpha,
             beta

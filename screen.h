@@ -6,7 +6,7 @@
 #include <QRect>
 #include <QList>
 #include <QCheckBox>
-#include "core/entities/object.h"
+#include "data/entities/object.h"
 #include <iostream>
 #include <QPainter>
 #include <QDebug>
@@ -18,9 +18,9 @@ class Screen : public QFrame
 private:
     //Oject of the world, the "Camera"
     QList<Object*> list;
-    int width = 854;  //inicialize with viewport size
-    int height = 480; //inicialize with viewport size
-    Coordinate center = {427.0,240.0};
+    int width; 
+    int height; 
+    Coordinate center = Coordinate::zero();
 
 public:
 

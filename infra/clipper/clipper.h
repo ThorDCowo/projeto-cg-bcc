@@ -4,9 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <QList>
-#include "../../core/entities/object.h"
-#include "../../core/entities/coordinate.h"
-
+#include "../../data/entities/object.h"
+#include "../../data/entities/coordinate.h"
 
 using namespace std;
 
@@ -15,29 +14,35 @@ class Clipper
 public:
     void pointClipping(
         Border border, 
-        QList<Coordinate>* pointsList
+        QList<Coordinate>* normalizedPointsList,
+        QList<pair<int,int>>* edgesListToDraw,
+        QList<Coordinate>* pointsListToDraw
     );
     void lineClipping(
         Border border, 
-        qsizetype pointOneIndex, 
-        qsizetype pointTwoIndex,    
-        QList<Coordinate>* pointsList
+        pair<int,int> edge,
+        QList<Coordinate>* normalizedPointsList,
+        QList<pair<int,int>>* edgesListToDraw,
+        QList<Coordinate>* pointsListToDraw
     );
     void polygonClipping(
         Border border, 
-        QList<Coordinate>* pointsList
-    );    
+        QList<Coordinate>* normalizedPointsList,
+        QList<pair<int,int>>* edgesList,
+        QList<pair<int,int>>* edgesListToDraw,
+        QList<Coordinate>* pointsListToDraw
+    );
 
 protected:
     QList<vector<bool>> regionCodeList; 
 
     vector<bool> generateRegionCode(
-        Border border, 
+        Border border,
         Coordinate point
     );
     QList<vector<bool>> generateRegionCodeList(
-        Border border, 
-        Coordinate pointOneIndex, 
+        Border border,
+        Coordinate pointOneIndex,
         Coordinate pointTwoIndex
     );
     void debugRegionCodes(
@@ -102,6 +107,13 @@ protected:
         Border border, 
         Coordinate outsidePoint,
         float angularCoefficient
+    );
+
+    void appendToNewLists(
+        Coordinate pointOne,
+        Coordinate pointTwo,
+        QList<pair<int,int>>* edgesListToDraw,
+        QList<Coordinate>* pointsListToDraw
     );
 
 };

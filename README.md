@@ -25,8 +25,8 @@ Projeção em Perspectiva
   - ~~Movimento.~~
   - ~~Camera.~~
   - ~~Zoom.~~
-    - Implementado, mas não funcional
-  - Escalar.
+    - Implementado, mas não testado pela perspectiva estar quebrada
+  - ~~Escalar.~~
 - Testes.
   - Casos de uso.
     - Projeção Ortogonal (Não tenho certeza dos valores esperados)..
@@ -42,6 +42,16 @@ Projeção em Perspectiva
     - Movimento.
     - Camera.
     - Zoom.
+
+## Objetivos finais
+
+- Fazer o psyduck aparecer
+  - ~~Fazer reduced psyduck aparecer~~
+  - Fazer Psyduck original aparecer
+- Arrumar o clipping que está dando out of range quando ele tenta remover
+- Arrumar a visão em perspectiva
+- Revisitar a escala dos objetos
+- Colocar nome dos pokemons como label do objeto
 
 # Cenário de Testes
 

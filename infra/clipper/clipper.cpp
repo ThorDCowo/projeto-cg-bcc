@@ -2,50 +2,63 @@
 
 void Clipper::pointClipping(
     Border border,
-    QList<Coordinate>* pointsList
+    QList<Coordinate>* normalizedPointsList,
+    QList<pair<int,int>>* edgesListToDraw,
+    QList<Coordinate>* pointsListToDraw
 ) 
 {
     vector<bool> regionCode = generateRegionCode(
         border,
-        (*pointsList)[0]
+        (*normalizedPointsList)[0]
     );
 
-    if (isPointInsideWindow(regionCode)) return;
+    if (!isPointInsideWindow(regionCode)) return;
 
-    pointsList->removeAt(0);
+    pair<int,int> edgeToDraw;
+
+    pointsListToDraw->append((*normalizedPointsList)[0]);
+    edgeToDraw.first = pointsListToDraw->size() - 1;
+    edgeToDraw.second = pointsListToDraw->size() - 1;
+
+    edgesListToDraw->append(edgeToDraw);
 }
 
 void Clipper::polygonClipping(
     Border border,
-    QList<Coordinate>* pointsList
+    QList<Coordinate>* normalizedPointsList,
+    QList<pair<int,int>>* edgesList,
+    QList<pair<int,int>>* edgesListToDraw,
+    QList<Coordinate>* pointsListToDraw
 ) 
-{    
-    for (qsizetype i = 0; i < pointsList->size(); i++)
-    {        
-        if (i == pointsList->size() - 1)
-        {
-            lineClipping(border, i, 0, pointsList);
-            break;           
-        }
+{   
 
-        lineClipping(border, i, i + 1, pointsList);
+    for (qsizetype i = 0; i < edgesList->size(); i++){    
+        lineClipping(
+            border,
+            (*edgesList)[i],
+            normalizedPointsList,
+            edgesListToDraw,
+            pointsListToDraw
+        );
+        
     }
 }
 
 void Clipper::lineClipping(
-    Border border,
-    qsizetype pointOneIndex,
-    qsizetype pointTwoIndex,
-    QList<Coordinate>* pointsList
+    Border border, 
+    pair<int,int> edge,
+    QList<Coordinate>* normalizedPointsList,
+    QList<pair<int,int>>* edgesListToDraw,
+    QList<Coordinate>* pointsListToDraw
 ) 
 {
-    qsizetype regionCodeFirstIndex = 0;
-    qsizetype regionCodeSecondIndex = 1;
+    int regionCodeFirstIndex = 0;
+    int regionCodeSecondIndex = 1;
 
     QList<vector<bool>> regionCodeList = generateRegionCodeList(
         border,
-        (*pointsList)[pointOneIndex],
-        (*pointsList)[pointTwoIndex]
+        (*normalizedPointsList)[edge.first],
+        (*normalizedPointsList)[edge.second]
     );
 
     // //cout << "border upper: " << border.getUpper() << endl;
@@ -53,96 +66,190 @@ void Clipper::lineClipping(
     // //cout << "border left: " << border.getLeft() << endl;
     // //cout << "border right: " << border.getRight() << endl;
 
-    // //cout << "pointOneIndex: " << pointOneIndex << endl;
-    // //cout << "pointTwoIndex: " << pointTwoIndex << endl;
+    // //cout << "edge.first: " << edge.first << endl;
+    // //cout << "edge.second: " << edge.second << endl;
 
     // debugRegionCodes(regionCodeList[regionCodeFirstIndex], regionCodeList[regionCodeSecondIndex]);
 
-    if (isLineFullyInsideWindow(regionCodeList[regionCodeFirstIndex], regionCodeList[regionCodeSecondIndex])) 
-        return;
-
-    if (isLineFullyOutsideWindow(regionCodeList[regionCodeFirstIndex], regionCodeList[regionCodeSecondIndex]))
-    {
-        //cout << "Index: " << pointOneIndex << " " << pointTwoIndex << endl;
-        //cout << pointsList->size() << endl;
-        pointsList->removeAt(pointTwoIndex);
-        pointsList->removeAt(pointOneIndex);
+    if (isLineFullyInsideWindow(regionCodeList[regionCodeFirstIndex], regionCodeList[regionCodeSecondIndex])) {        
+        appendToNewLists(
+            (*normalizedPointsList)[edge.first],
+            (*normalizedPointsList)[edge.second],
+            edgesListToDraw,
+            pointsListToDraw
+        );
         return;
     }
 
-    //Ou aceita (atualiza) ambos os pontos ou nao aceita nada remove ambos
+    if (isLineFullyOutsideWindow(regionCodeList[regionCodeFirstIndex], regionCodeList[regionCodeSecondIndex]))
+    {
+        //cout << "Index: " << edge.first << " " << edge.second << endl;
+        //cout << normalizedPointsList->size() << endl;
+        //Remover a Aresta
+        // normalizedPointsList->removeAt(edge.second);
+        // normalizedPointsList->removeAt(edge.first);
+        return;
+    }
+
+    
     if(isLineFullyDiagonal(regionCodeList[regionCodeFirstIndex], regionCodeList[regionCodeSecondIndex])){
-        Coordinate control = (*pointsList)[pointOneIndex];
+        //(atualiza) ambos os pontos e adiciona na 
+        Coordinate control = (*normalizedPointsList)[edge.first];
         //cout << "Fully Diagonal" << endl;
-        (*pointsList)[pointOneIndex] = diagonalClipping(
+        Coordinate pointOne = diagonalClipping(
             border,
-            (*pointsList)[pointTwoIndex],
-            (*pointsList)[pointOneIndex]
+            (*normalizedPointsList)[edge.second],
+            (*normalizedPointsList)[edge.first]
         );
-        if(control == (*pointsList)[pointOneIndex]){
+        if(control == pointOne){
             //cout << "Removendo linha diagonal" << endl;
-            pointsList->removeAt(pointTwoIndex);
-            pointsList->removeAt(pointOneIndex);
+            // pointsList->removeAt(pointTwoIndex);
+            // pointsList->removeAt(pointOneIndex);
             return;
         }
         //cout << "Second Point" << endl;
-        (*pointsList)[pointTwoIndex] = diagonalClipping(
+        Coordinate pointTwo = diagonalClipping(
             border,
-            (*pointsList)[pointOneIndex],
-            (*pointsList)[pointTwoIndex]
+            (*normalizedPointsList)[edge.first],
+            (*normalizedPointsList)[edge.second]
+        );
+
+        appendToNewLists(
+            pointOne,
+            pointTwo,
+            edgesListToDraw,
+            pointsListToDraw
         );
         return;
     }
 
     if(hasTwoRegionCodeTruly(regionCodeList[regionCodeFirstIndex])){
-        Coordinate control = (*pointsList)[pointOneIndex];
-        (*pointsList)[pointOneIndex] = diagonalClipping(
+        Coordinate control = (*normalizedPointsList)[edge.first];
+        Coordinate pointOne = diagonalClipping(
             border,
-            (*pointsList)[pointTwoIndex],
-            (*pointsList)[pointOneIndex]
+            (*normalizedPointsList)[edge.second],
+            (*normalizedPointsList)[edge.first]
         );
 
-        if(control == (*pointsList)[pointOneIndex]){
+        if(control == pointOne){
             //cout << "Edging 1" << endl;
-            pointsList->removeAt(pointOneIndex);
+            // normalizedPointsList->removeAt(edge.first);
             return;
         }
+
+        Coordinate pointTwo = (*normalizedPointsList)[edge.second];
+        if(hasSomeRegionCodeTruly(regionCodeList[regionCodeSecondIndex])) {
+            pointTwo = parallelToAxisClipping(
+                border,
+                (*normalizedPointsList)[edge.first],
+                (*normalizedPointsList)[edge.second]
+            );
+        }
+
+        appendToNewLists(
+            pointOne,
+            pointTwo,
+            edgesListToDraw,
+            pointsListToDraw
+        );
     }
 
     if(hasTwoRegionCodeTruly(regionCodeList[regionCodeSecondIndex])){
-        Coordinate control = (*pointsList)[pointTwoIndex];
-        (*pointsList)[pointTwoIndex] = diagonalClipping(
+        Coordinate control = (*normalizedPointsList)[edge.second];
+        Coordinate pointTwo = diagonalClipping(
             border,
-            (*pointsList)[pointOneIndex],
-            (*pointsList)[pointTwoIndex]
+            (*normalizedPointsList)[edge.first],
+            (*normalizedPointsList)[edge.second]
         );
 
-        if(control == (*pointsList)[pointTwoIndex]){            
+        if(control == pointTwo){            
             //cout << "Edging 2" << endl;
-            pointsList->removeAt(pointTwoIndex);
+            // normalizedPointsList->removeAt(edge.second);
             return;
         }
+
+        Coordinate pointOne = (*normalizedPointsList)[edge.first];
+        if(hasSomeRegionCodeTruly(regionCodeList[regionCodeFirstIndex])) {
+            pointOne = parallelToAxisClipping(
+                border,
+                (*normalizedPointsList)[edge.second],
+                (*normalizedPointsList)[edge.first]
+            );
+        }
+
+        appendToNewLists(
+            pointOne,
+            pointTwo,
+            edgesListToDraw,
+            pointsListToDraw
+        );
     }
 
     if(hasSomeRegionCodeTruly(regionCodeList[regionCodeFirstIndex])){
-        Coordinate aux = (*pointsList)[pointOneIndex];
-        (*pointsList)[pointOneIndex] = parallelToAxisClipping(
+        Coordinate aux = (*normalizedPointsList)[edge.first];
+        Coordinate pointOne = parallelToAxisClipping(
             border,
-            (*pointsList)[pointTwoIndex],
-            (*pointsList)[pointOneIndex]
+            (*normalizedPointsList)[edge.second],
+            (*normalizedPointsList)[edge.first]
         );
-        if(aux == (*pointsList)[pointOneIndex]){
-            pointsList->removeAt(pointTwoIndex);
-            pointsList->removeAt(pointOneIndex);
+        if(aux == pointOne){
+            // normalizedPointsList->removeAt(edge.second);
+            // normalizedPointsList->removeAt(edge.first);
             return;
         }
+
+        Coordinate pointTwo = (*normalizedPointsList)[edge.second];
+        if(hasSomeRegionCodeTruly(regionCodeList[regionCodeSecondIndex])) {
+            pointTwo = parallelToAxisClipping(
+                border,
+                (*normalizedPointsList)[edge.first],
+                (*normalizedPointsList)[edge.second]
+            );
+        }
+
+        appendToNewLists(
+            pointOne,
+            pointTwo,
+            edgesListToDraw,
+            pointsListToDraw
+        );
+
+        return;
     }
 
-    (*pointsList)[pointTwoIndex] = parallelToAxisClipping(
-        border,
-        (*pointsList)[pointOneIndex],
-        (*pointsList)[pointTwoIndex]
+    Coordinate pointOne = (*normalizedPointsList)[edge.first];
+    Coordinate pointTwo = (*normalizedPointsList)[edge.second];
+    if(hasSomeRegionCodeTruly(regionCodeList[regionCodeSecondIndex])) {
+        pointTwo = parallelToAxisClipping(
+            border,
+            (*normalizedPointsList)[edge.first],
+            (*normalizedPointsList)[edge.second]
+        );
+    }
+
+    appendToNewLists(
+        pointOne,
+        pointTwo,
+        edgesListToDraw,
+        pointsListToDraw
     );
+}
+
+void Clipper::appendToNewLists(
+    Coordinate pointOne,
+    Coordinate pointTwo,
+    QList<pair<int,int>>* edgesListToDraw,
+    QList<Coordinate>* pointsListToDraw
+) { 
+    pair<int,int> edgeToDraw;
+
+    pointsListToDraw->append(pointOne);
+    edgeToDraw.first = pointsListToDraw->size() - 1;
+
+    pointsListToDraw->append(pointTwo);
+    edgeToDraw.second = pointsListToDraw->size() - 1;
+
+    edgesListToDraw->append(edgeToDraw);
 }
 
 QList<vector<bool>> Clipper::generateRegionCodeList(

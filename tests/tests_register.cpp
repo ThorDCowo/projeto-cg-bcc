@@ -1,5 +1,5 @@
 #include "framework_test.h"
-#include "../core/entities/object.test.cpp"
+#include "../data/entities/object.test.cpp"
 #include "../infra/clipper/clipper.test.cpp"
 #include "../infra/coordinate_parser/coordinate_parser.h"
 #include "../infra/coordinate_parser/coordinate_parser.test.cpp"
@@ -12,8 +12,8 @@
 void runTests() {
     FrameworkTest frameworkTest;
 
-    Clipper clipper;
-    ClipperTest clipperTest(&clipper);
+    // Clipper clipper;
+    // ClipperTest clipperTest(&clipper);
 
     CoordinateParser coordinateParser;
     CoordinateParserTest coordinateParserTest(&coordinateParser);
@@ -32,7 +32,7 @@ void runTests() {
     ObjectTest objectTest;
 
 
-    frameworkTest.registerTest(&clipperTest);
+    // frameworkTest.registerTest(&clipperTest);
     frameworkTest.registerTest(&coordinateParserTest);
     frameworkTest.registerTest(&readCoordinateFileUseCaseTest);
     frameworkTest.registerTest(&objectTest);

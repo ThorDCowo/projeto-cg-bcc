@@ -34,7 +34,11 @@ public:
 
     Coordinate barycenter();
     void rotateWorld(float radians, Coordinate axis);
-    void transformToViewport(Coordinate center);
+    void transformToViewport(
+        Coordinate center,
+        int viewportWidth,
+        int viewportHeight
+    );
     void orthogonalProjection(Coordinate axisToExclude);
     void planeProjection(float distanceBetweenCOPandPlane);
     void perspectiveNormalize(
@@ -43,23 +47,20 @@ public:
         Coordinate windowCenter,
         float distanceFromProjection);
     void orthogonalNormalize(
-        int width, 
-        int height, 
+        int windowWidth,
+        int windowHeight,
         Coordinate center,
-        Coordinate axisToExclude);
+        Coordinate axisToExclude
+    );
     void perspectiveProjection(
         Coordinate centerOfProjection, 
         Coordinate axisX, 
         Coordinate axisY, 
         float alpha, 
-        float beta);
+        float beta
+    );
 
-    void draw(QPainter &painter);
-    void drawNormalizedPoints(QPainter &painter);
-    void drawWorldPoints(QPainter &painter);
-    void drawProjectedPoints(QPainter &painter);
     void drawEdges(QPainter &painter);
-
 
     virtual void translate(Coordinate translation)=0;
     virtual void translateProjection(Coordinate translation) = 0;
@@ -69,27 +70,30 @@ public:
     inline QString getName()const{ return name; }
     inline QList<Coordinate> getPoints()const { return this->pointsList; }
     inline QList<pair<int, int>> getEdges()const { return this->edgesList; } 
+    inline QList<pair<int, int>> getEdgesListToDraw()const { return this->edgesListToDraw; } 
+    inline QList<Coordinate> getPointsListToDraw()const { return this->pointsListToDraw; } 
     inline QList<Coordinate> getProjectionPoints()const { return this->projectionPointsList; } 
-    inline QList<Coordinate> getNormalizedPoints()const { return this->normalizePointsList; } 
+    inline QList<Coordinate> getNormalizedPoints()const { return this->normalizedPointsList; } 
+    inline QList<Coordinate> getviewportPoints()const { return this->viewportPointsList; } 
     inline Qt::GlobalColor getColor()const { return color; }
-
-    float linearInterpolation(
-        float x, 
-        float x0, 
-        float x1, 
-        float y0, 
-        float y1
-    );
-
+    
 protected:
     QString name; //id do objeto instanciado
     QList<Coordinate> pointsList;
     QList<pair<int, int>> edgesList;
+    QList<pair<int,int>> edgesListToDraw;
+
+    QList<Coordinate> pointsListToDraw;
     QList<Coordinate> projectionPointsList;
-    QList<Coordinate> normalizePointsList;
+    QList<Coordinate> normalizedPointsList;
+    QList<Coordinate> viewportPointsList;
     Qt::GlobalColor color;
 
-    void normalizeCoordinates(int windowWidth, int windowHeight, Coordinate windowCenter, QList<Coordinate> list);
+    void normalizeCoordinates(
+        int windowWidth,
+        int windowHeight,
+        Coordinate windowCenter
+    );
 };
 
 #endif // OBJECT_H

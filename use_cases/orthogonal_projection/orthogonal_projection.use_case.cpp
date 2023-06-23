@@ -2,17 +2,28 @@
 
 void OrthogonalProjectionUseCase::execute(
     Object* object,
-    int width,
-    int height,
-    Coordinate center,
+    int windowWidth,
+    int windowHeight,
+    int viewportWidth,
+    int viewportHeight,
+    Coordinate windowCenter,
     Coordinate axisToExclude
 )
 {
-    Border border(width, height, center);
+    Border border(windowWidth, windowHeight, windowCenter);
     
-    object->orthogonalNormalize(width, height, center, axisToExclude);
-    this->clippObjectUseCase->execute(object, border);
-    object->transformToViewport(center);
+    object->orthogonalNormalize(
+        windowWidth,
+        windowHeight,
+        windowCenter,
+        axisToExclude
+    );
+    // this->clippObjectUseCase->execute(object, border);
+    object->transformToViewport(
+        windowCenter,
+        viewportWidth,
+        viewportHeight
+    );
 
     // cout << "Points / Projection / Normalized" << endl;
     // cout << object->getPoints()[0].toString() << endl;

@@ -1,5 +1,5 @@
-#include "../../core/entities/object.h"
-#include "../../core/entities/border.h"
+#include "../../data/entities/object.h"
+#include "../../data/entities/border.h"
 #include "../../tests/framework_test.h"
 #include "../../tests/test_suite.h"
 #include "coordinate_parser.h"
